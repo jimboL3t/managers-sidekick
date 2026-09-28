@@ -1,0 +1,7 @@
+target/
+.maven-repository/
+data/
+*.pdf
+.DS_Store
+.idea/
+*.iml
