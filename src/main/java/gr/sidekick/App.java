@@ -44,15 +44,15 @@ public final class App extends JFrame {
         teamHeading.setForeground(Theme.MUTED);heading.add(teamHeading,BorderLayout.EAST);
         JPanel toolbar=new JPanel(new FlowLayout(FlowLayout.LEFT,8,4));
         button(toolbar,"‹ Ομάδες εργασίας",this::showTeams);button(toolbar,"Ρυθμίσεις",this::settings);
-        button(toolbar,"Πόστα",this::posts);button(toolbar,"Εργαζόμενοι",this::employees);button(toolbar,"Νέο είδος άδειας",this::leave);
+        button(toolbar,"Πόστα",this::posts);button(toolbar,"Δεξιότητες",this::skills);button(toolbar,"Εργαζόμενοι",this::employees);button(toolbar,"Νέο είδος άδειας",this::leave);
         JPanel navigation=new JPanel(new FlowLayout(FlowLayout.LEFT,8,4));
         button(navigation,"‹",()->navigate(-1));navigation.add(month);navigation.add(year);button(navigation,"›",()->navigate(1));
         button(navigation,"Τρέχων μήνας",()->selectMonth(YearMonth.now()));
         button(navigation,"Ερχόμενος μήνας",()->selectMonth(YearMonth.now().plusMonths(1)));
         button(navigation,"Αργίες μήνα",this::holidays);
-        JPanel actions=new JPanel(new FlowLayout(FlowLayout.LEFT,8,4));
+        JPanel actions=new JPanel(new GridLayout(2,3,8,8));
         button(actions,"Υπολογισμός βαρδιών",this::generate);button(actions,"Έλεγχος",this::validateMonth);button(actions,"Αποδέσμευση κελιού",this::unlock);
-        button(actions,"Αποθήκευση",this::save);button(actions,"Εξαγωγή PDF",this::pdf);
+        button(actions,"Καθαρισμός χειροκίνητων",this::clearManual);button(actions,"Αποθήκευση",this::save);button(actions,"Εξαγωγή PDF",this::pdf);
         JPanel titlePanel=new JPanel(new GridLayout(2,1,0,6));
         monthTitle.setFont(new Font("SansSerif",Font.BOLD,22));overview.setForeground(Theme.MUTED);titlePanel.add(monthTitle);titlePanel.add(overview);
         JPanel controls=new JPanel();controls.setLayout(new BoxLayout(controls,BoxLayout.Y_AXIS));
@@ -131,7 +131,7 @@ public final class App extends JFrame {
         teamHeading.setText(t==null?"":t.name+(t.sandbox?" · Δοκιμαστικό αντίγραφο":" · Ομάδα εργασίας"));
         monthTitle.setText(month.getSelectedItem()+" "+year.getValue());
         grid.setModel(new ScheduleTableModel(data,t,date,()->{save();validateMonth();grid.getTableHeader().repaint();},()->!busy));
-        grid.getColumnModel().getColumn(0).setPreferredWidth(235);for(int c=1;c<grid.getColumnCount();c++)grid.getColumnModel().getColumn(c).setPreferredWidth(104);
+        grid.getColumnModel().getColumn(0).setPreferredWidth(340);for(int c=1;c<grid.getColumnCount();c++)grid.getColumnModel().getColumn(c).setPreferredWidth(104);
         grid.setDefaultEditor(Object.class,new DefaultCellEditor(new JComboBox<Choice>()){
             public Component getTableCellEditorComponent(JTable table,Object value,boolean selected,int row,int col){JComboBox<Choice> combo=new JComboBox<>();combo.addItem(new Choice(null,"— Κενό"));Employee e=t.employees.get(row);for(Post p:t.posts)combo.addItem(new Choice(p.id,p.name+(e.skills.contains(p.id)?"":" (εκτός δεξιοτήτων)")));for(String id:t.allowedLeaves)combo.addItem(new Choice(id,leaves(data,t).get(id)));Cell current=t.cell(e.id,date.atDay(col));for(int i=0;i<combo.getItemCount();i++)if(Objects.equals(combo.getItemAt(i).id(),current==null?null:current.value))combo.setSelectedIndex(i);combo.addActionListener(event->stopCellEditing());editorComponent=combo;return combo;}
             public Object getCellEditorValue(){return ((JComboBox<?>)editorComponent).getSelectedItem();}
@@ -155,9 +155,28 @@ public final class App extends JFrame {
         grid.getTableHeader().repaint();
         if(team()==null){overview.setText("Δημιουργήστε την πρώτη σας ομάδα");report.setText("Προσθέστε πόστα και εργαζομένους για να ξεκινήσετε.");return;}
         Team t=team();
-        overview.setText(t.employees.size()+" εργαζόμενοι   ·   "+t.posts.size()+" πόστα   ·   Στόχος "+CalendarRules.offTarget(t,ym())+" ρεπό / άτομο   ·   "+uncovered.size()+" ημέρες με ελλιπή κάλυψη");
+        long missingSkills=t.employees.stream().filter(e->t.posts.stream().noneMatch(p->e.skills.contains(p.id))).count();
+        overview.setText(t.employees.size()+" εργαζόμενοι   ·   "+t.posts.size()+" πόστα   ·   Στόχος "+CalendarRules.offTarget(t,ym())+" ρεπό / άτομο   ·   "+uncovered.size()+" ημέρες με ελλιπή κάλυψη"+(missingSkills>0?"   ·   "+missingSkills+" άτομα χωρίς επιτρεπόμενα πόστα":""));
         List<String> issues=scheduler.validate(data,t,ym());
         report.setText(issues.isEmpty()?"Το πρόγραμμα είναι πλήρες.":"Παρατηρήσεις προγράμματος — μπορείτε να συνεχίσετε τις αλλαγές.\n"+String.join("\n",issues));report.setCaretPosition(0);
+    }
+    private void skills(){
+        Team t=team();if(t==null)return;
+        JPanel panel=new JPanel(new GridLayout(0,t.posts.size()+1,8,8));
+        panel.add(new JLabel("Εργαζόμενος"));for(Post p:t.posts)panel.add(new JLabel(p.name));
+        Map<Employee,Map<String,JCheckBox>> boxes=new LinkedHashMap<>();
+        for(Employee e:t.employees){panel.add(new JLabel(e.name));Map<String,JCheckBox> row=new LinkedHashMap<>();
+            for(Post p:t.posts){JCheckBox b=new JCheckBox("",e.skills.contains(p.id));panel.add(b);row.put(p.id,b);}boxes.put(e,row);
+        }
+        JPanel content=new JPanel(new BorderLayout(0,12));content.add(new JLabel("Επιλέξτε τα πόστα που μπορεί να αναλάβει κάθε εργαζόμενος. Κενή γραμμή = καμία αυτόματη βάρδια."),BorderLayout.NORTH);
+        JScrollPane scroll=new JScrollPane(panel);scroll.setPreferredSize(new Dimension(800,Math.min(450,70+t.employees.size()*35)));content.add(scroll);
+        if(JOptionPane.showConfirmDialog(this,content,"Δεξιότητες ομάδας",JOptionPane.OK_CANCEL_OPTION)!=JOptionPane.OK_OPTION)return;
+        boxes.forEach((e,row)->{e.skills.clear();row.forEach((id,b)->{if(b.isSelected())e.skills.add(id);});});save();refresh();
+    }
+    private void clearManual(){
+        Team t=team();if(t==null)return;
+        if(JOptionPane.showConfirmDialog(this,"Να αφαιρεθούν όλες οι χειροκίνητες επιλογές της ομάδας «"+t.name+"» για "+monthTitle.getText()+";\nΟι αυτόματες αναθέσεις, οι αργίες και οι άλλοι μήνες διατηρούνται. Πατήστε μετά Υπολογισμός βαρδιών.","Καθαρισμός χειροκίνητων",JOptionPane.OK_CANCEL_OPTION)!=JOptionPane.OK_OPTION)return;
+        Scheduler.clearManual(t,ym());save();refresh();
     }
     private void unlock(){int r=grid.getSelectedRow(),c=grid.getSelectedColumn();if(team()==null||r<0||c<1)return;Cell cell=team().cell(team().employees.get(r).id,ym().atDay(c));if(cell!=null)cell.locked=false;save();refresh();}
     private void generate(){Team t=team();YearMonth date=ym();if(t==null||t.posts.isEmpty()||t.employees.isEmpty()){status.setText("Προσθέστε πόστα και εργαζομένους πριν τον υπολογισμό.");return;}busy=true;month.setEnabled(false);year.setEnabled(false);status.setText("Υπολογισμός…");

@@ -49,6 +49,17 @@ public final class Scheduler {
                     }
                 }
             }
+            // Coverage is a minimum. Fill each employee's monthly work entitlement
+            // even when more staff are available than the minimum number of slots.
+            List<Employee> employees=new ArrayList<>(t.employees);Collections.shuffle(employees,random);
+            for(Employee e:employees) for(LocalDate day:days) {
+                if(t.cell(e.id,day)!=null||!withinMonthlyBudget(t,e,ym))continue;
+                List<Post> eligible=new ArrayList<>();
+                for(Post p:t.posts)if(safe(t,e,day,p))eligible.add(p);
+                Collections.shuffle(eligible,random);
+                eligible.sort(Comparator.comparingLong(p->t.employees.stream().filter(person->{Cell c=t.cell(person.id,day);return c!=null&&p.id.equals(c.value);}).count()));
+                if(!eligible.isEmpty())m.cells.put(key(e.id,day.getDayOfMonth()),new Cell(eligible.getFirst().id,false));
+            }
             int quotaDeviation=0, unassigned=0;
             for(Employee e:t.employees) {
                 int remaining=CalendarRules.offTarget(t,ym)-CalendarRules.count(t,e,ym,OFF);
@@ -69,6 +80,21 @@ public final class Scheduler {
         }
         m.cells=best==null?fixed:best;
         return validate(data,t,ym);
+    }
+    public static int workTarget(Team t,Employee e,YearMonth ym) {
+        int leave=0;for(int d=1;d<=ym.lengthOfMonth();d++){
+            Cell c=t.cell(e.id,ym.atDay(d));if(c!=null&&t.post(c.value)==null&&!OFF.equals(c.value))leave++;
+        }
+        return Math.max(0,ym.lengthOfMonth()-CalendarRules.offTarget(t,ym)-leave);
+    }
+    public static int workCount(Team t,Employee e,YearMonth ym) {
+        int count=0;for(int d=1;d<=ym.lengthOfMonth();d++){
+            Cell c=t.cell(e.id,ym.atDay(d));if(c!=null&&t.post(c.value)!=null)count++;
+        }return count;
+    }
+    public static void clearManual(Team t,YearMonth ym) {
+        Model.Month month=t.months.get(ym.toString());
+        if(month!=null)month.cells.entrySet().removeIf(entry->entry.getValue().locked);
     }
     private boolean withinMonthlyBudget(Team t,Employee e,YearMonth ym) {
         int working=0, leave=0;
@@ -100,15 +126,18 @@ public final class Scheduler {
             if(p==null&&(!leaves(data,t).containsKey(c.value)||!t.allowedLeaves.contains(c.value)))issues.add(day+" · "+e.name+": μη επιτρεπόμενη άδεια");
         }
         for(Employee e:t.employees) {
+            if(t.posts.stream().noneMatch(p->e.skills.contains(p.id)))issues.add(e.name+": δεν έχουν επιλεγεί επιτρεπόμενα πόστα. Ορίστε τα από «Δεξιότητες».");
             int actual=CalendarRules.count(t,e,ym,OFF), target=CalendarRules.offTarget(t,ym);
             int empty=0;for(int d=1;d<=ym.lengthOfMonth();d++)if(t.cell(e.id,ym.atDay(d))==null)empty++;
+            int worked=workCount(t,e,ym), planned=workTarget(t,e,ym);
+            if(worked!=planned)issues.add(e.name+": βάρδιες "+worked+" / "+planned);
             if(empty>0)issues.add(e.name+": "+empty+" ημέρες χωρίς ανάθεση (δεν προσμετρώνται ως ρεπό)");
             if(actual!=target)issues.add(e.name+": ρεπό "+actual+" / "+target+" του μήνα");
         }
         for(int d=1;d<=ym.lengthOfMonth();d++)for(Post p:t.posts) {
             LocalDate day=ym.atDay(d);long n=t.employees.stream().filter(e->{Cell c=t.cell(e.id,day);return c!=null&&p.id.equals(c.value);}).count();
             int demand=p.required(day);
-            if(n!=demand)issues.add(day+" · "+p.name+": κάλυψη "+n+" / "+demand);
+            if(n<demand)issues.add(day+" · "+p.name+": κάλυψη "+n+" / "+demand);
         }
         if(!t.months.containsKey(ym.minusMonths(1).toString()))issues.add("Προειδοποίηση: απουσιάζει ο προηγούμενος μήνας· δεν επαληθεύεται πλήρως το αρχικό όριο.");
         if(!t.months.containsKey(ym.plusMonths(1).toString()))issues.add("Προειδοποίηση: απουσιάζει ο επόμενος μήνας· απαιτείται έλεγχος όταν δημιουργηθεί.");
