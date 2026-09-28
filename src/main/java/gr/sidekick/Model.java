@@ -17,6 +17,8 @@ public final class Model {
     }
     public static class Team {
         public String id = id(), name;
+        public boolean sandbox;
+        public Map<String,String> leaveTypes = new LinkedHashMap<>();
         public List<Post> posts = new ArrayList<>();
         public List<Employee> employees = new ArrayList<>();
         public Set<String> allowedLeaves = new LinkedHashSet<>();
@@ -58,8 +60,11 @@ public final class Model {
         public Cell(String value,boolean locked) { this.value=value;this.locked=locked; }
     }
     public static String key(String employee,int day) { return employee+":"+day; }
+    public static Map<String,String> leaves(Data data,Team team) {
+        return team.leaveTypes==null||team.leaveTypes.isEmpty()?data.leaves:team.leaveTypes;
+    }
     public static String label(Data data,Team team,String value) {
         if (value==null) return "—";
-        Post p=team.post(value);return p==null?data.leaves.getOrDefault(value,"Άγνωστο"):p.name;
+        Post p=team.post(value);return p==null?leaves(data,team).getOrDefault(value,"Άγνωστο"):p.name;
     }
 }

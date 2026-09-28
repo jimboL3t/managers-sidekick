@@ -20,7 +20,7 @@ public final class PdfExporter {
     public static void export(Data data,Team t,YearMonth ym,Path file) throws IOException {
         try(PDDocument doc=new PDDocument()) {
             PDFont font=PDType0Font.load(doc,fontPath().toFile());
-            List<String> codes=new ArrayList<>();t.posts.forEach(p->codes.add(p.id));codes.addAll(data.leaves.keySet());
+            List<String> codes=new ArrayList<>();t.posts.forEach(p->codes.add(p.id));codes.addAll(leaves(data,t).keySet());
             int perPage=10;
             for(int first=0;first<Math.max(1,t.employees.size());first+=perPage) {
                 PDPage page=new PDPage(new PDRectangle(PDRectangle.A4.getHeight(),PDRectangle.A4.getWidth()));doc.addPage(page);

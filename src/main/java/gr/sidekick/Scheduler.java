@@ -97,7 +97,7 @@ public final class Scheduler {
             if(c==null) continue;
             Post p=t.post(c.value);
             if(p!=null&&!safe(t,e,day,p))issues.add(day+" · "+e.name+": δεξιότητα / συνεχόμενες ημέρες / ανάπαυση");
-            if(p==null&&(!data.leaves.containsKey(c.value)||!t.allowedLeaves.contains(c.value)))issues.add(day+" · "+e.name+": μη επιτρεπόμενη άδεια");
+            if(p==null&&(!leaves(data,t).containsKey(c.value)||!t.allowedLeaves.contains(c.value)))issues.add(day+" · "+e.name+": μη επιτρεπόμενη άδεια");
         }
         for(Employee e:t.employees) {
             int actual=CalendarRules.count(t,e,ym,OFF), target=CalendarRules.offTarget(t,ym);

@@ -13,6 +13,7 @@ public final class Storage {
         try (Reader r=Files.newBufferedReader(file)) {
             Model.Data data=gson.fromJson(r,Model.Data.class);
             if(data==null || data.version!=1 || data.teams==null || data.leaves==null) throw new IOException("Μη έγκυρο αρχείο δεδομένων ή έκδοση.");
+            for(Model.Team team:data.teams) if(team.leaveTypes==null||team.leaveTypes.isEmpty()) team.leaveTypes=new java.util.LinkedHashMap<>(data.leaves);
             return data;
         } catch(JsonParseException e) { throw new IOException("Δεν διαβάζονται τα δεδομένα. Διατηρήστε το αρχείο και το .bak.",e); }
     }
