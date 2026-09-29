@@ -20,7 +20,14 @@ public final class ActionButton extends JButton {
         Graphics2D g=(Graphics2D)graphics.create();g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         Color fill=switch(style){case PRIMARY->new Color(0xBEA6F6);case EXPORT->new Color(0x91D5C2);case QUIET->Theme.PANEL;case DANGER->new Color(0x352338);default->new Color(0x2A2541);};
         if(!isEnabled())fill=Theme.BACKGROUND;else if(getModel().isPressed())fill=fill.darker();else if(getModel().isRollover())fill=fill.brighter();
-        g.setColor(fill);g.fillRoundRect(1,1,getWidth()-2,getHeight()-2,14,14);
-        g.setColor(isFocusOwner()?Theme.ACCENT:new Color(0x49405F));g.setStroke(new BasicStroke(isFocusOwner()?2f:1f));g.drawRoundRect(1,1,getWidth()-3,getHeight()-3,14,14);g.dispose();super.paintComponent(graphics);
+        int w=getWidth()-4,h=getHeight()-5;
+        g.setColor(new Color(0,0,0,65));g.fillRoundRect(2,4,w,h,18,18);
+        g.setPaint(new GradientPaint(0,2,fill.brighter(),0,getHeight(),fill));g.fillRoundRect(2,1,w,h,18,18);
+        Shape surface=new java.awt.geom.RoundRectangle2D.Float(2,1,w,h,18,18);g.setClip(surface);
+        g.setPaint(new GradientPaint(0,1,new Color(255,255,255,isEnabled()?38:10),0,getHeight()/2f,new Color(255,255,255,0)));
+        g.fillRect(2,1,w,h);g.setClip(null);
+        g.setColor(isFocusOwner()?Theme.ACCENT:new Color(255,255,255,isEnabled()?65:20));
+        g.setStroke(new BasicStroke(isFocusOwner()?2f:1f));g.drawRoundRect(2,1,w-1,h-1,18,18);
+        g.dispose();super.paintComponent(graphics);
     }
 }

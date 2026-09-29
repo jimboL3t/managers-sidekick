@@ -23,7 +23,8 @@ class TeamPickerTest {
                 picker.refresh(data,copy);picker.setSize(1200,650);layout(picker);
                 BufferedImage home=render(picker);
                 ImageIO.write(home,"png",Path.of("target","team-picker-preview.png").toFile());
-                int visibleText=0;for(int y=240;y<300;y++)for(int x=50;x<1100;x++)if(new Color(home.getRGB(x,y)).getRed()>140)visibleText++;
+                JList<?> teamList=findList(picker);Point origin=SwingUtilities.convertPoint(teamList,0,0,picker);
+                int visibleText=0;for(int y=Math.max(0,origin.y);y<Math.min(home.getHeight(),origin.y+teamList.getHeight());y++)for(int x=50;x<1100;x++)if(new Color(home.getRGB(x,y)).getRed()>140)visibleText++;
                 assertTrue(visibleText>200,"Team rows must show readable names and details");
                 JPanel controls=new JPanel(new FlowLayout(FlowLayout.LEFT,16,20));
                 JButton button=new JButton("Υπολογισμός βαρδιών");controls.add(button);controls.add(new JComboBox<>(new String[]{"Σεπτέμβριος","Οκτώβριος"}));
@@ -39,6 +40,7 @@ class TeamPickerTest {
             }catch(Exception e){throw new RuntimeException(e);}
         });
     }
+    private static JList<?> findList(Container parent){for(Component c:parent.getComponents()){if(c instanceof JList<?> list)return list;if(c instanceof Container child){JList<?> found=findList(child);if(found!=null)return found;}}return null;}
     private static JButton find(Container parent,String text){
         for(Component c:parent.getComponents()){
             if(c instanceof JButton b&&text.equals(b.getText()))return b;

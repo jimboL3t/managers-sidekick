@@ -54,7 +54,7 @@ public final class App extends JFrame {
         button(navigation,I18n.text("Τρέχων μήνας"),()->selectMonth(YearMonth.now()));
         button(navigation,I18n.text("Ερχόμενος μήνας"),()->selectMonth(YearMonth.now().plusMonths(1)));
         button(navigation,I18n.text("Αργίες μήνα"),this::holidays);
-        JPanel actions=new JPanel(new BorderLayout(16,10));
+        JPanel actions=new GlassPanel(new BorderLayout(16,10));
         JPanel planning=new JPanel(new FlowLayout(FlowLayout.LEFT,8,0));
         button(planning,I18n.text("Υπολογισμός βαρδιών"),this::generate);button(planning,I18n.text("Έλεγχος"),this::validateMonth);
         button(planning,I18n.text("Άλλος συνδυασμός"),()->generate(true));
@@ -71,7 +71,8 @@ public final class App extends JFrame {
         button(output,I18n.text("Αποθήκευση"),this::save);button(output,I18n.text("Εξαγωγή PDF"),this::pdf);
         JPanel adjustments=new JPanel(new FlowLayout(FlowLayout.LEFT,8,0));
         button(adjustments,I18n.text("Αποδέσμευση κελιού"),this::unlock);button(adjustments,I18n.text("Καθαρισμός χειροκίνητων"),this::clearManual);
-        actions.setBorder(BorderFactory.createEmptyBorder(10,0,8,0));actions.add(planning,BorderLayout.WEST);actions.add(output,BorderLayout.EAST);actions.add(adjustments,BorderLayout.SOUTH);
+        planning.setOpaque(false);output.setOpaque(false);adjustments.setOpaque(false);
+        actions.setBorder(BorderFactory.createEmptyBorder(14,12,14,12));actions.add(planning,BorderLayout.WEST);actions.add(output,BorderLayout.EAST);actions.add(adjustments,BorderLayout.SOUTH);
         JPanel titlePanel=new JPanel(new GridLayout(2,1,0,6));
         monthTitle.setFont(new Font("SansSerif",Font.BOLD,22));overview.setForeground(Theme.MUTED);titlePanel.add(monthTitle);titlePanel.add(overview);
         JPanel controls=new JPanel();controls.setLayout(new BoxLayout(controls,BoxLayout.Y_AXIS));

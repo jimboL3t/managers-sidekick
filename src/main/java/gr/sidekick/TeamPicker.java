@@ -39,7 +39,7 @@ public final class TeamPicker extends JPanel {
             JLabel badge=new JLabel(team.sandbox?I18n.text("ΔΟΚΙΜΑΣΤΙΚΟ ΑΝΤΙΓΡΑΦΟ"):I18n.text("ΟΜΑΔΑ ΕΡΓΑΣΙΑΣ"));badge.setForeground(Theme.ACCENT);row.add(badge,BorderLayout.EAST);return row;
         });
         add(new JScrollPane(list));
-        JPanel actions=new JPanel(new BorderLayout(12,14));
+        JPanel actions=new GlassPanel(new BorderLayout(12,14));actions.setBorder(BorderFactory.createEmptyBorder(18,18,18,18));
         JPanel primary=new JPanel(new FlowLayout(FlowLayout.LEFT,12,0));
         open=action(I18n.text("Άνοιγμα ημερολογίου"),()->withSelection(onOpen),ActionButton.Style.PRIMARY);primary.add(open);
         annual=action(I18n.text("Ετήσια εικόνα"),()->withSelection(onAnnual),ActionButton.Style.EXPORT);primary.add(annual);
@@ -47,7 +47,7 @@ public final class TeamPicker extends JPanel {
         management.add(action(I18n.text("Νέα ομάδα"),create,ActionButton.Style.STANDARD));
         copy=action(I18n.text("Αντίγραφο για δοκιμές"),()->withSelection(onCopy),ActionButton.Style.STANDARD);management.add(copy);
         delete=action(I18n.text("Διαγραφή ομάδας"),()->withSelection(onDelete),ActionButton.Style.DANGER);management.add(delete);
-        actions.add(primary,BorderLayout.NORTH);actions.add(management,BorderLayout.SOUTH);add(actions,BorderLayout.SOUTH);
+        primary.setOpaque(false);management.setOpaque(false);actions.add(primary,BorderLayout.NORTH);actions.add(management,BorderLayout.SOUTH);add(actions,BorderLayout.SOUTH);
         list.addListSelectionListener(e->updateButtons());
         list.addMouseListener(new MouseAdapter(){@Override public void mouseClicked(MouseEvent e){int index=list.locationToIndex(e.getPoint());if(e.getClickCount()==2&&index>=0&&list.getCellBounds(index,index).contains(e.getPoint()))withSelection(onOpen);}});
         list.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"open");list.getActionMap().put("open",new AbstractAction(){public void actionPerformed(ActionEvent e){withSelection(onOpen);}});
