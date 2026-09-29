@@ -24,11 +24,11 @@ public final class ScheduleTableModel extends AbstractTableModel {
     @Override public int getRowCount(){return team==null?0:team.employees.size();}
     @Override public int getColumnCount(){return month.lengthOfMonth()+1;}
     @Override public String getColumnName(int column){
-        return column==0?"Εργαζόμενος · Ρεπό · Βάρδιες":month.atDay(column).format(DateTimeFormatter.ofPattern("dd EEE",Locale.forLanguageTag("el")));
+        return column==0?I18n.text("Εργαζόμενος · Ρεπό · Βάρδιες"):month.atDay(column).format(DateTimeFormatter.ofPattern("dd EEE",I18n.locale()));
     }
     @Override public Object getValueAt(int row,int column){
         Employee e=team.employees.get(row);
-        if(column==0)return e.name+"   ·   "+CalendarRules.count(team,e,month,OFF)+"/"+CalendarRules.offTarget(team,month)+" Ρ · "+Scheduler.workCount(team,e,month)+"/"+Scheduler.workTarget(team,e,month)+" Β";
+        if(column==0)return e.name+"   ·   "+CalendarRules.count(team,e,month,OFF)+"/"+CalendarRules.offTarget(team,month)+I18n.text(" Ρ · ")+Scheduler.workCount(team,e,month)+"/"+Scheduler.workTarget(team,e,month)+I18n.text(" Β");
         Cell cell=team.cell(e.id,month.atDay(column));
         return cell==null?"—":(cell.locked?"★ ":"")+label(data,team,cell.value);
     }

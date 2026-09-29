@@ -1,10 +1,10 @@
-# Διανομή και δοκιμή σε Windows / Linux — 0.4.0
+# Διανομή και δοκιμή σε Windows / Linux — 0.8.0
 
 ## Τι στέλνουμε
 
-Στείλτε το `dist/managers-sidekick-0.4.0-test.zip` και προαιρετικά το διπλανό `.sha256`. Το ίδιο ZIP χρησιμοποιείται σε Windows και Linux. Περιλαμβάνει εκτελέσιμο JAR με τις βιβλιοθήκες του, scripts εκκίνησης, εγχειρίδια και άδειες βιβλιοθηκών. Δεν περιλαμβάνει Java, προσωπικά δεδομένα, Maven cache, Git ή ρυθμίσεις IDE.
+Στείλτε το `dist/managers-sidekick-0.8.0-test.zip` και προαιρετικά το διπλανό `.sha256`. Το ίδιο ZIP χρησιμοποιείται σε Windows και Linux. Περιλαμβάνει εκτελέσιμο JAR με τις βιβλιοθήκες του, scripts εκκίνησης, εγχειρίδια και άδειες βιβλιοθηκών. Δεν περιλαμβάνει Java, προσωπικά δεδομένα, Maven cache, Git ή ρυθμίσεις IDE.
 
-Αυτό είναι φορητό πακέτο δοκιμής που απαιτεί εγκατεστημένη Java, όχι installer `.exe`/`.deb` με ενσωματωμένο runtime. Η έκδοση εφαρμογής παραμένει 0.4.0.
+Αυτό είναι φορητό πακέτο δοκιμής που απαιτεί εγκατεστημένη Java, όχι installer `.exe`/`.deb` με ενσωματωμένο runtime. Η έκδοση εφαρμογής παραμένει 0.8.0.
 
 ## Απαιτήσεις ανά λειτουργικό
 
@@ -95,18 +95,18 @@ start-windows.cmd
 python3 scripts/package_release.py
 ```
 
-Το script εκτελεί `mvn verify`, ελέγχει το executable JAR και τις βασικές ενσωματωμένες βιβλιοθήκες, δημιουργεί το ZIP και ένα SHA-256 αρχείο στο `dist/`. Χρησιμοποιεί ρητή λίστα αρχείων ώστε να αποκλείονται τα πραγματικά δεδομένα. Αν αλλάξουν οι εκδόσεις runtime dependencies, ενημερώστε και τη λίστα άδειών τους στο script.
+Το script εκτελεί `mvn clean verify`, ελέγχει το executable JAR και τις βασικές ενσωματωμένες βιβλιοθήκες, δημιουργεί το ZIP και ένα SHA-256 αρχείο στο `dist/`. Χρησιμοποιεί ρητή λίστα αρχείων ώστε να αποκλείονται τα πραγματικά δεδομένα. Αν αλλάξουν οι εκδόσεις runtime dependencies, ενημερώστε και τη λίστα άδειών τους στο script.
 
 Έλεγχος checksum μετά τη μεταφορά:
 
 ```sh
 # Linux, στον φάκελο που περιέχει ZIP και .sha256
-sha256sum -c managers-sidekick-0.4.0-test.zip.sha256
+sha256sum -c managers-sidekick-0.8.0-test.zip.sha256
 ```
 
 ```powershell
 # Windows PowerShell: συγκρίνετε το Hash με το περιεχόμενο του .sha256
-Get-FileHash .\managers-sidekick-0.4.0-test.zip -Algorithm SHA256
+Get-FileHash .\managers-sidekick-0.8.0-test.zip -Algorithm SHA256
 ```
 
 Το εσωτερικό `SHA256SUMS.txt` περιέχει hashes των περιεχομένων. Τα hashes ελέγχουν ακεραιότητα μεταφοράς, δεν αποτελούν ψηφιακή υπογραφή.

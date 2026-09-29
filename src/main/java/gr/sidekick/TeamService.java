@@ -10,18 +10,19 @@ public final class TeamService {
 
     public static Team create(Data data,String name) {
         Team team=new Team(requireName(name));
-        team.leaveTypes.putAll(new Data().leaves);
+        Data defaults=new Data();team.leaveTypes.putAll(defaults.leaves);team.builtInLeaves.putAll(defaults.builtInLeaves);
         team.allowedLeaves.addAll(team.leaveTypes.keySet());
         data.teams.add(team);
         return team;
     }
 
     public static Team duplicate(Data data,Team source,String name) {
-        if(!data.teams.contains(source))throw new IllegalArgumentException("Η ομάδα δεν υπάρχει.");
+        if(!data.teams.contains(source))throw new IllegalArgumentException(I18n.text("Η ομάδα δεν υπάρχει."));
         Gson gson=new Gson();
         Team copy=gson.fromJson(gson.toJson(source),Team.class);
         copy.id=id();copy.name=requireName(name);copy.sandbox=true;
         copy.leaveTypes=new LinkedHashMap<>(leaves(data,source));
+        if(source.leaveTypes==null||source.leaveTypes.isEmpty())copy.builtInLeaves=new LinkedHashMap<>(data.builtInLeaves);
         Map<String,String> posts=new HashMap<>(),employees=new HashMap<>();
         for(Post p:copy.posts){String old=p.id;p.id=id();posts.put(old,p.id);}
         for(Employee e:copy.employees){
@@ -47,7 +48,7 @@ public final class TeamService {
     public static boolean delete(Data data,Team team){return data.teams.remove(team);}
 
     private static String requireName(String name){
-        if(name==null||name.isBlank())throw new IllegalArgumentException("Συμπληρώστε όνομα ομάδας.");
+        if(name==null||name.isBlank())throw new IllegalArgumentException(I18n.text("Συμπληρώστε όνομα ομάδας."));
         return name.strip();
     }
 }

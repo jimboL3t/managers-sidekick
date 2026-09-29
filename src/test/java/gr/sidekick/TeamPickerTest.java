@@ -16,9 +16,10 @@ class TeamPickerTest {
             try{
                 Theme.install();Data data=new Data();Team a=TeamService.create(data,"Ομάδα Α · Υποδοχή");Team b=TeamService.create(data,"Ομάδα Β · Υποστήριξη");Team copy=TeamService.duplicate(data,b,"Ομάδα Β · Δοκιμή");
                 AtomicReference<Team> opened=new AtomicReference<>();
-                TeamPicker picker=new TeamPicker(()->{},opened::set,t->{},t->{});
+                AtomicReference<Team> annual=new AtomicReference<>();
+                TeamPicker picker=new TeamPicker(()->{},opened::set,t->{},t->{},annual::set);
                 picker.refresh(data,null);assertNull(opened.get());assertFalse(find(picker,"Άνοιγμα ημερολογίου").isEnabled());
-                picker.refresh(data,b);assertNull(opened.get());find(picker,"Άνοιγμα ημερολογίου").doClick();assertSame(b,opened.get());
+                picker.refresh(data,b);assertNull(opened.get());find(picker,"Ετήσια εικόνα").doClick();assertSame(b,annual.get());assertNull(opened.get());find(picker,"Άνοιγμα ημερολογίου").doClick();assertSame(b,opened.get());
                 picker.refresh(data,copy);picker.setSize(1200,650);layout(picker);
                 BufferedImage home=render(picker);
                 ImageIO.write(home,"png",Path.of("target","team-picker-preview.png").toFile());

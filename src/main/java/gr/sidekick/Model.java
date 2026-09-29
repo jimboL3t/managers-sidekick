@@ -8,16 +8,19 @@ public final class Model {
     public static String id() { return UUID.randomUUID().toString(); }
     public static class Data {
         public int version = 1;
+        public String language = "el";
+        public Map<String,String> builtInLeaves = new LinkedHashMap<>();
         public List<Team> teams = new ArrayList<>();
         public Map<String,String> leaves = new LinkedHashMap<>();
         public Data() {
-            leaves.put(OFF,"Ρεπό");
-            for (String name : List.of("Κανονική άδεια","Άδεια ιατρού","Άδεια ασθενείας","Γονική άδεια","Φοιτητική άδεια","Άνευ αποδοχών")) leaves.put(id(),name);
+            leaves.put(OFF,"Ρεπό");builtInLeaves.put(OFF,"Ρεπό");
+            for (String name : List.of("Κανονική άδεια","Άδεια ιατρού","Άδεια ασθενείας","Γονική άδεια","Φοιτητική άδεια","Άνευ αποδοχών")) {String key=id();leaves.put(key,name);builtInLeaves.put(key,name);}
         }
     }
     public static class Team {
         public String id = id(), name;
         public boolean sandbox;
+        public Map<String,String> builtInLeaves = new LinkedHashMap<>();
         public Map<String,String> leaveTypes = new LinkedHashMap<>();
         public List<Post> posts = new ArrayList<>();
         public List<Employee> employees = new ArrayList<>();
@@ -37,8 +40,10 @@ public final class Model {
     public static class Post {
         public String id = id(), name, start, end;
         public int[] demand = {1,1,1,1,1,1,1};
+        public boolean[] operatingDays = {true,true,true,true,true,true,true};
+        public boolean operates(LocalDate day) { return operatingDays==null || operatingDays[day.getDayOfWeek().getValue()-1]; }
         public Post(String name,String start,String end) { this.name=name;this.start=start;this.end=end; }
-        public int required(LocalDate day) { return Math.max(1,demand[day.getDayOfWeek().getValue()-1]); }
+        public int required(LocalDate day) { return operates(day)?Math.max(1,demand[day.getDayOfWeek().getValue()-1]):0; }
         public LocalDateTime startAt(LocalDate d) { return d.atTime(LocalTime.parse(start)); }
         public LocalDateTime endAt(LocalDate d) {
             LocalTime a=LocalTime.parse(start), b=LocalTime.parse(end);
@@ -65,6 +70,9 @@ public final class Model {
     }
     public static String label(Data data,Team team,String value) {
         if (value==null) return "—";
-        Post p=team.post(value);return p==null?leaves(data,team).getOrDefault(value,"Άγνωστο"):p.name;
+        Post p=team.post(value);if(p!=null)return p.name;
+        String label=leaves(data,team).get(value);if(label==null)return I18n.text("Άγνωστο");
+        Map<String,String> builtins=team.leaveTypes==null||team.leaveTypes.isEmpty()?data.builtInLeaves:team.builtInLeaves;
+        return (OFF.equals(value)&&"Ρεπό".equals(label))||(builtins!=null&&label.equals(builtins.get(value)))?I18n.text(label):label;
     }
 }

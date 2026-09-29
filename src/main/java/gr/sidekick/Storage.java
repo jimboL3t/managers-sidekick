@@ -11,11 +11,27 @@ public final class Storage {
     public Model.Data load() throws IOException {
         if (!Files.exists(file)) return new Model.Data();
         try (Reader r=Files.newBufferedReader(file)) {
-            Model.Data data=gson.fromJson(r,Model.Data.class);
-            if(data==null || data.version!=1 || data.teams==null || data.leaves==null) throw new IOException("Μη έγκυρο αρχείο δεδομένων ή έκδοση.");
-            for(Model.Team team:data.teams) if(team.leaveTypes==null||team.leaveTypes.isEmpty()) team.leaveTypes=new java.util.LinkedHashMap<>(data.leaves);
+            JsonElement tree=JsonParser.parseReader(r);
+            if(!tree.isJsonObject())throw new IOException(I18n.text("Μη έγκυρο αρχείο δεδομένων ή έκδοση."));
+            JsonObject source=tree.getAsJsonObject();
+            Model.Data data=gson.fromJson(source,Model.Data.class);
+            if(data==null || data.version!=1 || data.teams==null || data.leaves==null) throw new IOException(I18n.text("Μη έγκυρο αρχείο δεδομένων ή έκδοση."));
+            if(data.language==null)data.language="el";
+            // Legacy files have no built-in type IDs. Recognize the original default
+            // names once, then persist the mapping; new custom types stay untouched.
+            if(!source.has("builtInLeaves"))data.builtInLeaves=legacyBuiltins(data.leaves);
+            for(int i=0;i<data.teams.size();i++){
+                Model.Team team=data.teams.get(i);
+                if(team.leaveTypes==null||team.leaveTypes.isEmpty())team.leaveTypes=new java.util.LinkedHashMap<>(data.leaves);
+                if(!source.getAsJsonArray("teams").get(i).getAsJsonObject().has("builtInLeaves"))team.builtInLeaves=legacyBuiltins(team.leaveTypes);
+            }
             return data;
-        } catch(JsonParseException e) { throw new IOException("Δεν διαβάζονται τα δεδομένα. Διατηρήστε το αρχείο και το .bak.",e); }
+        } catch(JsonParseException e) { throw new IOException(I18n.text("Δεν διαβάζονται τα δεδομένα. Διατηρήστε το αρχείο και το .bak."),e); }
+    }
+    private java.util.Map<String,String> legacyBuiltins(java.util.Map<String,String> leaves){
+        java.util.Map<String,String> result=new java.util.LinkedHashMap<>();
+        for(String name:new Model.Data().leaves.values())leaves.entrySet().stream().filter(e->name.equals(e.getValue())).findFirst().ifPresent(e->result.put(e.getKey(),e.getValue()));
+        return result;
     }
     public void save(Model.Data data) throws IOException {
         Files.createDirectories(file.toAbsolutePath().getParent());

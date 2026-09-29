@@ -54,3 +54,15 @@
 ## Ροή 0.4.0
 
 Το `Scheduler.clearManual` αφαιρεί μόνο κλειδωμένα κελιά της επιλεγμένης ομάδας/μήνα. Η επεξεργασία dropdown συνεχίζει να αποθηκεύει χωρίς αυτόματο υπολογισμό. Το κουμπί Υπολογισμός διατηρεί όλα τα κλειδωμένα κελιά, ανεξάρτητα αν είναι πόστο, ρεπό ή άδεια. Οι δεξιότητες απαιτούν ρητή επιλογή και δεν συμπληρώνονται από χειροκίνητες εξαιρέσεις.
+
+## Ετήσια εικόνα και UI 0.5.0
+
+Το `YearSummary` συγκεντρώνει αναθέσεις των ημερομηνιών του επιλεγμένου έτους με read-only `Team.cell`, χωρίς δημιουργία μη υπαρχόντων μηνών. Το `YearSummaryPanel` παρέχει επιλογή έτους, τέσσερα συγκεντρωτικά στοιχεία και αναλυτικό πίνακα ανά εργαζόμενο με σύνολα. Το `ActionButton` ζωγραφίζει στρογγυλεμένο φόντο με καταστάσεις hover/pressed/disabled και εστίασης, διατηρώντας τη συμπεριφορά και προσβασιμότητα του JButton. Δεν προστέθηκε εξάρτηση.
+
+## Branding και PDF 0.6.0
+
+Το `Logo` χρησιμοποιεί τα ίδια διανυσματικά μονοπάτια με το `brand/logo.svg`: Java2D για Swing/window icons και απευθείας PDFBox paths για το PDF, χωρίς bitmap στο εξαγόμενο έγγραφο. Δεν προστέθηκαν βιβλιοθήκες. Ο `PdfExporter` διαθέτει κεφαλίδα 32pt με δύο γραμμές, διαφορετικά ύψη γραμμών προγράμματος/συνόλων, έως 10 εργαζομένους ανά σελίδα και έως 10 κατηγορίες ανά πίνακα συνόλων. Η τελευταία στήλη μετρά όλα τα μη κενά κελιά του μήνα για τον συγκεκριμένο εργαζόμενο, ανεξάρτητα από τη σελίδα κατηγοριών. Άγνωστες κατηγορίες από παλιά δεδομένα συμπεριλαμβάνονται ώστε να μη χάνονται από το άθροισμα.
+
+## Localization 0.7.0
+
+`I18n` provides Greek-default UI text and English translations from `i18n/en.json`. `Data.language` persists the selection; the home-screen selector rebuilds the window with the selected locale. User-entered strings are never passed through translation. `builtInLeaves` records default leave IDs and their original labels, allowing localized presentation without rewriting saved values. Legacy files infer these IDs once from matching original default names; an old custom type with exactly a default name may therefore be recognized as built-in. New custom types are unambiguous. PDF codes use separate duty/leave counters and a fixed rest symbol per language.

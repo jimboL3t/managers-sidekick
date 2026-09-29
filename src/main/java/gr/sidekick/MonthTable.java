@@ -36,7 +36,7 @@ public final class MonthTable extends JTable {
                 boolean missing=uncovered.get().contains(col);
                 setForeground(missing?Theme.RED:Theme.TEXT);setFont(getFont().deriveFont(Font.BOLD));
                 setBorder(BorderFactory.createMatteBorder(0,0,missing?3:1,1,missing?Theme.RED:new Color(0x444654)));
-                setToolTipText(col==0?"Εργαζόμενος · ρεπό / στόχος":(missing?"Ακάλυπτο πόστο · ":"")+(team.get()!=null&&CalendarRules.holiday(team.get(),month.get().atDay(col))?"Αργία":""));
+                setToolTipText(col==0?I18n.text("Εργαζόμενος · ρεπό / στόχος"):(missing?I18n.text("Ακάλυπτο πόστο · "):"")+(team.get()!=null&&CalendarRules.holiday(team.get(),month.get().atDay(col))?I18n.text("Αργία"):""));
                 return this;
             }
         });

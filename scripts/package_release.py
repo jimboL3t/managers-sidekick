@@ -18,7 +18,7 @@ def main():
     maven = shutil.which("mvn.cmd" if os.name == "nt" else "mvn")
     if not maven:
         raise SystemExit("Maven is required only on the build computer.")
-    subprocess.run([maven, "verify", "-q"], cwd=ROOT, check=True)
+    subprocess.run([maven, "clean", "verify", "-q"], cwd=ROOT, check=True)
     jar = ROOT / "target" / f"managers-sidekick-{version}.jar"
     with zipfile.ZipFile(jar) as executable:
         manifest = executable.read("META-INF/MANIFEST.MF")
@@ -31,6 +31,7 @@ def main():
     output = ROOT / "dist" / f"{prefix}-test.zip"
     output.parent.mkdir(exist_ok=True)
     files = {"managers-sidekick.jar": jar.read_bytes(), "START-HERE.md": (ROOT / "packaging/START-HERE.md").read_bytes()}
+    files["brand/logo.svg"] = (ROOT / "src/main/resources/brand/logo.svg").read_bytes()
     for path in sorted((ROOT / "docs").glob("*.md")):
         files[f"docs/{path.name}"] = path.read_bytes()
     files["start-linux.sh"] = (ROOT / "packaging/start-linux.sh").read_bytes()

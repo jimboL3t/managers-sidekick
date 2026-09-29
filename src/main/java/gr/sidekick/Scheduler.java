@@ -8,7 +8,7 @@ import static gr.sidekick.Model.*;
 public final class Scheduler {
     private boolean work(Team t,Employee e,LocalDate d) { Cell c=t.cell(e.id,d);return c!=null&&t.post(c.value)!=null; }
     private boolean safe(Team t,Employee e,LocalDate d,Post p) {
-        if(!e.skills.contains(p.id)) return false;
+        if(!p.operates(d)||!e.skills.contains(p.id)) return false;
         int run=1;
         for(LocalDate x=d.minusDays(1);work(t,e,x);x=x.minusDays(1)) run++;
         for(LocalDate x=d.plusDays(1);work(t,e,x);x=x.plusDays(1)) run++;
@@ -122,29 +122,30 @@ public final class Scheduler {
             LocalDate day=ym.atDay(d);Cell c=t.cell(e.id,day);
             if(c==null) continue;
             Post p=t.post(c.value);
-            if(p!=null&&!safe(t,e,day,p))issues.add(day+" · "+e.name+": δεξιότητα / συνεχόμενες ημέρες / ανάπαυση");
-            if(p==null&&(!leaves(data,t).containsKey(c.value)||!t.allowedLeaves.contains(c.value)))issues.add(day+" · "+e.name+": μη επιτρεπόμενη άδεια");
+            if(p!=null&&!p.operates(day))issues.add(day+" · "+e.name+" · "+p.name+I18n.text(": ανάθεση εκτός ημερών λειτουργίας"));
+            if(p!=null&&p.operates(day)&&!safe(t,e,day,p))issues.add(day+" · "+e.name+I18n.text(": δεξιότητα / συνεχόμενες ημέρες / ανάπαυση"));
+            if(p==null&&(!leaves(data,t).containsKey(c.value)||!t.allowedLeaves.contains(c.value)))issues.add(day+" · "+e.name+I18n.text(": μη επιτρεπόμενη άδεια"));
         }
         for(Employee e:t.employees) {
-            if(t.posts.stream().noneMatch(p->e.skills.contains(p.id)))issues.add(e.name+": δεν έχουν επιλεγεί επιτρεπόμενα πόστα. Ορίστε τα από «Δεξιότητες».");
+            if(t.posts.stream().noneMatch(p->e.skills.contains(p.id)))issues.add(e.name+I18n.text(": δεν έχουν επιλεγεί επιτρεπόμενα πόστα. Ορίστε τα από «Δεξιότητες»."));
             int actual=CalendarRules.count(t,e,ym,OFF), target=CalendarRules.offTarget(t,ym);
             int empty=0;for(int d=1;d<=ym.lengthOfMonth();d++)if(t.cell(e.id,ym.atDay(d))==null)empty++;
             int worked=workCount(t,e,ym), planned=workTarget(t,e,ym);
-            if(worked!=planned)issues.add(e.name+": βάρδιες "+worked+" / "+planned);
-            if(empty>0)issues.add(e.name+": "+empty+" ημέρες χωρίς ανάθεση (δεν προσμετρώνται ως ρεπό)");
-            if(actual!=target)issues.add(e.name+": ρεπό "+actual+" / "+target+" του μήνα");
+            if(worked!=planned)issues.add(e.name+I18n.text(": βάρδιες ")+worked+" / "+planned);
+            if(empty>0)issues.add(e.name+": "+empty+I18n.text(" ημέρες χωρίς ανάθεση (δεν προσμετρώνται ως ρεπό)"));
+            if(actual!=target)issues.add(e.name+I18n.text(": ρεπό ")+actual+" / "+target+I18n.text(" του μήνα"));
         }
         for(int d=1;d<=ym.lengthOfMonth();d++)for(Post p:t.posts) {
             LocalDate day=ym.atDay(d);long n=t.employees.stream().filter(e->{Cell c=t.cell(e.id,day);return c!=null&&p.id.equals(c.value);}).count();
             int demand=p.required(day);
-            if(n<demand)issues.add(day+" · "+p.name+": κάλυψη "+n+" / "+demand);
+            if(n<demand)issues.add(day+" · "+p.name+I18n.text(": κάλυψη ")+n+" / "+demand);
         }
-        if(!t.months.containsKey(ym.minusMonths(1).toString()))issues.add("Προειδοποίηση: απουσιάζει ο προηγούμενος μήνας· δεν επαληθεύεται πλήρως το αρχικό όριο.");
-        if(!t.months.containsKey(ym.plusMonths(1).toString()))issues.add("Προειδοποίηση: απουσιάζει ο επόμενος μήνας· απαιτείται έλεγχος όταν δημιουργηθεί.");
+        if(!t.months.containsKey(ym.minusMonths(1).toString()))issues.add(I18n.text("Προειδοποίηση: απουσιάζει ο προηγούμενος μήνας· δεν επαληθεύεται πλήρως το αρχικό όριο."));
+        if(!t.months.containsKey(ym.plusMonths(1).toString()))issues.add(I18n.text("Προειδοποίηση: απουσιάζει ο επόμενος μήνας· απαιτείται έλεγχος όταν δημιουργηθεί."));
         for(Employee e:t.employees) {
             boolean missing=false;
             for(int i=1;i<=7;i++) if(t.cell(e.id,ym.atDay(1).minusDays(i))==null || t.cell(e.id,ym.atEndOfMonth().plusDays(i))==null) missing=true;
-            if(missing) issues.add("Προειδοποίηση: "+e.name+": ελλιπές ιστορικό στις γειτονικές ημέρες του μήνα.");
+            if(missing) issues.add(I18n.text("Προειδοποίηση: ")+e.name+I18n.text(": ελλιπές ιστορικό στις γειτονικές ημέρες του μήνα."));
         }
         return issues;
     }
