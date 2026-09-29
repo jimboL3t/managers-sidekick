@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-only
+// Copyright (C) 2026 Dimitrios Diamantis
+// See LICENSE and COPYING.md for permissions and warranty disclaimer.
 package gr.sidekick;
 
 import javax.swing.*;
@@ -26,6 +29,11 @@ public final class TeamPicker extends JPanel {
         language.setToolTipText("Γλώσσα / Language");language.getAccessibleContext().setAccessibleName("Γλώσσα / Language");
         language.addActionListener(e->onLanguage.accept(language.getSelectedIndex()==1?"en":"el"));
         JPanel languages=new JPanel(new FlowLayout(FlowLayout.RIGHT,0,0));languages.add(language);
+        JButton license=new ActionButton(I18n.text("Άδεια χρήσης"),ActionButton.Style.QUIET);
+        license.addActionListener(e->{try(var in=TeamPicker.class.getResourceAsStream("/META-INF/sidekick/LICENSE")){
+            String text="Manager’s Sidekick\nCopyright (C) 2026 Dimitrios Diamantis\nGPL-3.0-only — WITHOUT ANY WARRANTY\n\n"+new String(java.util.Objects.requireNonNull(in).readAllBytes(),java.nio.charset.StandardCharsets.UTF_8);
+            JTextArea area=new JTextArea(text,24,80);area.setEditable(false);area.setCaretPosition(0);JOptionPane.showMessageDialog(this,new JScrollPane(area),I18n.text("Άδεια χρήσης"),JOptionPane.PLAIN_MESSAGE);
+        }catch(Exception ex){JOptionPane.showMessageDialog(this,ex.getMessage(),I18n.text("Σφάλμα"),JOptionPane.ERROR_MESSAGE);}});languages.add(license);
         JPanel top=new JPanel(new BorderLayout(16,0));top.add(title,BorderLayout.CENTER);top.add(languages,BorderLayout.EAST);add(top,BorderLayout.NORTH);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);list.setFixedCellHeight(88);
         list.setCellRenderer((items,team,index,selected,focus)->{

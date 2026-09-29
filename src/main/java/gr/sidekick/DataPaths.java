@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-only
+// Copyright (C) 2026 Dimitrios Diamantis
+// See LICENSE and COPYING.md for permissions and warranty disclaimer.
 package gr.sidekick;
 import java.nio.file.*;
 /** Portable launches retain their old location; installed launches use user-owned storage. */

@@ -48,3 +48,7 @@ Runtime dependencies: Gson 2.14.0 and PDFBox 3.0.7 (Apache-2.0). Tests use JUnit
 1.0.0 adds glass-style controls and backup documentation, incorporating day locks and alternative calculations developed on `feature/day-locks`. Earlier releases introduced weekday duty operation (0.8), language selection (0.7), vector branding and improved PDF totals (0.6), annual summaries (0.5), monthly work targets (0.4), independent teams/copies (0.3) and holiday/rest targets (0.2). `v0.8.0` remains available as a source baseline. Git does not back up personal schedules.
 
 Review observations before publishing a real schedule. Default rules implement project requirements and do not constitute legal-compliance certification.
+
+## License
+
+Copyright (C) 2026 Dimitrios Diamantis. **GPL-3.0-only**. [LICENSE](LICENSE) · [Copyright](COPYING.md) · [Distribution obligations](docs/LICENSING.en.md).

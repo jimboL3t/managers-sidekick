@@ -106,3 +106,7 @@ java -Dsidekick.font=/absolute/path/GreekFont.ttf -jar target/managers-sidekick-
 Η 1.0.0 διαθέτει ανανεωμένα κουμπιά και επιφάνειες με γυάλινη όψη. [Backup και επαναφορά δεδομένων](docs/BACKUP.md).
 
 [Προτάσεις βελτίωσης και σύγκριση αγοράς](docs/IMPROVEMENTS.md). Για μεταφορά στέλνετε ολόκληρο το ZIP από το `dist`, όχι μόνο τον φάκελο `packaging`.
+
+## Άδεια
+
+Copyright (C) 2026 Dimitrios Diamantis. **GPL-3.0-only**. [LICENSE](LICENSE) · [Copyright](COPYING.md) · [Όροι διανομής](docs/LICENSING.md).

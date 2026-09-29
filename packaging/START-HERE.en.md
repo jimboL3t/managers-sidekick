@@ -15,3 +15,5 @@
 The package does not include Java or employee data. With the launchers, data is stored in `data/sidekick.json` beside the JAR. To move existing schedules: Save, close the app, back up the entire `data` folder, then copy it beside the destination JAR. Do not overwrite destination data without a backup. Copies on different computers do not synchronize.
 
 [Native installer and its data location](docs/RELEASE-1.1.en.md).
+
+GPL-3.0-only · Copyright (C) 2026 Dimitrios Diamantis. [LICENSE](LICENSE) · [Licensing](docs/LICENSING.en.md).

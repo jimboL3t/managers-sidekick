@@ -18,3 +18,5 @@
 Πριν από αναβάθμιση: Αποθήκευση, κλείσιμο εφαρμογής και αντίγραφο όλου του φακέλου `data`. [Αναλυτικές οδηγίες backup και επαναφοράς](docs/BACKUP.md).
 
 [Native installer και νέα θέση δεδομένων](docs/RELEASE-1.1.md).
+
+GPL-3.0-only · Copyright (C) 2026 Dimitrios Diamantis. [LICENSE](LICENSE) · [Άδεια και διανομή](docs/LICENSING.md).

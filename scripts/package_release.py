@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-only
+# Copyright (C) 2026 Dimitrios Diamantis
 """Build a desktop testing ZIP from an explicit allowlist; never include user data."""
 import hashlib
 import os
@@ -31,6 +33,8 @@ def main():
     output = ROOT / "dist" / f"{prefix}-test.zip"
     output.parent.mkdir(exist_ok=True)
     files = {"managers-sidekick.jar": jar.read_bytes(), "START-HERE.md": (ROOT / "packaging/START-HERE.md").read_bytes()}
+    files["LICENSE"] = (ROOT / "LICENSE").read_bytes()
+    files["COPYING.md"] = (ROOT / "COPYING.md").read_bytes()
     files["START-HERE.en.md"] = (ROOT / "packaging/START-HERE.en.md").read_bytes()
     files["brand/logo.svg"] = (ROOT / "src/main/resources/brand/logo.svg").read_bytes()
     for path in sorted((ROOT / "docs").glob("*.md")):
@@ -48,7 +52,7 @@ def main():
     ]
     notices = ["# Included runtime libraries", "", "All libraries below use Apache License 2.0.",
                "Original LICENSE/NOTICE files supplied in their jars are retained here.",
-               "The application is supplied for testing; no source license is assigned by this package.", ""]
+               "Manager’s Sidekick: Copyright (C) 2026 Dimitrios Diamantis; GPL-3.0-only. See LICENSE and COPYING.md.", ""]
     for relative in runtime:
         source = ROOT / ".maven-repository" / relative
         notices.append(f"- {source.stem}")
@@ -71,6 +75,16 @@ def main():
         assert not any("/data/" in name or "/.git/" in name for name in archive.namelist())
     checksum = hashlib.sha256(output.read_bytes()).hexdigest()
     output.with_suffix(output.suffix + ".sha256").write_text(f"{checksum}  {output.name}\n")
+    source_zip = ROOT / "dist" / f"{prefix}-source.zip"
+    source_files = [ROOT / name for name in ("LICENSE", "COPYING.md", "README.md", "README.en.md", "pom.xml", ".gitignore", ".mvn/maven.config")]
+    for directory in ("src", "docs", "scripts", "packaging"):
+        source_files.extend(p for p in (ROOT / directory).rglob("*") if p.is_file() and "__pycache__" not in p.parts and p.suffix != ".pyc")
+    with zipfile.ZipFile(source_zip, "w", zipfile.ZIP_DEFLATED) as archive:
+        for path in sorted(source_files):
+            archive.write(path, f"{prefix}-source/{path.relative_to(ROOT).as_posix()}")
+    digest = hashlib.sha256(source_zip.read_bytes()).hexdigest()
+    source_zip.with_suffix(source_zip.suffix + ".sha256").write_text(f"{digest}  {source_zip.name}\n")
+    print(f"Application source: {source_zip}")
     print(f"Created: {output}\nSHA-256: {checksum}")
 
 
