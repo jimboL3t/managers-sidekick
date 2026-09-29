@@ -1,10 +1,12 @@
-# Installation and distribution — 1.0.0
+# Installation and distribution — 1.1.0
+
+**New in 1.1.0:** [History, availability and native installation](RELEASE-1.1.en.md). Native packages use a different data location; read before migrating.
 
 [Ελληνικά](DISTRIBUTION.md) · [User guide](ADMIN_GUIDE.en.md) · [Backup](BACKUP.en.md)
 
 ## What to send
 
-Send **`dist/managers-sidekick-1.0.0-test.zip`**, optionally with its `.sha256` file. Extract the entire ZIP on the destination computer. **The repository's `packaging` folder alone is not runnable:** it contains launcher templates and instructions, not the application JAR.
+Send **`dist/managers-sidekick-1.1.0-test.zip`**, optionally with its `.sha256` file. Extract the entire ZIP on the destination computer. **The repository's `packaging` folder alone is not runnable:** it contains launcher templates and instructions, not the application JAR.
 
 The ZIP includes `managers-sidekick.jar` with runtime libraries, Windows/Linux launchers, Greek/English documentation, branding and dependency licenses. It excludes Java, employee data, source code, Git, IDE settings and Maven caches. This is a portable distribution requiring Java, not a native installer with a bundled runtime. The `-test` filename suffix is retained for compatibility with the packaging script.
 
@@ -68,13 +70,13 @@ This runs `mvn clean verify`, checks the executable JAR and dependencies, and cr
 Linux checksum verification:
 
 ```sh
-sha256sum -c managers-sidekick-1.0.0-test.zip.sha256
+sha256sum -c managers-sidekick-1.1.0-test.zip.sha256
 ```
 
 Windows PowerShell:
 
 ```powershell
-Get-FileHash .\managers-sidekick-1.0.0-test.zip -Algorithm SHA256
+Get-FileHash .\managers-sidekick-1.1.0-test.zip -Algorithm SHA256
 ```
 
 Compare with the supplied checksum. The internal `SHA256SUMS.txt` covers archive contents. Hashes check transfer integrity; they are not a digital signature or publisher authentication. Native installers and bundled Java are future work. Platform-specific desktop testing remains necessary.

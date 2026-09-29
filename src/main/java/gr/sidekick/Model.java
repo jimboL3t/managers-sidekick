@@ -20,6 +20,7 @@ public final class Model {
     public static class Team {
         public String id = id(), name;
         public boolean sandbox;
+        public List<Revision> history = new ArrayList<>();
         public Map<String,String> builtInLeaves = new LinkedHashMap<>();
         public Map<String,String> leaveTypes = new LinkedHashMap<>();
         public List<Post> posts = new ArrayList<>();
@@ -53,12 +54,18 @@ public final class Model {
     public static class Employee {
         public String id = id(), name;
         public Set<String> skills = new LinkedHashSet<>();
+        public boolean[] availableWeekdays = {true,true,true,true,true,true,true};
+        public Map<String,Boolean> availabilityOverrides = new TreeMap<>();
         public Employee(String name) { this.name=name; }
     }
     public static class Month {
         public Map<String,Cell> cells = new LinkedHashMap<>();
         public Set<Integer> holidays = new TreeSet<>();
         public Set<Integer> lockedDays = new TreeSet<>();
+    }
+    public static class Revision {
+        public String id=id(),created,month,note,snapshot;
+        public String toString(){return month+" · "+created+" · "+note;}
     }
     public static class Cell {
         public String value;

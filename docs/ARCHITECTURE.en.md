@@ -1,5 +1,7 @@
 # Architecture — 1.0.0
 
+**New in 1.1.0:** [History, availability and native installation](RELEASE-1.1.en.md). Native packages use a different data location; read before migrating.
+
 [Ελληνικά](ARCHITECTURE.md)
 
 ## Components
@@ -42,4 +44,4 @@ Annual summaries count assignments, not attendance or hours. Overnight shifts be
 
 ## Known limits and next steps
 
-One assignment per employee/date; no split shifts, date-specific coverage override, employment start/end dates, employee archival or transfers. No rule snapshots, audit trail, undo, authentication, encryption, cloud synchronization or inter-process file locking. Use one instance per data folder. Priorities include restore points, history snapshots, availability, fairness metrics, a solver evaluation, native installers and a bundled licensed font. See [improvement assessment](IMPROVEMENTS.en.md).
+One assignment per employee/date; no split shifts, date-specific coverage override, employment start/end dates, employee archival or transfers. Monthly snapshots are available through History; there is no per-edit audit trail, undo, authentication, encryption, cloud synchronization or inter-process file locking. Use one instance per data folder. History snapshots, whole-day availability and native packaging are available in 1.1. Further priorities include preview/undo, fairness metrics, a solver evaluation and a bundled licensed font. See [improvement assessment](IMPROVEMENTS.en.md).

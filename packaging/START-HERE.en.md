@@ -1,4 +1,4 @@
-# Manager’s Sidekick — 1.0.0
+# Manager’s Sidekick — 1.1.0
 
 [Ελληνικά](START-HERE.md)
 
@@ -11,3 +11,5 @@
 [Installation and troubleshooting](docs/DISTRIBUTION.en.md) · [Administrator guide](docs/ADMIN_GUIDE.en.md) · [Backup and restore](docs/BACKUP.en.md)
 
 The package does not include Java or employee data. With the launchers, data is stored in `data/sidekick.json` beside the JAR. To move existing schedules: Save, close the app, back up the entire `data` folder, then copy it beside the destination JAR. Do not overwrite destination data without a backup. Copies on different computers do not synchronize.
+
+[Native installer and its data location](docs/RELEASE-1.1.en.md).

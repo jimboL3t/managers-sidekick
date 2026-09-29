@@ -1,8 +1,8 @@
-# Validation — 1.0.0
+# Validation — 1.1.0
 
 [Ελληνικά](VALIDATION.md)
 
-Run `mvn clean verify` or `python3 scripts/package_release.py`. The current suite contains **37 tests**. Packaging builds the executable JAR, verifies its entry point and embedded libraries, and produces an allowlisted ZIP plus SHA-256 checksums. Personal data and IDE settings are excluded.
+Run `mvn clean verify` or `python3 scripts/package_release.py`. The current suite contains **42 tests**. Packaging builds the executable JAR, verifies its entry point and embedded libraries, and produces an allowlisted ZIP plus SHA-256 checksums. Personal data and IDE settings are excluded.
 
 Coverage includes scheduling/rest constraints, monthly work/rest targets, locked manual choices and reset, overnight and adjacent-month checks, leap months, holidays and coverage, storage compatibility, independent team copies, table editing, annual aggregation, dark controls, PDF layout/pagination/totals, language persistence and untranslated custom names, weekday duty operation, and whole-day locks across multiple random seeds.
 
@@ -22,3 +22,7 @@ On macOS, Windows and Linux with desktop Java 21+:
 8. Confirm missing fonts, older Java, missing JAR and unwritable folders produce actionable failures.
 
 Native cross-platform acceptance is still pending. The heuristic's success is not a proof of optimality, and its failure is not proof that no valid schedule exists. Project defaults are scheduling requirements, not certification of legal compliance.
+
+## 1.1 checks
+
+Five additional tests cover frozen snapshots, independent restoration with new IDs, availability overrides and overnight boundaries, preserved manual exceptions, legacy migration, and native/portable data paths. Native packaging was exercised on macOS Apple Silicon. Windows/Linux install and upgrade acceptance is still pending.

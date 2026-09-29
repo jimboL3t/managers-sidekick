@@ -8,7 +8,7 @@ import static gr.sidekick.Model.*;
 public final class Scheduler {
     private boolean work(Team t,Employee e,LocalDate d) { Cell c=t.cell(e.id,d);return c!=null&&t.post(c.value)!=null; }
     private boolean safe(Team t,Employee e,LocalDate d,Post p) {
-        if(!p.operates(d)||!e.skills.contains(p.id)) return false;
+        if(!p.operates(d)||!Availability.allows(e,p,d)||!e.skills.contains(p.id)) return false;
         int run=1;
         for(LocalDate x=d.minusDays(1);work(t,e,x);x=x.minusDays(1)) run++;
         for(LocalDate x=d.plusDays(1);work(t,e,x);x=x.plusDays(1)) run++;
@@ -126,6 +126,7 @@ public final class Scheduler {
             LocalDate day=ym.atDay(d);Cell c=t.cell(e.id,day);
             if(c==null) continue;
             Post p=t.post(c.value);
+            if(p!=null&&!Availability.allows(e,p,day))issues.add(day+" · "+e.name+I18n.text(": εργασία εκτός διαθεσιμότητας"));
             if(p!=null&&!p.operates(day))issues.add(day+" · "+e.name+" · "+p.name+I18n.text(": ανάθεση εκτός ημερών λειτουργίας"));
             if(p!=null&&p.operates(day)&&!safe(t,e,day,p))issues.add(day+" · "+e.name+I18n.text(": δεξιότητα / συνεχόμενες ημέρες / ανάπαυση"));
             if(p==null&&(!leaves(data,t).containsKey(c.value)||!t.allowedLeaves.contains(c.value)))issues.add(day+" · "+e.name+I18n.text(": μη επιτρεπόμενη άδεια"));

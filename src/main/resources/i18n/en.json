@@ -167,5 +167,16 @@
   " (εκτός ημερών λειτουργίας)": " (outside operating days)",
   "Άλλος συνδυασμός": "Another combination",
   "Λουκέτα ημερών": "Day locks",
-  "Ξεκλειδώστε πρώτα τις ημέρες από τις επικεφαλίδες.": "Unlock the days in the headers first."
+  "Ξεκλειδώστε πρώτα τις ημέρες από τις επικεφαλίδες.": "Unlock the days in the headers first.",
+  "Διαθεσιμότητα": "Availability",
+  "Ιστορικό": "History",
+  "Πριν τον υπολογισμό": "Before calculation",
+  "Στιγμιότυπο μήνα": "Month snapshot",
+  "Περιγραφή στιγμιοτύπου": "Snapshot description",
+  "Προβολή": "View",
+  "Επαναφορά ως νέα ομάδα": "Restore as new team",
+  "Εξαιρέσεις YYYY-MM-DD=0 (όχι) ή =1 (ναι), μία ανά γραμμή": "Exceptions YYYY-MM-DD=0 (unavailable) or =1 (available), one per line",
+  "Χρησιμοποιήστε YYYY-MM-DD=0 ή YYYY-MM-DD=1.": "Use YYYY-MM-DD=0 or YYYY-MM-DD=1.",
+  "Διπλή ημερομηνία: ": "Duplicate date: ",
+  ": εργασία εκτός διαθεσιμότητας": ": work outside availability"
 }

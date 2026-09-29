@@ -1,5 +1,7 @@
 # Data, backup and restore — 1.0.0
 
+**New in 1.1.0:** [History, availability and native installation](RELEASE-1.1.en.md). Native packages use a different data location; read before migrating.
+
 [Ελληνικά](BACKUP.md) · [Installation](DISTRIBUTION.en.md)
 
 ## Storage location

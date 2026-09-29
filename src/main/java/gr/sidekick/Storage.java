@@ -22,6 +22,9 @@ public final class Storage {
             if(!source.has("builtInLeaves"))data.builtInLeaves=legacyBuiltins(data.leaves);
             for(int i=0;i<data.teams.size();i++){
                 Model.Team team=data.teams.get(i);
+                if(team.employees==null)team.employees=new java.util.ArrayList<>();
+                if(team.history==null)team.history=new java.util.ArrayList<>();
+                for(Model.Employee employee:team.employees)if(employee.availabilityOverrides==null)employee.availabilityOverrides=new java.util.TreeMap<>();
                 if(team.leaveTypes==null||team.leaveTypes.isEmpty())team.leaveTypes=new java.util.LinkedHashMap<>(data.leaves);
                 if(!source.getAsJsonArray("teams").get(i).getAsJsonObject().has("builtInLeaves"))team.builtInLeaves=legacyBuiltins(team.leaveTypes);
             }
