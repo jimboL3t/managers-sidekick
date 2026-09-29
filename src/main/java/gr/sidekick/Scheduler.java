@@ -24,16 +24,20 @@ public final class Scheduler {
         return true;
     }
     public List<String> generate(Data data,Team t,YearMonth ym) {
+        return generate(data,t,ym,42L);
+    }
+    public List<String> generate(Data data,Team t,YearMonth ym,long seed) {
         Model.Month m=t.month(ym);Map<String,Cell> fixed=new LinkedHashMap<>();
-        m.cells.forEach((k,v)->{if(v.locked)fixed.put(k,v);});
+        m.cells.forEach((k,v)->{if(v.locked||m.lockedDays.contains(Integer.parseInt(k.substring(k.lastIndexOf(':')+1))))fixed.put(k,v);});
         Map<String,Cell> best=null;long bestScore=Long.MAX_VALUE;
-        Random random=new Random(42);
+        Random random=new Random(seed);
         for(int attempt=0;attempt<180;attempt++) {
             m.cells=new LinkedHashMap<>(fixed);
             List<LocalDate> days=new ArrayList<>();for(int d=1;d<=ym.lengthOfMonth();d++)days.add(ym.atDay(d));
             if(attempt%3==1) Collections.reverse(days); else if(attempt%3==2)Collections.shuffle(days,random);
             int gaps=0;
             for(LocalDate day:days) {
+                if(m.lockedDays.contains(day.getDayOfMonth()))continue;
                 List<Post> posts=new ArrayList<>(t.posts);
                 Collections.shuffle(posts,random);
                 posts.sort(Comparator.comparingLong(p->t.employees.stream().filter(e->e.skills.contains(p.id)).count()));
@@ -53,7 +57,7 @@ public final class Scheduler {
             // even when more staff are available than the minimum number of slots.
             List<Employee> employees=new ArrayList<>(t.employees);Collections.shuffle(employees,random);
             for(Employee e:employees) for(LocalDate day:days) {
-                if(t.cell(e.id,day)!=null||!withinMonthlyBudget(t,e,ym))continue;
+                if(m.lockedDays.contains(day.getDayOfMonth())||t.cell(e.id,day)!=null||!withinMonthlyBudget(t,e,ym))continue;
                 List<Post> eligible=new ArrayList<>();
                 for(Post p:t.posts)if(safe(t,e,day,p))eligible.add(p);
                 Collections.shuffle(eligible,random);
@@ -64,7 +68,7 @@ public final class Scheduler {
             for(Employee e:t.employees) {
                 int remaining=CalendarRules.offTarget(t,ym)-CalendarRules.count(t,e,ym,OFF);
                 List<Integer> empty=new ArrayList<>();
-                for(int d=1;d<=ym.lengthOfMonth();d++) if(t.cell(e.id,ym.atDay(d))==null) empty.add(d);
+                for(int d=1;d<=ym.lengthOfMonth();d++) if(!m.lockedDays.contains(d)&&t.cell(e.id,ym.atDay(d))==null) empty.add(d);
                 Collections.shuffle(empty,random);
                 while(remaining>0 && !empty.isEmpty()) {
                     empty.sort(Comparator.comparingInt(d->offCost(t,e,ym.atDay(d))));
@@ -94,7 +98,7 @@ public final class Scheduler {
     }
     public static void clearManual(Team t,YearMonth ym) {
         Model.Month month=t.months.get(ym.toString());
-        if(month!=null)month.cells.entrySet().removeIf(entry->entry.getValue().locked);
+        if(month!=null)month.cells.entrySet().removeIf(entry->entry.getValue().locked&&!month.lockedDays.contains(Integer.parseInt(entry.getKey().substring(entry.getKey().lastIndexOf(':')+1))));
     }
     private boolean withinMonthlyBudget(Team t,Employee e,YearMonth ym) {
         int working=0, leave=0;

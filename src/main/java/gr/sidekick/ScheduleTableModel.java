@@ -32,7 +32,7 @@ public final class ScheduleTableModel extends AbstractTableModel {
         Cell cell=team.cell(e.id,month.atDay(column));
         return cell==null?"—":(cell.locked?"★ ":"")+label(data,team,cell.value);
     }
-    @Override public boolean isCellEditable(int row,int column){return column>0&&editable.getAsBoolean();}
+    @Override public boolean isCellEditable(int row,int column){return column>0&&(team.months.get(month.toString())==null||!team.months.get(month.toString()).lockedDays.contains(column))&&editable.getAsBoolean();}
     @Override public void setValueAt(Object value,int row,int column){
         if(!(value instanceof Choice choice)||!isCellEditable(row,column))return;
         Employee employee=team.employees.get(row);

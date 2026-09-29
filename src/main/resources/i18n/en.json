@@ -164,5 +164,8 @@
   "Επιλεγμένη ημέρα: απαιτούμενα άτομα": "Selected day: required staff",
   "Χωρίς επιλογή: το πόστο δεν λειτουργεί": "Unchecked: duty does not operate",
   ": ανάθεση εκτός ημερών λειτουργίας": ": assignment outside operating days",
-  " (εκτός ημερών λειτουργίας)": " (outside operating days)"
+  " (εκτός ημερών λειτουργίας)": " (outside operating days)",
+  "Άλλος συνδυασμός": "Another combination",
+  "Λουκέτα ημερών": "Day locks",
+  "Ξεκλειδώστε πρώτα τις ημέρες από τις επικεφαλίδες.": "Unlock the days in the headers first."
 }

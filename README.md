@@ -1,6 +1,10 @@
-# Manager’s Sidekick — 0.8.0
+# Manager’s Sidekick — 0.9.0
 
 Εφαρμογή Java Swing στα ελληνικά για μηνιαίο προγραμματισμό ομάδων, ειδικότητες εργαζομένων, άδειες, κλειδωμένες επιλογές και εξαγωγή PDF Α4 landscape.
+
+## Δοκιμαστική 0.9.0 — Λουκέτα ημερών
+
+Στο branch `feature/day-locks`: ενεργοποιήστε **Λουκέτα ημερών** και πατήστε ημερομηνίες για κλείδωμα ολόκληρης στήλης. Το **Άλλος συνδυασμός** αναζητά εναλλακτικό πρόγραμμα κρατώντας αυτές τις ημέρες και τις χειροκίνητες επιλογές. Σταθερή βάση: `main`, tag `v0.8.0`. Οδηγίες επιστροφής στο εγχειρίδιο.
 
 ## Ημέρες λειτουργίας 0.8.0
 
@@ -50,7 +54,7 @@
 
 ## Πακέτο δοκιμής για άλλον υπολογιστή
 
-Στείλτε το `dist/managers-sidekick-0.8.0-test.zip`. Στον υπολογιστή δοκιμής αρκεί **Java 21+ με GUI**, χωρίς Maven ή IDE. Windows: `start-windows.cmd`. Linux: `sh start-linux.sh`. Το ZIP δεν περιέχει δεδομένα εργαζομένων ή Java runtime.
+Στείλτε το `dist/managers-sidekick-0.9.0-test.zip`. Στον υπολογιστή δοκιμής αρκεί **Java 21+ με GUI**, χωρίς Maven ή IDE. Windows: `start-windows.cmd`. Linux: `sh start-linux.sh`. Το ZIP δεν περιέχει δεδομένα εργαζομένων ή Java runtime.
 
 Δημιουργία πακέτου στον υπολογιστή ανάπτυξης: `python3 scripts/package_release.py`.
 
@@ -62,7 +66,7 @@
 
 ```sh
 mvn clean verify
-java -jar target/managers-sidekick-0.8.0.jar
+java -jar target/managers-sidekick-0.9.0.jar
 ```
 
 Εκτελέστε τις εντολές από αυτόν τον φάκελο. Το Maven κατεβάζει τις εξαρτήσεις μέσα στο `.maven-repository/`. Τα δεδομένα γράφονται στο `data/sidekick.json` και το προηγούμενο αντίγραφο στο `.bak`. Δεν απαιτείται λογαριασμός, server ή βάση δεδομένων. Χρησιμοποιείτε μία εκτέλεση της εφαρμογής κάθε φορά.
@@ -80,7 +84,7 @@ java -jar target/managers-sidekick-0.8.0.jar
 Οι βιβλιοθήκες εγκαθίστανται αυτόματα από το Maven. Το PDF χρησιμοποιεί εγκατεστημένη TrueType γραμματοσειρά με ελληνικά (Arial σε macOS/Windows, DejaVu Sans σε Linux). Εάν δεν υπάρχει:
 
 ```sh
-java -Dsidekick.font=/absolute/path/GreekFont.ttf -jar target/managers-sidekick-0.8.0.jar
+java -Dsidekick.font=/absolute/path/GreekFont.ttf -jar target/managers-sidekick-0.9.0.jar
 ```
 
 Δεν αντιγράφεται γραμματοσειρά στο repository. Για διανομή με ενσωματωμένη γραμματοσειρά προτείνεται αργότερα Noto Sans με την άδειά της. Για μεγαλύτερες ομάδες και εγγυημένη αναζήτηση λύσεων προτείνεται ξεχωριστή αξιολόγηση solver (π.χ. Timefold ή OR-Tools). Η πρώτη έκδοση χρησιμοποιεί δικό της περιορισμένο ευρετικό αλγόριθμο.

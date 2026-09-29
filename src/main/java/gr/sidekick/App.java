@@ -28,6 +28,7 @@ public final class App extends JFrame {
     private final JTextArea report=new JTextArea(6,100);
     private final JLabel status=new JLabel(" ");
     private boolean busy;
+    private final JCheckBox dayLocks=new JCheckBox();
     private final Scheduler scheduler=new Scheduler();
     public static void main(String[] args) { SwingUtilities.invokeLater(()->{try{Theme.install();new App().setVisible(true);}catch(Exception e){JOptionPane.showMessageDialog(null,e.getMessage(),I18n.text("Αδυναμία εκκίνησης"),JOptionPane.ERROR_MESSAGE);}}); }
     public App() throws Exception {this(new Storage(Path.of("data","sidekick.json")).load());}
@@ -56,6 +57,16 @@ public final class App extends JFrame {
         JPanel actions=new JPanel(new BorderLayout(16,10));
         JPanel planning=new JPanel(new FlowLayout(FlowLayout.LEFT,8,0));
         button(planning,I18n.text("Υπολογισμός βαρδιών"),this::generate);button(planning,I18n.text("Έλεγχος"),this::validateMonth);
+        button(planning,I18n.text("Άλλος συνδυασμός"),()->generate(true));
+        dayLocks.setText(I18n.text("Λουκέτα ημερών"));navigation.add(dayLocks);
+        dayLocks.addActionListener(e->{if(!dayLocks.isSelected()&&team()!=null&&!team().month(ym()).lockedDays.isEmpty()){dayLocks.setSelected(true);status.setText(I18n.text("Ξεκλειδώστε πρώτα τις ημέρες από τις επικεφαλίδες."));}grid.getTableHeader().repaint();});
+        ((MonthTable)grid).setLockControls(dayLocks::isSelected);
+        grid.getTableHeader().addMouseListener(new MouseAdapter(){public void mouseClicked(MouseEvent e){
+            if(busy||team()==null||!dayLocks.isSelected())return;
+            int column=grid.columnAtPoint(e.getPoint());if(column<1)return;int day=grid.convertColumnIndexToModel(column);
+            if(grid.isEditing())grid.getCellEditor().stopCellEditing();
+            Set<Integer> locks=team().month(ym()).lockedDays;if(!locks.remove(day))locks.add(day);save();refresh();
+        }});
         JPanel output=new JPanel(new FlowLayout(FlowLayout.RIGHT,10,0));
         button(output,I18n.text("Αποθήκευση"),this::save);button(output,I18n.text("Εξαγωγή PDF"),this::pdf);
         JPanel adjustments=new JPanel(new FlowLayout(FlowLayout.LEFT,8,0));
@@ -104,7 +115,7 @@ public final class App extends JFrame {
     }
     private void openTeam(Team team){
         if(!data.teams.contains(team))return;
-        activeTeam=team;refresh();screens.show(pages,"calendar");
+        activeTeam=team;dayLocks.setSelected(!team.month(ym()).lockedDays.isEmpty());refresh();screens.show(pages,"calendar");
         setTitle("Manager’s Sidekick · "+team.name+(team.sandbox?I18n.text(" · Δοκιμαστικό αντίγραφο"):""));
     }
     private void addTeam(){
@@ -160,7 +171,8 @@ public final class App extends JFrame {
         JPanel p=new JPanel(new GridLayout(0,1));JTextField n=new JTextField(old==null?"":old.name,25);p.add(new JLabel(I18n.text("Όνομα εργαζομένου")));p.add(n);p.add(new JLabel(I18n.text("Επιτρεπόμενα πόστα")));Map<String,JCheckBox> boxes=new LinkedHashMap<>();for(Post post:t.posts){JCheckBox c=new JCheckBox(post.name,old!=null&&old.skills.contains(post.id));boxes.put(post.id,c);p.add(c);}
         if(JOptionPane.showConfirmDialog(this,p,I18n.text("Εργαζόμενος"),JOptionPane.OK_CANCEL_OPTION)!=JOptionPane.OK_OPTION||n.getText().isBlank())return;Employee e=old==null?new Employee(n.getText().strip()):old;e.name=n.getText().strip();e.skills.clear();boxes.forEach((id,c)->{if(c.isSelected())e.skills.add(id);});if(old==null)t.employees.add(e);save();refresh();}
     private void leave(){Team t=team();if(t==null)return;String n=name(I18n.text("Όνομα νέου είδους άδειας"));if(n==null)return;String id=id();t.leaveTypes.put(id,n);t.allowedLeaves.add(id);save();refresh();status.setText(I18n.text("Η άδεια προστέθηκε μόνο στην ομάδα «")+t.name+"».");}
-    private void refresh(){if(grid.isEditing())grid.getCellEditor().stopCellEditing();Team t=team();YearMonth date=ym();
+    private void refresh(){
+        if(team()!=null&&!team().month(ym()).lockedDays.isEmpty())dayLocks.setSelected(true);if(grid.isEditing())grid.getCellEditor().stopCellEditing();Team t=team();YearMonth date=ym();
         teamHeading.setText(t==null?"":t.name+(t.sandbox?I18n.text(" · Δοκιμαστικό αντίγραφο"):I18n.text(" · Ομάδα εργασίας")));
         monthTitle.setText(month.getSelectedItem()+" "+year.getValue());
         grid.setModel(new ScheduleTableModel(data,t,date,()->{save();validateMonth();grid.getTableHeader().repaint();},()->!busy));
@@ -211,8 +223,9 @@ public final class App extends JFrame {
         if(JOptionPane.showConfirmDialog(this,I18n.text("Να αφαιρεθούν όλες οι χειροκίνητες επιλογές της ομάδας «")+t.name+I18n.text("» για ")+monthTitle.getText()+I18n.text(";\nΟι αυτόματες αναθέσεις, οι αργίες και οι άλλοι μήνες διατηρούνται. Πατήστε μετά Υπολογισμός βαρδιών."),I18n.text("Καθαρισμός χειροκίνητων"),JOptionPane.OK_CANCEL_OPTION)!=JOptionPane.OK_OPTION)return;
         Scheduler.clearManual(t,ym());save();refresh();
     }
-    private void unlock(){int r=grid.getSelectedRow(),c=grid.getSelectedColumn();if(team()==null||r<0||c<1)return;Cell cell=team().cell(team().employees.get(r).id,ym().atDay(c));if(cell!=null)cell.locked=false;save();refresh();}
-    private void generate(){Team t=team();YearMonth date=ym();if(t==null||t.posts.isEmpty()||t.employees.isEmpty()){status.setText(I18n.text("Προσθέστε πόστα και εργαζομένους πριν τον υπολογισμό."));return;}busy=true;month.setEnabled(false);year.setEnabled(false);status.setText(I18n.text("Υπολογισμός…"));
-        new SwingWorker<List<String>,Void>(){protected List<String> doInBackground(){return scheduler.generate(data,t,date);}protected void done(){busy=false;month.setEnabled(true);year.setEnabled(true);try{get();save();refresh();status.setText(I18n.text("Ο υπολογισμός ολοκληρώθηκε. Ελέγξτε τις αποκλίσεις πριν χρησιμοποιήσετε το πρόγραμμα."));}catch(Exception e){error(e);}}}.execute();}
+    private void unlock(){int r=grid.getSelectedRow(),c=grid.getSelectedColumn();if(team()==null||r<0||c<1)return;if(team().month(ym()).lockedDays.contains(c))return;Cell cell=team().cell(team().employees.get(r).id,ym().atDay(c));if(cell!=null)cell.locked=false;save();refresh();}
+    private void generate(){generate(false);}
+    private void generate(boolean alternative){Team t=team();YearMonth date=ym();if(t==null||t.posts.isEmpty()||t.employees.isEmpty()){status.setText(I18n.text("Προσθέστε πόστα και εργαζομένους πριν τον υπολογισμό."));return;}busy=true;month.setEnabled(false);year.setEnabled(false);status.setText(I18n.text("Υπολογισμός…"));
+        new SwingWorker<List<String>,Void>(){protected List<String> doInBackground(){return scheduler.generate(data,t,date,alternative?java.util.concurrent.ThreadLocalRandom.current().nextLong():42L);}protected void done(){busy=false;month.setEnabled(true);year.setEnabled(true);try{get();save();refresh();status.setText(I18n.text("Ο υπολογισμός ολοκληρώθηκε. Ελέγξτε τις αποκλίσεις πριν χρησιμοποιήσετε το πρόγραμμα."));}catch(Exception e){error(e);}}}.execute();}
     private void pdf(){if(team()==null)return;JFileChooser chooser=new JFileChooser();chooser.setSelectedFile(new java.io.File("sidekick-"+ym()+".pdf"));if(chooser.showSaveDialog(this)!=JFileChooser.APPROVE_OPTION)return;Path file=chooser.getSelectedFile().toPath();if(Files.exists(file)&&JOptionPane.showConfirmDialog(this,I18n.text("Αντικατάσταση υπάρχοντος PDF;"),"PDF",JOptionPane.YES_NO_OPTION)!=JOptionPane.YES_OPTION)return;try{PdfExporter.export(data,team(),ym(),file);status.setText(I18n.text("Δημιουργήθηκε PDF: ")+file.toAbsolutePath());}catch(Exception e){error(e);}}
 }

@@ -10,6 +10,8 @@ import static gr.sidekick.Model.*;
 
 /** Calendar rendering shared by the desktop window and headless presentation checks. */
 public final class MonthTable extends JTable {
+    private java.util.function.BooleanSupplier lockControls=()->false;
+    public void setLockControls(java.util.function.BooleanSupplier value){lockControls=value;}
     private final Supplier<Team> team;
     private final Supplier<YearMonth> month;
     private final Supplier<Set<Integer>> uncovered;
@@ -33,6 +35,11 @@ public final class MonthTable extends JTable {
             @Override public Component getTableCellRendererComponent(JTable table,Object value,boolean selected,boolean focus,int row,int col){
                 super.getTableCellRendererComponent(table,value,false,false,row,col);
                 setHorizontalAlignment(CENTER);setBackground(dayColor(col));
+                setIcon(null);
+                if(col>0&&team.get()!=null&&(lockControls.getAsBoolean()||team.get().month(month.get()).lockedDays.contains(col))){
+                    boolean locked=team.get().month(month.get()).lockedDays.contains(col);
+                    setIcon(new Icon(){public int getIconWidth(){return 14;}public int getIconHeight(){return 16;}public void paintIcon(Component c,Graphics g,int x,int y){g.setColor(locked?Theme.ACCENT:Theme.MUTED);g.drawArc(x+3,y+1,7,9,0,locked?180:130);g.drawRoundRect(x+1,y+7,11,8,2,2);if(locked)g.fillRect(x+6,y+10,2,3);}});
+                }
                 boolean missing=uncovered.get().contains(col);
                 setForeground(missing?Theme.RED:Theme.TEXT);setFont(getFont().deriveFont(Font.BOLD));
                 setBorder(BorderFactory.createMatteBorder(0,0,missing?3:1,1,missing?Theme.RED:new Color(0x444654)));

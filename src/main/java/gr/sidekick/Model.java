@@ -58,6 +58,7 @@ public final class Model {
     public static class Month {
         public Map<String,Cell> cells = new LinkedHashMap<>();
         public Set<Integer> holidays = new TreeSet<>();
+        public Set<Integer> lockedDays = new TreeSet<>();
     }
     public static class Cell {
         public String value;
