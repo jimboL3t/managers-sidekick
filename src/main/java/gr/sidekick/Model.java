@@ -29,6 +29,7 @@ public final class Model {
         public Map<String,Month> months = new TreeMap<>();
         public int maxConsecutive = 5, minRestHours = 11, weeklyOff = 2;
         public boolean preferPaired = true;
+        public int nightBalanceWeight, weekendBalanceWeight, fairnessLookback;
         public Team(String name) { this.name = name; allowedLeaves.add(OFF); }
         public Month month(YearMonth ym) { return months.computeIfAbsent(ym.toString(), k -> new Month()); }
         public Post post(String id) { return posts.stream().filter(p -> p.id.equals(id)).findFirst().orElse(null); }
@@ -40,6 +41,7 @@ public final class Model {
     }
     public static class Post {
         public String id = id(), name, start, end;
+        public boolean nightDuty;
         public int[] demand = {1,1,1,1,1,1,1};
         public boolean[] operatingDays = {true,true,true,true,true,true,true};
         public boolean operates(LocalDate day) { return operatingDays==null || operatingDays[day.getDayOfWeek().getValue()-1]; }
@@ -53,6 +55,7 @@ public final class Model {
     }
     public static class Employee {
         public String id = id(), name;
+        public boolean excludeNightBalance,excludeWeekendBalance,noNights,noWeekends;
         public Set<String> skills = new LinkedHashSet<>();
         public boolean[] availableWeekdays = {true,true,true,true,true,true,true};
         public Map<String,Boolean> availabilityOverrides = new TreeMap<>();

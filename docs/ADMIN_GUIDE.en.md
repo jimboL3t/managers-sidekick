@@ -1,5 +1,7 @@
 # Administrator guide — 1.0.0
 
+[New in 1.2: configurable night/weekend balancing. Administrator guide](FAIRNESS.en.md).
+
 **New in 1.1.0:** [History, availability and native installation](RELEASE-1.1.en.md). Native packages use a different data location; read before migrating.
 
 [Ελληνικά](ADMIN_GUIDE.md) · [Installation](DISTRIBUTION.en.md) · [Backup](BACKUP.en.md)

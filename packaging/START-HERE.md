@@ -1,4 +1,6 @@
-# Manager’s Sidekick — έκδοση 1.1.0
+# Manager’s Sidekick — έκδοση 1.2.0
+
+[Νέο στην 1.2: ρυθμιζόμενη εξισορρόπηση νυχτών/Σαββατοκύριακων. Οδηγός διαχειριστή](docs/FAIRNESS.md).
 
 [English](START-HERE.en.md)
 

@@ -1,4 +1,6 @@
-# Manager’s Sidekick — 1.1.0
+# Manager’s Sidekick — 1.2.0
+
+[New in 1.2: configurable night/weekend balancing. Administrator guide](docs/FAIRNESS.en.md).
 
 [Ελληνικά](START-HERE.md)
 

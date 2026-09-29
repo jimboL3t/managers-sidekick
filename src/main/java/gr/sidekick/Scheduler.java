@@ -6,9 +6,12 @@ import static gr.sidekick.Model.*;
 
 /** Bounded multi-start heuristic; never claims that failure proves infeasibility. */
 public final class Scheduler {
+    private record Score(int gaps,int quota,int empty,double preferences) implements Comparable<Score>{
+        public int compareTo(Score other){int c=Integer.compare(gaps,other.gaps);if(c==0)c=Integer.compare(quota,other.quota);if(c==0)c=Integer.compare(empty,other.empty);return c==0?Double.compare(preferences,other.preferences):c;}
+    }
     private boolean work(Team t,Employee e,LocalDate d) { Cell c=t.cell(e.id,d);return c!=null&&t.post(c.value)!=null; }
     private boolean safe(Team t,Employee e,LocalDate d,Post p) {
-        if(!p.operates(d)||!Availability.allows(e,p,d)||!e.skills.contains(p.id)) return false;
+        if(!Fairness.allowed(e,p,d)||!p.operates(d)||!Availability.allows(e,p,d)||!e.skills.contains(p.id)) return false;
         int run=1;
         for(LocalDate x=d.minusDays(1);work(t,e,x);x=x.minusDays(1)) run++;
         for(LocalDate x=d.plusDays(1);work(t,e,x);x=x.plusDays(1)) run++;
@@ -29,10 +32,12 @@ public final class Scheduler {
     public List<String> generate(Data data,Team t,YearMonth ym,long seed) {
         Model.Month m=t.month(ym);Map<String,Cell> fixed=new LinkedHashMap<>();
         m.cells.forEach((k,v)->{if(v.locked||m.lockedDays.contains(Integer.parseInt(k.substring(k.lastIndexOf(':')+1))))fixed.put(k,v);});
-        Map<String,Cell> best=null;long bestScore=Long.MAX_VALUE;
+        Map<String,Cell> best=null;Score bestScore=null;
+        Fairness.Context fairness=new Fairness.Context(t,ym);boolean balancing=t.nightBalanceWeight>0||t.weekendBalanceWeight>0;
         Random random=new Random(seed);
-        for(int attempt=0;attempt<180;attempt++) {
+        for(int attempt=0;attempt<(balancing?360:180);attempt++) {
             m.cells=new LinkedHashMap<>(fixed);
+            boolean guide=balancing&&attempt>=180;
             List<LocalDate> days=new ArrayList<>();for(int d=1;d<=ym.lengthOfMonth();d++)days.add(ym.atDay(d));
             if(attempt%3==1) Collections.reverse(days); else if(attempt%3==2)Collections.shuffle(days,random);
             int gaps=0;
@@ -47,7 +52,7 @@ public final class Scheduler {
                         List<Employee> candidates=new ArrayList<>();
                         for(Employee e:t.employees) if(t.cell(e.id,day)==null&&withinMonthlyBudget(t,e,ym)&&safe(t,e,day,p)) candidates.add(e);
                         Collections.shuffle(candidates,random);
-                        candidates.sort(Comparator.comparingDouble(e->cost(t,e,day,ym)));
+                        candidates.sort(Comparator.comparingDouble(e->cost(t,e,day,ym)+(guide?fairness.marginal(e,p,day):0)));
                         if(candidates.isEmpty()) {gaps++;continue;}
                         Employee e=candidates.getFirst();m.cells.put(key(e.id,day.getDayOfMonth()),new Cell(p.id,false));
                     }
@@ -61,7 +66,7 @@ public final class Scheduler {
                 List<Post> eligible=new ArrayList<>();
                 for(Post p:t.posts)if(safe(t,e,day,p))eligible.add(p);
                 Collections.shuffle(eligible,random);
-                eligible.sort(Comparator.comparingLong(p->t.employees.stream().filter(person->{Cell c=t.cell(person.id,day);return c!=null&&p.id.equals(c.value);}).count()));
+                eligible.sort(Comparator.comparingDouble(p->t.employees.stream().filter(person->{Cell c=t.cell(person.id,day);return c!=null&&p.id.equals(c.value);}).count()+(guide?fairness.marginal(e,p,day):0)));
                 if(!eligible.isEmpty())m.cells.put(key(e.id,day.getDayOfMonth()),new Cell(eligible.getFirst().id,false));
             }
             int quotaDeviation=0, unassigned=0;
@@ -79,8 +84,8 @@ public final class Scheduler {
             }
             int isolated=0;
             if(t.preferPaired)for(Employee e:t.employees)for(int d=2;d<ym.lengthOfMonth();d++)if(!work(t,e,ym.atDay(d))&&work(t,e,ym.atDay(d-1))&&work(t,e,ym.atDay(d+1)))isolated++;
-            long score=gaps*1000000L+quotaDeviation*10000L+unassigned*100L+isolated;
-            if(score<bestScore) {bestScore=score;best=new LinkedHashMap<>(m.cells);}
+            Score score=new Score(gaps,quotaDeviation,unassigned,fairness.penalty()+isolated);
+            if(bestScore==null||score.compareTo(bestScore)<0) {bestScore=score;best=new LinkedHashMap<>(m.cells);}
         }
         m.cells=best==null?fixed:best;
         return validate(data,t,ym);
@@ -126,6 +131,7 @@ public final class Scheduler {
             LocalDate day=ym.atDay(d);Cell c=t.cell(e.id,day);
             if(c==null) continue;
             Post p=t.post(c.value);
+            if(p!=null&&!Fairness.allowed(e,p,day))issues.add(day+" · "+e.name+I18n.text(": απαγορευμένη νύχτα ή εργασία Σαββατοκύριακου"));
             if(p!=null&&!Availability.allows(e,p,day))issues.add(day+" · "+e.name+I18n.text(": εργασία εκτός διαθεσιμότητας"));
             if(p!=null&&!p.operates(day))issues.add(day+" · "+e.name+" · "+p.name+I18n.text(": ανάθεση εκτός ημερών λειτουργίας"));
             if(p!=null&&p.operates(day)&&!safe(t,e,day,p))issues.add(day+" · "+e.name+I18n.text(": δεξιότητα / συνεχόμενες ημέρες / ανάπαυση"));
