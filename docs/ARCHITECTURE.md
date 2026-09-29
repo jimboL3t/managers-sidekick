@@ -1,5 +1,7 @@
 # Τεχνική τεκμηρίωση
 
+[English](ARCHITECTURE.en.md)
+
 ## Δομή
 
 - `App`: Swing GUI στο event dispatch thread. Ο υπολογισμός εκτελείται μέσω SwingWorker και αποκλείει μεταβολές κατά την εκτέλεσή του.

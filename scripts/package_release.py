@@ -31,6 +31,7 @@ def main():
     output = ROOT / "dist" / f"{prefix}-test.zip"
     output.parent.mkdir(exist_ok=True)
     files = {"managers-sidekick.jar": jar.read_bytes(), "START-HERE.md": (ROOT / "packaging/START-HERE.md").read_bytes()}
+    files["START-HERE.en.md"] = (ROOT / "packaging/START-HERE.en.md").read_bytes()
     files["brand/logo.svg"] = (ROOT / "src/main/resources/brand/logo.svg").read_bytes()
     for path in sorted((ROOT / "docs").glob("*.md")):
         files[f"docs/{path.name}"] = path.read_bytes()
