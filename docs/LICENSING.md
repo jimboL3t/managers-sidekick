@@ -1,5 +1,7 @@
 # Άδεια και διανομή μέσω ιστοσελίδας
 
+**1.2.1:** [Πακέτα ιστοσελίδας με Java, πηγές και οδηγίες ανάρτησης](PUBLICATION.md).
+
 [English](LICENSING.en.md)
 
 Manager’s Sidekick — Copyright (C) 2026 Dimitrios Diamantis.

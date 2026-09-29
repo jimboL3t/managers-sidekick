@@ -1,5 +1,7 @@
 # Licensing and website distribution
 
+**1.2.1:** [Website packages with Java, source archives and upload instructions](PUBLICATION.en.md).
+
 [Ελληνικά](LICENSING.md)
 
 Manager’s Sidekick: Copyright (C) 2026 Dimitrios Diamantis.

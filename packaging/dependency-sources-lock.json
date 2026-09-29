@@ -1,0 +1,64 @@
+{
+  "assets": [
+    {
+      "name": "gson-2.14.0-sources.jar",
+      "url": "https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.14.0/gson-2.14.0-sources.jar",
+      "sha256": "a4873f0ef88981cab520c3d7449cd89a68e605f15e9fe46e1aa2c77d5f87eb6f"
+    },
+    {
+      "name": "gson-2.14.0.pom",
+      "url": "https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.14.0/gson-2.14.0.pom",
+      "sha256": "1fa0122c0e3733192642861c36be4c6f799a795327a23bdd2922691b6e9ba480"
+    },
+    {
+      "name": "error_prone_annotations-2.48.0-sources.jar",
+      "url": "https://repo.maven.apache.org/maven2/com/google/errorprone/error_prone_annotations/2.48.0/error_prone_annotations-2.48.0-sources.jar",
+      "sha256": "5c1c7b797aa1effa050a06d2d98534a28750f5fa8bcca56d8f49a866ca8bd03f"
+    },
+    {
+      "name": "error_prone_annotations-2.48.0.pom",
+      "url": "https://repo.maven.apache.org/maven2/com/google/errorprone/error_prone_annotations/2.48.0/error_prone_annotations-2.48.0.pom",
+      "sha256": "189e09ad0489c325e90daaa9d5c8f406330602fa366609bca07cbcdad03ab9da"
+    },
+    {
+      "name": "pdfbox-3.0.7-sources.jar",
+      "url": "https://repo.maven.apache.org/maven2/org/apache/pdfbox/pdfbox/3.0.7/pdfbox-3.0.7-sources.jar",
+      "sha256": "8325c672fb0be55d58ab87a76048b038e1576a00a720d6db2dc999b6a940c37b"
+    },
+    {
+      "name": "pdfbox-3.0.7.pom",
+      "url": "https://repo.maven.apache.org/maven2/org/apache/pdfbox/pdfbox/3.0.7/pdfbox-3.0.7.pom",
+      "sha256": "de79292762d855dd69a8e555c9e0e6de40f538ffbd97d012d1bb3a4d045ad047"
+    },
+    {
+      "name": "pdfbox-io-3.0.7-sources.jar",
+      "url": "https://repo.maven.apache.org/maven2/org/apache/pdfbox/pdfbox-io/3.0.7/pdfbox-io-3.0.7-sources.jar",
+      "sha256": "76281f0e78ca18621a3f503715aebbfcf0310190c31f0d44518b2836c4a79a79"
+    },
+    {
+      "name": "pdfbox-io-3.0.7.pom",
+      "url": "https://repo.maven.apache.org/maven2/org/apache/pdfbox/pdfbox-io/3.0.7/pdfbox-io-3.0.7.pom",
+      "sha256": "742cfd5701ae2cd57a1d2ee61becfe1bd1549ba7704c7fb171937fad010214b6"
+    },
+    {
+      "name": "fontbox-3.0.7-sources.jar",
+      "url": "https://repo.maven.apache.org/maven2/org/apache/pdfbox/fontbox/3.0.7/fontbox-3.0.7-sources.jar",
+      "sha256": "94138405517c4e28df207a109d8477f8ed025812b1cea6d8e1bf36845cbdba31"
+    },
+    {
+      "name": "fontbox-3.0.7.pom",
+      "url": "https://repo.maven.apache.org/maven2/org/apache/pdfbox/fontbox/3.0.7/fontbox-3.0.7.pom",
+      "sha256": "a3fc589c564b41bc9bb4bb72d173cce5f8c2335d2e66d634489b6a8b04bfeb7a"
+    },
+    {
+      "name": "commons-logging-1.3.5-sources.jar",
+      "url": "https://repo.maven.apache.org/maven2/commons-logging/commons-logging/1.3.5/commons-logging-1.3.5-sources.jar",
+      "sha256": "496332597187dd32e41cfd1d87e5991a3d77b51bae2cc0bbe9e51496ae54ce5c"
+    },
+    {
+      "name": "commons-logging-1.3.5.pom",
+      "url": "https://repo.maven.apache.org/maven2/commons-logging/commons-logging/1.3.5/commons-logging-1.3.5.pom",
+      "sha256": "ccf4a30346f5027b9496abd56290ac26d159abf2be64df1265611dc9400b9d68"
+    }
+  ]
+}

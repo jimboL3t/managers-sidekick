@@ -30,3 +30,7 @@ Five additional tests cover frozen snapshots, independent restoration with new I
 ## Fairness 1.2
 
 Four tests verify measurable balancing improvement without loss of coverage, monthly work completion, hard restrictions and preserved manual exceptions, participation versus prohibition, historical targets, read-only reporting, availability-weighted opportunity counts and explicit night classification.
+
+## Website packages 1.2.1
+
+`scripts/verify_public.py` verifies archive contents, regular-file hashes, licenses and PE/ELF/Mach-O target architectures. On macOS arm64 it executes the distributed Java/JAR for headless Swing, scheduling, history, JSON and PDF using temporary data. Results are written to the upload directory VALIDATION.json. Windows/Linux/Intel Mac native GUI acceptance remains pending.

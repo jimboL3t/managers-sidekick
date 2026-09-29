@@ -1,4 +1,6 @@
-# Manager’s Sidekick — 1.2.0
+# Manager’s Sidekick — 1.2.1
+
+**1.2.1:** [Website packages with Java, source archives and upload instructions](docs/PUBLICATION.en.md).
 
 [New in 1.2: configurable night/weekend balancing. Administrator guide](docs/FAIRNESS.en.md).
 
@@ -16,7 +18,7 @@ Manual cell changes do not trigger recalculation. The bounded heuristic does not
 
 ## Use on another computer
 
-Send **`dist/managers-sidekick-1.2.0-test.zip`**, extract it completely and install desktop Java 21+ for that OS/CPU. Windows: `start-windows.cmd`. Linux/macOS: `sh start-linux.sh`. No Maven, Python or IDE is needed on the destination. The `packaging` source folder alone is insufficient: it does not contain the application JAR.
+Send **`dist/managers-sidekick-1.2.1-test.zip`**, extract it completely and install desktop Java 21+ for that OS/CPU. Windows: `start-windows.cmd`. Linux/macOS: `sh start-linux.sh`. No Maven, Python or IDE is needed on the destination. The `packaging` source folder alone is insufficient: it does not contain the application JAR.
 
 The ZIP includes libraries, launchers, bilingual guides and licenses, but not Java or employee data. To transfer existing schedules, save/close the app and copy its `data` folder beside the extracted JAR. Keep a separate backup first.
 
@@ -35,7 +37,7 @@ Requires JDK 21+ and Maven 3.9+; packaging also needs Python 3.9+.
 
 ```sh
 mvn clean verify
-java -jar target/managers-sidekick-1.2.0.jar
+java -jar target/managers-sidekick-1.2.1.jar
 python3 scripts/package_release.py
 ```
 
