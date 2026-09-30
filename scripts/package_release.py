@@ -76,7 +76,7 @@ def main():
     checksum = hashlib.sha256(output.read_bytes()).hexdigest()
     output.with_suffix(output.suffix + ".sha256").write_text(f"{checksum}  {output.name}\n")
     source_zip = ROOT / "dist" / f"{prefix}-source.zip"
-    source_files = [ROOT / name for name in ("LICENSE", "COPYING.md", "README.md", "README.en.md", "pom.xml", ".gitignore", ".mvn/maven.config")]
+    source_files = [ROOT / name for name in ("LICENSE", "COPYING.md", "README.md", "README.en.md", "README.el.md", "pom.xml", ".gitignore", ".mvn/maven.config")]
     for directory in ("src", "docs", "scripts", "packaging"):
         source_files.extend(p for p in (ROOT / directory).rglob("*") if p.is_file() and "__pycache__" not in p.parts and p.suffix != ".pyc")
     with zipfile.ZipFile(source_zip, "w", zipfile.ZIP_DEFLATED) as archive:

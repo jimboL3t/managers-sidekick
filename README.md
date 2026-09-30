@@ -1,114 +1,84 @@
-# Manager’s Sidekick — 1.2.2
+<p align="center">
+  <img src="src/main/resources/brand/logo.svg" width="80" alt="M/S application logo">
+</p>
+<h1 align="center">Manager’s Sidekick</h1>
+<p align="center"><strong>Shift planning, with you in control.</strong></p>
+<p align="center">by <img src="src/main/resources/brand/nervz.png" width="100" alt="nervZ"></p>
+<p align="center"><strong><a href="README.md">English</a> · <a href="README.el.md">Ελληνικά — Ελληνική παρουσίαση</a></strong></p>
+<p align="center">Windows · macOS · Linux &nbsp; | &nbsp; Ελληνικά / English &nbsp; | &nbsp; GPL-3.0</p>
 
-**1.2.2:** [Πακέτα ιστοσελίδας με Java, πηγές και οδηγίες ανάρτησης](docs/PUBLICATION.md).
+Manager’s Sidekick is a free, open-source desktop application for planning a team's monthly shifts. Define duties, employee skills, availability and leave, then calculate the remaining schedule while keeping your manual choices intact.
 
-[Νέο στην 1.2: ρυθμιζόμενη εξισορρόπηση νυχτών/Σαββατοκύριακων. Οδηγός διαχειριστή](docs/FAIRNESS.md).
+**[Downloads](https://github.com/jimboL3t/managers-sidekick/releases) · [Getting started](docs/PUBLICATION.en.md) · [Administrator guide](docs/ADMIN_GUIDE.en.md)**
 
-**Νέο στην 1.1.0:** [Ιστορικό, διαθεσιμότητα και native εγκατάσταση](docs/RELEASE-1.1.md). Για installer αλλάζει η θέση δεδομένων· δείτε τον οδηγό πριν τη μεταφορά.
+> Version 1.2.2 is being prepared for public release. Downloads are not public yet.
 
-[English documentation](README.en.md)
+![Monthly calendar with duties, rest days, locked assignments and coverage indicators](docs/images/calendar.png)
+*Calendar preview with sample data. The interface and PDFs support both English and Greek.*
 
-Εφαρμογή Java Swing στα ελληνικά και αγγλικά για μηνιαίο προγραμματισμό ομάδων, ειδικότητες εργαζομένων, άδειες, κλειδωμένες επιλογές και εξαγωγή PDF Α4 landscape.
+## Plan your team’s month
 
-## Έκδοση 1.0.0
+- **Independent teams:** manage employees, duties and leave types separately; create a copy to try changes safely.
+- **Scheduling rules:** account for skills, operating weekdays, staffing demand, availability, rest intervals and consecutive workdays.
+- **Your choices stay in place:** assign leave or a requested duty, lock whole days and explore other combinations for the remaining cells.
+- **Fairer distribution:** configure night/weekend balancing, reference previous months and control employee participation. [How it works](docs/FAIRNESS.en.md).
+- **A longer view:** review annual totals and saved history; export monthly schedules and employee totals to landscape A4 PDF.
+- **Local and bilingual:** work in English or Greek without an account or server. Your data stays in local files.
 
- ενεργοποιήστε **Λουκέτα ημερών** και πατήστε ημερομηνίες για κλείδωμα ολόκληρης στήλης. Το **Άλλος συνδυασμός** αναζητά εναλλακτικό πρόγραμμα κρατώντας αυτές τις ημέρες και τις χειροκίνητες επιλογές. Η προηγούμενη βάση διατηρείται στο tag `v0.8.0`. Οδηγίες επιστροφής στο εγχειρίδιο.
+Calculation runs when you request it. Coverage gaps and rule deviations remain visible for review. The scheduler uses a bounded heuristic, so it cannot guarantee a feasible or optimal schedule; review the result before using it. Use one app instance per data folder.
 
-## Ημέρες λειτουργίας 0.8.0
+## From teams to a printable schedule
 
-Στα **Πόστα** επιλέγετε ημέρες λειτουργίας, με συντομεύσεις **Κάθε μέρα** και **Μόνο καθημερινές**. Ο υπολογισμός και η κάλυψη σέβονται τις επιλεγμένες ημέρες.
+<details>
+<summary><strong>Team selection and independent test copies</strong></summary>
 
-## Γλώσσες 0.7.0
+![Team picker with sample teams and a test copy](docs/images/teams.png)
 
-Επιλογή **Ελληνικά / English** στην επάνω δεξιά γωνία της αρχικής οθόνης ομάδων. Προεπιλογή: Ελληνικά. Η επιλογή αποθηκεύεται και ισχύει για το περιβάλλον και τα PDF. Τα ονόματα ομάδων, εργαζομένων, υπηρεσιών και προσαρμοσμένων αδειών παραμένουν όπως καταχωρίστηκαν.
+</details>
 
-Κωδικοί PDF: **Υ1, Υ2…** υπηρεσίες, **Ρ** ρεπό, **Α1, Α2…** άδειες. Στα αγγλικά: **D1, D2…**, **R**, **L1, L2…** αντίστοιχα.
+<details>
+<summary><strong>PDF schedule and employee totals</strong></summary>
 
-## Προηγούμενες αλλαγές 0.6.0
+![Sample landscape PDF with monthly assignments and category totals](docs/images/pdf.png)
 
-- Διανυσματικό λογότυπο M/S στην εφαρμογή, στο εικονίδιο παραθύρου και στα PDF. Πηγή: `src/main/resources/brand/logo.svg`.
-- PDF με ημερομηνία επάνω και ημέρα από κάτω σε κάθε στήλη.
-- Ονόματα πόστων/αδειών δίπλα στους κωδικούς του πίνακα συνόλων, με πλήρες υπόμνημα σε ξεχωριστή σελίδα.
-- Τελευταία στήλη «Σύνολο» για όλες τις ανατεθειμένες ημέρες ανά εργαζόμενο, χωρίς τα κενά.
+</details>
 
-## Αλλαγές 0.5.0
+*Images are rendered from real application components and PDF output using synthetic test data; they are illustrative, not validated work schedules.*
 
-- Στρογγυλεμένα κουμπιά με hover/εστίαση και ξεχωριστή έμφαση στην Αποθήκευση και την Εξαγωγή PDF.
-- Ομαδοποίηση ενεργειών: υπολογισμός αριστερά, αποθήκευση/PDF δεξιά, διορθώσεις ξεχωριστά.
-- Ετήσια εικόνα από την επιλογή ομάδας, με επιλογή έτους, σύνολα βαρδιών/ρεπό/αδειών και ανάλυση ανά πόστο και είδος άδειας για κάθε εργαζόμενο.
+## Get started
 
-## Αλλαγές 0.4.0
+1. Once published, choose the **1.2.2 package** for Windows x64, Linux x64, macOS Apple Silicon or macOS Intel from [Releases](https://github.com/jimboL3t/managers-sidekick/releases).
+2. Extract the entire archive into a writable folder. The platform packages include Java; no separate Java installation is needed.
+3. Follow the included `START-HERE`: Windows uses `start-windows.cmd`; Linux uses `sh start-linux.sh`; macOS uses `sh start-macos.command`.
 
-- Στόχος εργασίας ανά εργαζόμενο: ημέρες μήνα μείον ρεπό και άλλες άδειες (Σεπτέμβριος χωρίς αργίες/άδειες: 22 βάρδιες).
-- Κάλυψη πόστων ως ελάχιστη απαίτηση, με πρόσθετες αναθέσεις όταν χρειάζονται για τη συμπλήρωση της μηνιαίας εργασίας.
-- Συγκεντρωτικός πίνακας **Δεξιότητες** και σαφής ένδειξη εργαζομένων χωρίς επιλεγμένα πόστα.
-- **Καθαρισμός χειροκίνητων** μόνο για την επιλεγμένη ομάδα και μήνα, με επιβεβαίωση.
-- Χειροκίνητα πόστα, άδειες και ρεπό παραμένουν κλειδωμένα σε κάθε υπολογισμό.
+These are portable archives, not native installers. Linux needs a graphical desktop and the libraries/fonts described in the [platform instructions](docs/PUBLICATION.en.md). Platform testing status is documented there.
 
-## Αλλαγές 0.3.0
+**Back up before upgrading.** Portable packages store schedules in `data/sidekick.json` beside the JAR. Keep a separate copy of the data folder before replacing or deleting the application folder. [Backup and restore](docs/BACKUP.en.md).
 
-- Αρχική οθόνη ομάδων πριν από το ημερολόγιο, με δημιουργία, άνοιγμα και διαγραφή.
-- Ανεξάρτητα δοκιμαστικά αντίγραφα μαζί με εργαζομένους, πόστα, άδειες και ιστορικό.
-- Ξεχωριστός κατάλογος αδειών ανά ομάδα και αυτόματη μεταφορά παλιών δεδομένων.
-- Σκούρα κουμπιά, dropdown και διάλογοι χωρίς τις φωτεινές διαβαθμίσεις του Swing, με μωβ/μπλε παλέτα κοντά στο ζητούμενο IDE theme.
+## Documentation
 
-## Αλλαγές 0.2.0
+| I want to… | Read |
+|---|---|
+| Set up teams and calculate shifts | [Administrator guide](docs/ADMIN_GUIDE.en.md) |
+| Balance nights and weekends | [Fair distribution](docs/FAIRNESS.en.md) |
+| Install or troubleshoot | [Platform packages](docs/PUBLICATION.en.md) · [Installation](docs/DISTRIBUTION.en.md) |
+| Back up or move my schedules | [Backup guide](docs/BACKUP.en.md) |
+| Understand the implementation | [Architecture](docs/ARCHITECTURE.en.md) · [Validation](docs/VALIDATION.en.md) |
+| See what changed | [Changelog](docs/CHANGELOG.en.md) |
 
-- Σκούρο θέμα εμπνευσμένο από Dracula και ημερολόγιο με διακριτικά χρώματα.
-- Άμεσες χειροκίνητες αλλαγές χωρίς popup ή αυτόματο επανυπολογισμό.
-- Ρεπό ανά μήνα = Σάββατα + Κυριακές + δηλωμένες αργίες για όλους.
-- Κανονική κάλυψη στις αργίες και κόκκινες ημερομηνίες όπου λείπει προσωπικό.
-- Ονομαστικός μήνας, έτος χωρίς κόμμα, συντόμευση για τον ερχόμενο μήνα.
+## Build from source
 
-## Πακέτο δοκιμής για άλλον υπολογιστή
-
-Στείλτε το `dist/managers-sidekick-1.2.2-test.zip`. Στον υπολογιστή δοκιμής αρκεί **Java 21+ με GUI**, χωρίς Maven ή IDE. Windows: `start-windows.cmd`. Linux: `sh start-linux.sh`. Το ZIP δεν περιέχει δεδομένα εργαζομένων ή Java runtime.
-
-Δημιουργία πακέτου στον υπολογιστή ανάπτυξης: `python3 scripts/package_release.py`.
-
-Δείτε τις [αναλυτικές οδηγίες διανομής ανά OS](docs/DISTRIBUTION.md) για εγκατάσταση Java, γραμματοσειρές, μεταφορά δεδομένων και troubleshooting.
-
-## Εκκίνηση από τον πηγαίο κώδικα
-
-Απαιτούνται JDK 21+ και Maven 3.9+. Στο περιβάλλον ανάπτυξης υπάρχουν ήδη Java και Maven.
+Requires **JDK 21+** and **Maven 3.9+**. From the repository root:
 
 ```sh
 mvn clean verify
 java -jar target/managers-sidekick-1.2.2.jar
 ```
 
-Εκτελέστε τις εντολές από αυτόν τον φάκελο. Το Maven κατεβάζει τις εξαρτήσεις μέσα στο `.maven-repository/`. Τα δεδομένα γράφονται στο `data/sidekick.json` και το προηγούμενο αντίγραφο στο `.bak`. Δεν απαιτείται λογαριασμός, server ή βάση δεδομένων. Χρησιμοποιείτε μία εκτέλεση της εφαρμογής κάθε φορά.
+Runtime libraries: Gson and Apache PDFBox; Swing is included in Java. Maven resolves dependencies automatically. Packaging instructions and pinned dependency/runtime sources are described in the [publication guide](docs/PUBLICATION.en.md).
 
-## Εξαρτήσεις και επιλογές
+## License and sources
 
-| Στοιχείο | Έκδοση | Χρήση |
-|---|---|---|
-| Java / Swing | 21+ | GUI, ημερομηνίες, εκτέλεση |
-| Maven | 3.9+ | Build και διαχείριση εξαρτήσεων |
-| [Gson](https://github.com/google/gson/releases) | 2.14.0 | JSON αποθήκευση (Apache-2.0) |
-| [Apache PDFBox](https://pdfbox.apache.org/) | 3.0.7 | PDF (Apache-2.0) |
-| [JUnit Jupiter](https://docs.junit.org/5.14.2/_exports/junit-user-guide-5.14.2.html) | 5.14.2 | Μόνο δοκιμές (EPL-2.0) |
+Copyright © 2026 Dimitrios Diamantis. Application licensed under **GPL-3.0-only**. [License](LICENSE) · [Copyright](COPYING.md) · [Distribution details](docs/LICENSING.en.md).
 
-Οι βιβλιοθήκες εγκαθίστανται αυτόματα από το Maven. Το PDF χρησιμοποιεί εγκατεστημένη TrueType γραμματοσειρά με ελληνικά (Arial σε macOS/Windows, DejaVu Sans σε Linux). Εάν δεν υπάρχει:
-
-```sh
-java -Dsidekick.font=/absolute/path/GreekFont.ttf -jar target/managers-sidekick-1.2.2.jar
-```
-
-Δεν αντιγράφεται γραμματοσειρά στο repository. Για διανομή με ενσωματωμένη γραμματοσειρά προτείνεται αργότερα Noto Sans με την άδειά της. Για μεγαλύτερες ομάδες και εγγυημένη αναζήτηση λύσεων προτείνεται ξεχωριστή αξιολόγηση solver (π.χ. Timefold ή OR-Tools). Η πρώτη έκδοση χρησιμοποιεί δικό της περιορισμένο ευρετικό αλγόριθμο.
-
-## Περιεχόμενα
-
-- [Εγχειρίδιο διαχειριστή](docs/ADMIN_GUIDE.md)
-- [Αρχιτεκτονική και περιορισμοί](docs/ARCHITECTURE.md)
-- [Έλεγχοι και πρώτη έκδοση](docs/VALIDATION.md)
-
-Η έκδοση είναι λειτουργικό αρχικό πρωτότυπο. Πριν χρησιμοποιηθεί πραγματικό πρόγραμμα ελέγξτε τις αποκλίσεις. Οι προεπιλεγμένοι κανόνες είναι οι απαιτήσεις του έργου, όχι πιστοποίηση συμμόρφωσης με εργατική νομοθεσία.
-
-Η 1.0.0 διαθέτει ανανεωμένα κουμπιά και επιφάνειες με γυάλινη όψη. [Backup και επαναφορά δεδομένων](docs/BACKUP.md).
-
-[Προτάσεις βελτίωσης και σύγκριση αγοράς](docs/IMPROVEMENTS.md). Για μεταφορά στέλνετε ολόκληρο το ZIP από το `dist`, όχι μόνο τον φάκελο `packaging`.
-
-## Άδεια
-
-Copyright (C) 2026 Dimitrios Diamantis. **GPL-3.0-only**. [LICENSE](LICENSE) · [Copyright](COPYING.md) · [Όροι διανομής](docs/LICENSING.md).
+Each distributed version includes a separate **`all-sources.zip`** with matching application, library and Java sources. GitHub's automatic source ZIP contains only this repository. Third-party licenses and notices remain included in the platform packages.
