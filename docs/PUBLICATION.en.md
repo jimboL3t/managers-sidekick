@@ -37,3 +37,17 @@ No employee data, Git history, IDE settings or caches are included. Old experime
 ## Reproduction
 
 Build tools: JDK 21+, Maven 3.9+, Python 3.12+ and curl. Network is needed for Maven and pinned downloads; omit `--download` when `dist/release-cache` is complete. Third-party rebuild instructions and build files are within their upstream archives and require their own toolchains; they are not rebuilt by the application's Maven command. Packaging assembles official runtime binaries without altering them. Updating Java requires refreshed metadata/checksums and matching sources, not just a filename change.
+
+## GitHub — staging before public availability
+
+Repository: https://github.com/jimboL3t/managers-sidekick (created private). Code and version tags have been pushed. Version 1.2.2 is staged as a draft Release with four platform packages, the complete `all-sources.zip`, licenses, validation/provenance files and `SHA256SUMS-release.txt` covering the attached packages. GitHub's automatic Source code ZIP contains only this repository and does not replace the complete source bundle.
+
+When the site is ready: review repository history before making it public, change repository visibility to public and publish the draft Release separately. Check downloads while signed out. Do not commit `data/`, backups, `.env`, editor settings or the entire `dist/` directory.
+
+The Windows button can link directly to:
+
+```text
+https://github.com/jimboL3t/managers-sidekick/releases/download/v1.2.2/managers-sidekick-1.2.2-windows-x64.zip
+```
+
+Use matching asset names for Linux and macOS and provide a link to `managers-sidekick-1.2.2-all-sources.zip`. The site needs neither curl nor a token. Public downloads require both a public repository and a published Release. Asset names include the version, so update the links for each subsequent release.

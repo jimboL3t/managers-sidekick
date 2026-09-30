@@ -6,3 +6,8 @@ data/
 .idea/
 *.iml
 dist/
+
+# Local editor settings and credentials
+.vscode/
+.env
+.env.*

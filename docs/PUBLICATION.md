@@ -37,3 +37,17 @@
 ## Αναπαραγωγή
 
 Απαιτούνται JDK 21+, Maven 3.9+, Python 3.12+ και curl στον υπολογιστή build. Το δίκτυο χρειάζεται για Maven και για τα καρφιτσωμένα downloads. Με συμπληρωμένο `dist/release-cache`, παραλείψτε το `--download`. Οι πηγές/build instructions τρίτων περιέχονται στα αντίστοιχα upstream archives· απαιτούν τα δικά τους εργαλεία για ανακατασκευή, δεν ανακατασκευάζονται από το Maven της εφαρμογής. Η διαδικασία συναρμολογεί τα επίσημα runtime binaries χωρίς τροποποίησή τους. Μελλοντική ενημέρωση Java απαιτεί νέα metadata/checksums και αντίστοιχες πηγές, όχι απλή αλλαγή ονόματος αρχείου.
+
+## GitHub — προετοιμασία πριν από τη δημόσια διάθεση
+
+Repository: https://github.com/jimboL3t/managers-sidekick (δημιουργήθηκε private). Ο κώδικας και τα tags έχουν ανέβει. Η 1.2.2 προετοιμάζεται ως draft Release με τα τέσσερα πακέτα λειτουργικών, το πλήρες `all-sources.zip`, άδειες, στοιχεία ελέγχων και `SHA256SUMS-release.txt` για τα συνημμένα πακέτα. Το αυτόματο Source code ZIP του GitHub περιέχει μόνο το repository· δεν αντικαθιστά το πλήρες πακέτο πηγών.
+
+Όταν είναι έτοιμο το site: ελέγξτε το ιστορικό πριν γίνει δημόσιο, αλλάξτε τη visibility του repository σε public και δημοσιεύστε το draft Release. Τα draft Releases χρειάζονται χωριστή δημοσίευση ακόμη και σε public repository. Επιβεβαιώστε τα downloads χωρίς σύνδεση στο GitHub. Μην ανεβάζετε `data/`, backups, `.env`, ρυθμίσεις IDE ή ολόκληρο το `dist/` στο Git.
+
+Το κουμπί Windows του site μπορεί να δείχνει απευθείας στο:
+
+```text
+https://github.com/jimboL3t/managers-sidekick/releases/download/v1.2.2/managers-sidekick-1.2.2-windows-x64.zip
+```
+
+Χρησιμοποιήστε αντίστοιχα τα ονόματα των άλλων assets για Linux και macOS και σύνδεσμο στο `managers-sidekick-1.2.2-all-sources.zip`. Δεν χρειάζεται curl ή token στο site. Οι δημόσιες λήψεις θα λειτουργήσουν μόνο αφού το repository γίνει public και το Release δημοσιευτεί. Τα ονόματα περιλαμβάνουν την έκδοση, επομένως ενημερώνετε τα links σε κάθε επόμενη έκδοση.
