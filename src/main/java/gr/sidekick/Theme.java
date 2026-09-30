@@ -19,6 +19,9 @@ public final class Theme {
     public static final Color RED = new Color(0xFF7979);
     public static final Color SELECTION = new Color(0x393052);
 
+    public static final Color BRAND_PURPLE = new Color(0x8A2BE2);
+    public static final Color BRAND_SILVER = new Color(0xC5CAD3);
+
     private Theme() {}
     public static void install() throws Exception {
         // Metal's default Ocean theme paints bright gradients over component backgrounds.
@@ -62,6 +65,7 @@ public final class Theme {
         UIManager.put("ScrollBar.track", new ColorUIResource(PANEL));
         UIManager.put("ScrollBarUI", DarkScrollBarUI.class.getName());
         UIManager.put("OptionPane.messageForeground", TEXT);
+        UIManager.put("OptionPane.questionIcon", new SettingsIcon());
     }
 
     public static class DarkScrollBarUI extends javax.swing.plaf.basic.BasicScrollBarUI {

@@ -1,10 +1,10 @@
-# Website packages — 1.2.1
+# Website packages — 1.2.2
 
 [Ελληνικά](PUBLICATION.md)
 
 ## Upload set
 
-Run `python3 scripts/package_public.py --download` to create `dist/website-1.2.1`. Upload **all its contents**, preserving names and relative paths. `index.html` is a simple download page; reuse its links in your own website if desired. Source downloads are adjacent to binary downloads. Nothing is published automatically.
+Run `python3 scripts/package_public.py --download` to create `dist/website-1.2.2`. Upload **all its contents**, preserving names and relative paths. `index.html` is a simple download page; reuse its links in your own website if desired. Source downloads are adjacent to binary downloads. Nothing is published automatically.
 
 Packages cover Windows x64, Linux x64 (glibc), macOS Apple Silicon (arm64), and macOS Intel (x64). Each contains **Eclipse Temurin Java 21.0.12.1+1**. These are portable packages, not EXE/MSI/DEB/DMG installers. No existing Java is needed and no system runtime/service is installed. Windows ARM, Linux ARM, Alpine/musl and 32-bit systems are not included.
 

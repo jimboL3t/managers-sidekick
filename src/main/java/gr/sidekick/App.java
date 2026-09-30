@@ -87,7 +87,7 @@ public final class App extends JFrame {
         JSplitPane split=new JSplitPane(JSplitPane.VERTICAL_SPLIT,schedule,new JScrollPane(report));split.setResizeWeight(.85);split.setBorder(null);root.add(split);
         JPanel footer=new JPanel(new GridLayout(2,1,0,8));
         JLabel legend=new JLabel(I18n.text("★ Κλειδωμένο   ·   Μωβ φόντο: Σαββατοκύριακο   ·   Πράσινο φόντο: Αργία   ·   Κόκκινη ημερομηνία: ελλιπής κάλυψη"));legend.setForeground(Theme.MUTED);
-        footer.add(legend);footer.add(status);root.add(footer,BorderLayout.SOUTH);
+        footer.add(legend);footer.add(status);JPanel signature=new JPanel(new BorderLayout(16,0));signature.add(footer,BorderLayout.CENTER);signature.add(CompanyBrand.label(),BorderLayout.EAST);root.add(signature,BorderLayout.SOUTH);
         teamPicker=new TeamPicker(this::addTeam,this::openTeam,this::copyTeam,this::deleteTeam,this::annualSummary,this::changeLanguage);
         pages.add(teamPicker,"teams");
         month.addActionListener(e->refresh());year.addChangeListener(e->refresh());

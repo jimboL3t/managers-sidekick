@@ -55,7 +55,7 @@ public final class TeamPicker extends JPanel {
         management.add(action(I18n.text("Νέα ομάδα"),create,ActionButton.Style.STANDARD));
         copy=action(I18n.text("Αντίγραφο για δοκιμές"),()->withSelection(onCopy),ActionButton.Style.STANDARD);management.add(copy);
         delete=action(I18n.text("Διαγραφή ομάδας"),()->withSelection(onDelete),ActionButton.Style.DANGER);management.add(delete);
-        primary.setOpaque(false);management.setOpaque(false);actions.add(primary,BorderLayout.NORTH);actions.add(management,BorderLayout.SOUTH);add(actions,BorderLayout.SOUTH);
+        primary.setOpaque(false);management.setOpaque(false);actions.add(primary,BorderLayout.NORTH);JPanel lower=new JPanel(new BorderLayout(12,0));lower.setOpaque(false);lower.add(management,BorderLayout.CENTER);lower.add(CompanyBrand.label(),BorderLayout.EAST);actions.add(lower,BorderLayout.SOUTH);add(actions,BorderLayout.SOUTH);
         list.addListSelectionListener(e->updateButtons());
         list.addMouseListener(new MouseAdapter(){@Override public void mouseClicked(MouseEvent e){int index=list.locationToIndex(e.getPoint());if(e.getClickCount()==2&&index>=0&&list.getCellBounds(index,index).contains(e.getPoint()))withSelection(onOpen);}});
         list.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0),"open");list.getActionMap().put("open",new AbstractAction(){public void actionPerformed(ActionEvent e){withSelection(onOpen);}});

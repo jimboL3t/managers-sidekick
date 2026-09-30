@@ -58,3 +58,7 @@ The final total counts all assigned days (work, rest and leave), not hours or on
 Save and many editing actions write all teams to the local JSON file. Use one application instance per data folder. There is no login, cloud synchronization or concurrent editing. See [backup and restore](BACKUP.en.md) before upgrading or deleting data.
 
 The 1.0.0 release includes day locks and the glass-style interface on `main`. The earlier baseline remains tagged `v0.8.0`. With a clean/committed working tree, `git switch -c maintenance/0.8 v0.8.0` creates a branch from that baseline. Switching code does not restore data; use a matching backup in a separate folder. Version 0.8.0 does not understand day locks.
+
+### Appearance in 1.2.2
+
+Save uses deep purple with white text; Export PDF uses silver gray. The M/S monogram shares these colors, including in PDFs. A discreet nervZ signature appears at the bottom right of the team picker and calendar. Input dialogs use a gear instead of the green question icon.

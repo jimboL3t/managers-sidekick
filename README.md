@@ -1,6 +1,6 @@
-# Manager’s Sidekick — 1.2.1
+# Manager’s Sidekick — 1.2.2
 
-**1.2.1:** [Πακέτα ιστοσελίδας με Java, πηγές και οδηγίες ανάρτησης](docs/PUBLICATION.md).
+**1.2.2:** [Πακέτα ιστοσελίδας με Java, πηγές και οδηγίες ανάρτησης](docs/PUBLICATION.md).
 
 [Νέο στην 1.2: ρυθμιζόμενη εξισορρόπηση νυχτών/Σαββατοκύριακων. Οδηγός διαχειριστή](docs/FAIRNESS.md).
 
@@ -62,7 +62,7 @@
 
 ## Πακέτο δοκιμής για άλλον υπολογιστή
 
-Στείλτε το `dist/managers-sidekick-1.2.1-test.zip`. Στον υπολογιστή δοκιμής αρκεί **Java 21+ με GUI**, χωρίς Maven ή IDE. Windows: `start-windows.cmd`. Linux: `sh start-linux.sh`. Το ZIP δεν περιέχει δεδομένα εργαζομένων ή Java runtime.
+Στείλτε το `dist/managers-sidekick-1.2.2-test.zip`. Στον υπολογιστή δοκιμής αρκεί **Java 21+ με GUI**, χωρίς Maven ή IDE. Windows: `start-windows.cmd`. Linux: `sh start-linux.sh`. Το ZIP δεν περιέχει δεδομένα εργαζομένων ή Java runtime.
 
 Δημιουργία πακέτου στον υπολογιστή ανάπτυξης: `python3 scripts/package_release.py`.
 
@@ -74,7 +74,7 @@
 
 ```sh
 mvn clean verify
-java -jar target/managers-sidekick-1.2.1.jar
+java -jar target/managers-sidekick-1.2.2.jar
 ```
 
 Εκτελέστε τις εντολές από αυτόν τον φάκελο. Το Maven κατεβάζει τις εξαρτήσεις μέσα στο `.maven-repository/`. Τα δεδομένα γράφονται στο `data/sidekick.json` και το προηγούμενο αντίγραφο στο `.bak`. Δεν απαιτείται λογαριασμός, server ή βάση δεδομένων. Χρησιμοποιείτε μία εκτέλεση της εφαρμογής κάθε φορά.
@@ -92,7 +92,7 @@ java -jar target/managers-sidekick-1.2.1.jar
 Οι βιβλιοθήκες εγκαθίστανται αυτόματα από το Maven. Το PDF χρησιμοποιεί εγκατεστημένη TrueType γραμματοσειρά με ελληνικά (Arial σε macOS/Windows, DejaVu Sans σε Linux). Εάν δεν υπάρχει:
 
 ```sh
-java -Dsidekick.font=/absolute/path/GreekFont.ttf -jar target/managers-sidekick-1.2.1.jar
+java -Dsidekick.font=/absolute/path/GreekFont.ttf -jar target/managers-sidekick-1.2.2.jar
 ```
 
 Δεν αντιγράφεται γραμματοσειρά στο repository. Για διανομή με ενσωματωμένη γραμματοσειρά προτείνεται αργότερα Noto Sans με την άδειά της. Για μεγαλύτερες ομάδες και εγγυημένη αναζήτηση λύσεων προτείνεται ξεχωριστή αξιολόγηση solver (π.χ. Timefold ή OR-Tools). Η πρώτη έκδοση χρησιμοποιεί δικό της περιορισμένο ευρετικό αλγόριθμο.
