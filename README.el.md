@@ -11,7 +11,7 @@
 
 **[Λήψεις](https://github.com/jimboL3t/managers-sidekick/releases) · [Πρώτα βήματα](docs/PUBLICATION.md) · [Εγχειρίδιο διαχειριστή](docs/ADMIN_GUIDE.md)**
 
-> Η έκδοση 1.2.2 προετοιμάζεται για δημόσια διάθεση. Οι λήψεις δεν είναι ακόμη δημόσιες.
+> **Η έκδοση 1.2.2 είναι διαθέσιμη.** [Κατέβασε τα πακέτα με ενσωματωμένη Java](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.2.2).
 
 ![Μηνιαίο ημερολόγιο με υπηρεσίες, ρεπό, κλειδωμένες επιλογές και ενδείξεις κάλυψης](docs/images/calendar.png)
 *Προεπισκόπηση με ενδεικτικά δεδομένα. Το περιβάλλον και τα PDF υποστηρίζουν ελληνικά και αγγλικά.*
@@ -47,7 +47,7 @@
 
 ## Πρώτα βήματα
 
-1. Όταν δημοσιευτεί, επίλεξε από τα [Releases](https://github.com/jimboL3t/managers-sidekick/releases) το πακέτο **1.2.2** για Windows x64, Linux x64, macOS Apple Silicon ή macOS Intel.
+1. Επίλεξε από τα [Releases](https://github.com/jimboL3t/managers-sidekick/releases) το πακέτο **1.2.2** για Windows x64, Linux x64, macOS Apple Silicon ή macOS Intel.
 2. Αποσυμπίεσε ολόκληρο το αρχείο σε εγγράψιμο φάκελο. Τα πακέτα λειτουργικών περιλαμβάνουν Java· δεν χρειάζεται χωριστή εγκατάσταση.
 3. Ακολούθησε το `START-HERE`: Windows `start-windows.cmd`, Linux `sh start-linux.sh`, macOS `sh start-macos.command`.
 
