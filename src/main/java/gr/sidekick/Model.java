@@ -11,6 +11,7 @@ public final class Model {
     public static String id() { return UUID.randomUUID().toString(); }
     public static class Data {
         public int version = 1;
+        public int uiScale = 100;
         public String language = "el";
         public Map<String,String> builtInLeaves = new LinkedHashMap<>();
         public List<Team> teams = new ArrayList<>();
@@ -32,6 +33,7 @@ public final class Model {
         public Map<String,Month> months = new TreeMap<>();
         public int maxConsecutive = 5, minRestHours = 11, weeklyOff = 2;
         public boolean preferPaired = true;
+        public boolean preferFullWeekend;
         public int nightBalanceWeight, weekendBalanceWeight, fairnessLookback;
         public Team(String name) { this.name = name; allowedLeaves.add(OFF); }
         public Month month(YearMonth ym) { return months.computeIfAbsent(ym.toString(), k -> new Month()); }
@@ -64,7 +66,13 @@ public final class Model {
         public Map<String,Boolean> availabilityOverrides = new TreeMap<>();
         public Employee(String name) { this.name=name; }
     }
+    public static class WorkPlan {
+        public String mode = "auto";
+        public int shifts;
+        public WorkPlan(String mode,int shifts){this.mode=mode;this.shifts=shifts;}
+    }
     public static class Month {
+        public Map<String,WorkPlan> workPlans = new LinkedHashMap<>();
         public Map<String,Cell> cells = new LinkedHashMap<>();
         public Set<Integer> holidays = new TreeSet<>();
         public Set<Integer> lockedDays = new TreeSet<>();

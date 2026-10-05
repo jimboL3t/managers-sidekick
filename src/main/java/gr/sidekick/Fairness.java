@@ -26,29 +26,31 @@ public final class Fairness {
      YearMonth m=month.minusMonths(back);
      // Missing months are unknown, not zero work histories.
      if(back>0&&(!team.months.containsKey(m.toString())||team.months.get(m.toString()).cells.isEmpty()))continue;
-     for(int k=0;k<2;k++){boolean night=k==0;if(back>0)past[k]+=count(team,e,m,night);
+     for(int k=0;k<2;k++){int before=cap[k];boolean night=k==0;if(back>0)past[k]+=count(team,e,m,night);
       for(int day=1;day<=m.lengthOfMonth();day++){LocalDate date=m.atDay(day);Cell fixed=team.cell(e.id,date);
        if(fixed!=null&&team.post(fixed.value)==null&&!OFF.equals(fixed.value))continue;
        if(!night&&!weekend(date))continue;
        if(team.posts.stream().anyMatch(p->(!night||p.nightDuty)&&p.operates(date)&&e.skills.contains(p.id)&&Availability.allows(e,p,date)&&allowed(e,p,date)))cap[k]++;
       }
+      if(Workload.custom(team,e,m))cap[k]=before+Math.min(cap[k]-before,Workload.target(team,e,m));
      }
     }capacity.put(e.id,cap);previous.put(e.id,past);
    }
   }
+  public boolean participates(Employee e,boolean night){return included(e,night)&&!Workload.reserve(team,e,month);}
   public int capacity(Employee e,boolean night){return capacity.get(e.id)[night?0:1];}
   public int actual(Employee e,boolean night){return previous.get(e.id)[night?0:1]+count(team,e,month,night);}
-  public double target(Employee e,boolean night){double total=0,cap=0;for(Employee other:team.employees)if(included(other,night)&&capacity(other,night)>0){total+=actual(other,night);cap+=capacity(other,night);}return included(e,night)&&cap>0?total*capacity(e,night)/cap:0;}
+  public double target(Employee e,boolean night){double total=0,cap=0;for(Employee other:team.employees)if(participates(other,night)&&capacity(other,night)>0){total+=actual(other,night);cap+=capacity(other,night);}return participates(e,night)&&cap>0?total*capacity(e,night)/cap:0;}
   private double penalty(boolean night,Employee added){
-   double total=0,cap=0;for(Employee e:team.employees)if(included(e,night)&&capacity(e,night)>0){total+=actual(e,night)+(e==added?1:0);cap+=capacity(e,night);}
+   double total=0,cap=0;for(Employee e:team.employees)if(participates(e,night)&&capacity(e,night)>0){total+=actual(e,night)+(e==added?1:0);cap+=capacity(e,night);}
    if(cap==0)return 0;double score=0;
-   for(Employee e:team.employees)if(included(e,night)&&capacity(e,night)>0){double diff=actual(e,night)+(e==added?1:0)-total*capacity(e,night)/cap;score+=diff*diff;}
+   for(Employee e:team.employees)if(participates(e,night)&&capacity(e,night)>0){double diff=actual(e,night)+(e==added?1:0)-total*capacity(e,night)/cap;score+=diff*diff;}
    return score;
   }
   public double penalty(){return team.nightBalanceWeight*penalty(true,null)+team.weekendBalanceWeight*penalty(false,null);}
   public double marginal(Employee e,Post p,LocalDate day){double score=0;
-   if(p.nightDuty&&included(e,true)&&team.nightBalanceWeight>0)score+=team.nightBalanceWeight*(penalty(true,e)-penalty(true,null));
-   if(weekend(day)&&included(e,false)&&team.weekendBalanceWeight>0)score+=team.weekendBalanceWeight*(penalty(false,e)-penalty(false,null));return score;
+   if(p.nightDuty&&participates(e,true)&&team.nightBalanceWeight>0)score+=team.nightBalanceWeight*(penalty(true,e)-penalty(true,null));
+   if(weekend(day)&&participates(e,false)&&team.weekendBalanceWeight>0)score+=team.weekendBalanceWeight*(penalty(false,e)-penalty(false,null));return score;
   }
  }
  public static String summary(Team t,YearMonth m){
@@ -59,7 +61,7 @@ public final class Fairness {
   if(missing>0)out.append(I18n.text("Μήνες χωρίς ιστορικό (παραλείπονται): ")).append(missing).append('\n');
   for(Employee e:t.employees){out.append(e.name);for(boolean night:new boolean[]{true,false}){
     out.append(night?I18n.text(" · Νύχτες "):I18n.text(" · Σ/Κ ")).append(c.actual(e,night)).append(" / ");
-    if(!included(e,night))out.append(I18n.text("εκτός εξισορρόπησης"));else if(c.capacity(e,night)==0)out.append(I18n.text("χωρίς διαθέσιμες ευκαιρίες"));else out.append(String.format(Locale.ROOT,"%.1f",c.target(e,night)));
+    if(!c.participates(e,night))out.append(I18n.text("εκτός εξισορρόπησης"));else if(c.capacity(e,night)==0)out.append(I18n.text("χωρίς διαθέσιμες ευκαιρίες"));else out.append(String.format(Locale.ROOT,"%.1f",c.target(e,night)));
    }out.append('\n');}
   out.append(I18n.text("Οι στόχοι είναι ενδεικτικοί, όχι υποχρεωτικές ποσοστώσεις.\n"));return out.toString();
  }

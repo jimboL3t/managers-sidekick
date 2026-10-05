@@ -28,7 +28,7 @@ public final class MonthTable extends JTable {
             @Override public Component getTableCellRendererComponent(JTable table,Object value,boolean selected,boolean focus,int row,int col){
                 super.getTableCellRendererComponent(table,value,selected,focus,row,col);
                 setBorder(BorderFactory.createEmptyBorder(0,8,0,8));setHorizontalAlignment(col==0?LEFT:CENTER);
-                setBackground(selected?Theme.SELECTION:dayColor(col));setForeground(Theme.TEXT);
+                setBackground(selected?Theme.SELECTION:rowColor(dayColor(col),row));setForeground(Theme.TEXT);
                 Team t=team.get();
                 if(col>0&&t!=null){Cell c=t.cell(t.employees.get(row).id,month.get().atDay(col));if(c!=null&&OFF.equals(c.value))setForeground(new Color(0xA9CFBA));}
                 setToolTipText(String.valueOf(value));return this;
@@ -50,6 +50,11 @@ public final class MonthTable extends JTable {
                 return this;
             }
         });
+    }
+
+    static Color rowColor(Color base,int row){
+        if(row%2==0)return base;
+        return new Color(Math.min(255,base.getRed()+9),Math.min(255,base.getGreen()+9),Math.min(255,base.getBlue()+11));
     }
 
     private Color dayColor(int column){

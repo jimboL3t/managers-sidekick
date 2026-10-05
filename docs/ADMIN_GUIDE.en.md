@@ -62,3 +62,27 @@ The 1.0.0 release includes day locks and the glass-style interface on `main`. Th
 ### Appearance in 1.2.2
 
 Save uses deep purple with white text; Export PDF uses silver gray. The M/S monogram shares these colors, including in PDFs. A discreet nervZ signature appears at the bottom right of the team picker and calendar. Input dialogs use a gear instead of the green question icon.
+
+## 1.3.0 — Display and weekends
+
+On the team selection screen, open **Display settings → Display scale**. 100% preserves the previous size; 125%, 150%, 175% and 200% enlarge the interface on top of OS scaling. Changes apply immediately and persist with application data. PDF print size is unchanged. Controls can be scrolled when screen space is limited.
+
+Employee names remain fixed on the left while calendar days scroll horizontally. Subtle alternating row shades preserve holiday, weekend and selection colors.
+
+Team settings now include **Prefer one full weekend off per month**, disabled by default. It aims for at least one Saturday–Sunday pair assigned Rest day per employee, with both dates inside the selected month. Leave and empty cells do not count. This checks calendar assignments, not continuous 48-hour rest if Friday has an overnight shift. It does not increase the monthly rest-day target.
+
+This is a preference: coverage, monthly targets and filling cells take priority. Manual assignments and day locks are preserved. A nonblocking observation appears if no full weekend is found. Click **Calculate shifts** or **Another combination** to apply the preference; changing the setting alone never recalculates the schedule.
+
+## Individual monthly targets and reserve employees (1.3.0)
+
+Select the team and month, then open **Employees → employee name**. Below eligible duties, **Shifts for this month only: YYYY-MM** applies to this employee, team and month only. Other months are unchanged; months without an override use the automatic target.
+
+- **Automatic target:** days in the month minus Saturdays, Sundays, declared holidays and assigned leave, as before.
+- **Custom shift target:** the final number of work shifts, from zero to the number of days in the month. Leave is not subtracted from this number again. Rest days adjust to month length − leave − target. More shifts mean fewer rest days. Availability, rest intervals and consecutive-work limits still apply. Unmet targets generate observations.
+- **Reserve — coverage gaps only:** the number is a ceiling, not a quota. Regular employees take priority for each coverage assignment. A reserve covers eligible duties as needed and is never topped up merely to reach the ceiling. Among schedules with equivalent coverage and target fulfillment, the search prefers fewer reserve shifts. The heuristic does not guarantee the mathematical minimum.
+
+**For a spare:** select only the duty they can cover, choose Reserve and set the maximum acceptable shifts for the month. A ceiling of 10 allows zero to 10 shifts. Confirm, then click **Calculate shifts**; changing settings alone never recalculates.
+
+Unused reserve days stay blank (—), not automatically Rest or Leave, and are excluded from PDF totals. Manual rest/leave entries stay intact. The fixed name column shows “Reserve · actual / up to limit”. Reserves are excluded for that month from full-weekend preferences and night/weekend balancing; restrictions on nights/weekends and availability still apply. Custom targets also cap the monthly eligible opportunity count used for balancing.
+
+Manual assignments and day locks take priority even above a target/ceiling, generating an observation rather than being removed. Impossible targets, such as those conflicting with leave or locked rest days, remain visible for review. Switching to Automatic removes only this month's override. Team copies and history preserve independent monthly settings.

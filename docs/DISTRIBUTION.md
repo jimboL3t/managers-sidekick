@@ -1,6 +1,6 @@
 # Διανομή και δοκιμή σε Windows / Linux — 1.2.0
 
-**1.2.2:** [Πακέτα ιστοσελίδας με Java, πηγές και οδηγίες ανάρτησης](PUBLICATION.md).
+**1.3.0:** [Πακέτα ιστοσελίδας με Java, πηγές και οδηγίες ανάρτησης](PUBLICATION.md).
 
 **Νέο στην 1.1.0:** [Ιστορικό, διαθεσιμότητα και native εγκατάσταση](RELEASE-1.1.md). Για installer αλλάζει η θέση δεδομένων· δείτε τον οδηγό πριν τη μεταφορά.
 
@@ -8,7 +8,7 @@
 
 ## Τι στέλνουμε
 
-Στείλτε το `dist/managers-sidekick-1.2.2-test.zip` και προαιρετικά το διπλανό `.sha256`. Το ίδιο ZIP χρησιμοποιείται σε Windows και Linux. Περιλαμβάνει εκτελέσιμο JAR με τις βιβλιοθήκες του, scripts εκκίνησης, εγχειρίδια και άδειες βιβλιοθηκών. Δεν περιλαμβάνει Java, προσωπικά δεδομένα, Maven cache, Git ή ρυθμίσεις IDE.
+Στείλτε το `dist/managers-sidekick-1.3.0-test.zip` και προαιρετικά το διπλανό `.sha256`. Το ίδιο ZIP χρησιμοποιείται σε Windows και Linux. Περιλαμβάνει εκτελέσιμο JAR με τις βιβλιοθήκες του, scripts εκκίνησης, εγχειρίδια και άδειες βιβλιοθηκών. Δεν περιλαμβάνει Java, προσωπικά δεδομένα, Maven cache, Git ή ρυθμίσεις IDE.
 
 Αυτό είναι φορητό πακέτο δοκιμής που απαιτεί εγκατεστημένη Java, όχι installer `.exe`/`.deb` με ενσωματωμένο runtime. Η έκδοση εφαρμογής παραμένει 1.0.0.
 
@@ -107,12 +107,12 @@ python3 scripts/package_release.py
 
 ```sh
 # Linux, στον φάκελο που περιέχει ZIP και .sha256
-sha256sum -c managers-sidekick-1.2.2-test.zip.sha256
+sha256sum -c managers-sidekick-1.3.0-test.zip.sha256
 ```
 
 ```powershell
 # Windows PowerShell: συγκρίνετε το Hash με το περιεχόμενο του .sha256
-Get-FileHash .\managers-sidekick-1.2.2-test.zip -Algorithm SHA256
+Get-FileHash .\managers-sidekick-1.3.0-test.zip -Algorithm SHA256
 ```
 
 Το εσωτερικό `SHA256SUMS.txt` περιέχει hashes των περιεχομένων. Τα hashes ελέγχουν ακεραιότητα μεταφοράς, δεν αποτελούν ψηφιακή υπογραφή.

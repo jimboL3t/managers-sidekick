@@ -15,6 +15,16 @@ public final class CalendarRules {
         return date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY;
     }
 
+    public static boolean fullWeekendOff(Team team,Employee employee,YearMonth month){
+        for(int d=1;d<month.lengthOfMonth();d++){
+            LocalDate day=month.atDay(d);
+            if(day.getDayOfWeek()!=DayOfWeek.SATURDAY)continue;
+            Cell saturday=team.cell(employee.id,day),sunday=team.cell(employee.id,day.plusDays(1));
+            if(saturday!=null&&sunday!=null&&OFF.equals(saturday.value)&&OFF.equals(sunday.value))return true;
+        }
+        return false;
+    }
+
     public static boolean holiday(Team team, LocalDate date) {
         Model.Month month = team.months.get(YearMonth.from(date).toString());
         return month != null && month.holidays.contains(date.getDayOfMonth());

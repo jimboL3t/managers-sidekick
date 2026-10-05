@@ -1,10 +1,10 @@
-# Πακέτα ιστοσελίδας — 1.2.2
+# Πακέτα ιστοσελίδας — 1.3.0
 
 [English](PUBLICATION.en.md)
 
 ## Τι ανεβάζουμε
 
-Το `python3 scripts/package_public.py --download` παράγει τον φάκελο `dist/website-1.2.2`. Ανεβάστε **ολόκληρο το περιεχόμενό του**, διατηρώντας τα ονόματα και τις σχετικές διαδρομές. Το `index.html` είναι έτοιμη απλή σελίδα λήψεων· μπορείτε να ενσωματώσετε τα ίδια links στο δικό σας site. Υπάρχει χωριστή λήψη πηγών δίπλα στις λήψεις προγράμματος. Δεν γίνεται αυτόματη δημοσίευση.
+Το `python3 scripts/package_public.py --download` παράγει τον φάκελο `dist/website-1.3.0`. Ανεβάστε **ολόκληρο το περιεχόμενό του**, διατηρώντας τα ονόματα και τις σχετικές διαδρομές. Το `index.html` είναι έτοιμη απλή σελίδα λήψεων· μπορείτε να ενσωματώσετε τα ίδια links στο δικό σας site. Υπάρχει χωριστή λήψη πηγών δίπλα στις λήψεις προγράμματος. Δεν γίνεται αυτόματη δημοσίευση.
 
 Περιλαμβάνει πακέτα για Windows x64, Linux x64 (glibc), macOS Apple Silicon (arm64) και macOS Intel (x64), με **Eclipse Temurin Java 21.0.12.1+1**. Είναι φορητά πακέτα, όχι installers EXE/MSI/DEB/DMG. Δεν εγκαθιστούν υπηρεσία ή Java στο σύστημα και δεν απαιτούν προϋπάρχουσα Java. Δεν καλύπτουν Windows ARM, Linux ARM, Alpine/musl ή παλιά 32-bit συστήματα.
 
@@ -38,16 +38,16 @@
 
 Απαιτούνται JDK 21+, Maven 3.9+, Python 3.12+ και curl στον υπολογιστή build. Το δίκτυο χρειάζεται για Maven και για τα καρφιτσωμένα downloads. Με συμπληρωμένο `dist/release-cache`, παραλείψτε το `--download`. Οι πηγές/build instructions τρίτων περιέχονται στα αντίστοιχα upstream archives· απαιτούν τα δικά τους εργαλεία για ανακατασκευή, δεν ανακατασκευάζονται από το Maven της εφαρμογής. Η διαδικασία συναρμολογεί τα επίσημα runtime binaries χωρίς τροποποίησή τους. Μελλοντική ενημέρωση Java απαιτεί νέα metadata/checksums και αντίστοιχες πηγές, όχι απλή αλλαγή ονόματος αρχείου.
 
-## GitHub — προετοιμασία πριν από τη δημόσια διάθεση
+## GitHub
 
-Repository: https://github.com/jimboL3t/managers-sidekick (δημιουργήθηκε private). Ο κώδικας και τα tags έχουν ανέβει. Η 1.2.2 προετοιμάζεται ως draft Release με τα τέσσερα πακέτα λειτουργικών, το πλήρες `all-sources.zip`, άδειες, στοιχεία ελέγχων και `SHA256SUMS-release.txt` για τα συνημμένα πακέτα. Το αυτόματο Source code ZIP του GitHub περιέχει μόνο το repository· δεν αντικαθιστά το πλήρες πακέτο πηγών.
+Public repository: https://github.com/jimboL3t/managers-sidekick
 
-Όταν είναι έτοιμο το site: ελέγξτε το ιστορικό πριν γίνει δημόσιο, αλλάξτε τη visibility του repository σε public και δημοσιεύστε το draft Release. Τα draft Releases χρειάζονται χωριστή δημοσίευση ακόμη και σε public repository. Επιβεβαιώστε τα downloads χωρίς σύνδεση στο GitHub. Μην ανεβάζετε `data/`, backups, `.env`, ρυθμίσεις IDE ή ολόκληρο το `dist/` στο Git.
+Release: https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.3.0
 
-Το κουμπί Windows του site μπορεί να δείχνει απευθείας στο:
+Download URL / URL λήψεων:
 
 ```text
-https://github.com/jimboL3t/managers-sidekick/releases/download/v1.2.2/managers-sidekick-1.2.2-windows-x64.zip
+https://github.com/jimboL3t/managers-sidekick/releases/download/v1.3.0/managers-sidekick-1.3.0-windows-x64.zip
 ```
 
-Χρησιμοποιήστε αντίστοιχα τα ονόματα των άλλων assets για Linux και macOS και σύνδεσμο στο `managers-sidekick-1.2.2-all-sources.zip`. Δεν χρειάζεται curl ή token στο site. Οι δημόσιες λήψεις θα λειτουργήσουν μόνο αφού το repository γίνει public και το Release δημοσιευτεί. Τα ονόματα περιλαμβάνουν την έκδοση, επομένως ενημερώνετε τα links σε κάθε επόμενη έκδοση.
+Links include the version; update website buttons when releasing. / Τα links περιλαμβάνουν την έκδοση· ενημερώστε τα κουμπιά του site.

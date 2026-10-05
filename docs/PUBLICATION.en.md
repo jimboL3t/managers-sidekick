@@ -1,10 +1,10 @@
-# Website packages — 1.2.2
+# Website packages — 1.3.0
 
 [Ελληνικά](PUBLICATION.md)
 
 ## Upload set
 
-Run `python3 scripts/package_public.py --download` to create `dist/website-1.2.2`. Upload **all its contents**, preserving names and relative paths. `index.html` is a simple download page; reuse its links in your own website if desired. Source downloads are adjacent to binary downloads. Nothing is published automatically.
+Run `python3 scripts/package_public.py --download` to create `dist/website-1.3.0`. Upload **all its contents**, preserving names and relative paths. `index.html` is a simple download page; reuse its links in your own website if desired. Source downloads are adjacent to binary downloads. Nothing is published automatically.
 
 Packages cover Windows x64, Linux x64 (glibc), macOS Apple Silicon (arm64), and macOS Intel (x64). Each contains **Eclipse Temurin Java 21.0.12.1+1**. These are portable packages, not EXE/MSI/DEB/DMG installers. No existing Java is needed and no system runtime/service is installed. Windows ARM, Linux ARM, Alpine/musl and 32-bit systems are not included.
 
@@ -38,16 +38,16 @@ No employee data, Git history, IDE settings or caches are included. Old experime
 
 Build tools: JDK 21+, Maven 3.9+, Python 3.12+ and curl. Network is needed for Maven and pinned downloads; omit `--download` when `dist/release-cache` is complete. Third-party rebuild instructions and build files are within their upstream archives and require their own toolchains; they are not rebuilt by the application's Maven command. Packaging assembles official runtime binaries without altering them. Updating Java requires refreshed metadata/checksums and matching sources, not just a filename change.
 
-## GitHub — staging before public availability
+## GitHub
 
-Repository: https://github.com/jimboL3t/managers-sidekick (created private). Code and version tags have been pushed. Version 1.2.2 is staged as a draft Release with four platform packages, the complete `all-sources.zip`, licenses, validation/provenance files and `SHA256SUMS-release.txt` covering the attached packages. GitHub's automatic Source code ZIP contains only this repository and does not replace the complete source bundle.
+Public repository: https://github.com/jimboL3t/managers-sidekick
 
-When the site is ready: review repository history before making it public, change repository visibility to public and publish the draft Release separately. Check downloads while signed out. Do not commit `data/`, backups, `.env`, editor settings or the entire `dist/` directory.
+Release: https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.3.0
 
-The Windows button can link directly to:
+Download URL / URL λήψεων:
 
 ```text
-https://github.com/jimboL3t/managers-sidekick/releases/download/v1.2.2/managers-sidekick-1.2.2-windows-x64.zip
+https://github.com/jimboL3t/managers-sidekick/releases/download/v1.3.0/managers-sidekick-1.3.0-windows-x64.zip
 ```
 
-Use matching asset names for Linux and macOS and provide a link to `managers-sidekick-1.2.2-all-sources.zip`. The site needs neither curl nor a token. Public downloads require both a public repository and a published Release. Asset names include the version, so update the links for each subsequent release.
+Links include the version; update website buttons when releasing. / Τα links περιλαμβάνουν την έκδοση· ενημερώστε τα κουμπιά του site.

@@ -1,5 +1,9 @@
 # Release history
 
+## 1.3.0
+
+100%–200% display scaling, frozen employee names, alternating rows, full-weekend preference and individual monthly targets / reserve employees. [Guide](ADMIN_GUIDE.en.md).
+
 [Ελληνικά](CHANGELOG.md) · [Home](../README.md)
 
 | Version | Changes |

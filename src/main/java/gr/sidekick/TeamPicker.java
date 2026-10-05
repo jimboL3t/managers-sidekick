@@ -20,6 +20,9 @@ public final class TeamPicker extends JPanel {
         this(create,onOpen,onCopy,onDelete,onAnnual,language->{});
     }
     public TeamPicker(Runnable create,Consumer<Team> onOpen,Consumer<Team> onCopy,Consumer<Team> onDelete,Consumer<Team> onAnnual,Consumer<String> onLanguage){
+        this(create,onOpen,onCopy,onDelete,onAnnual,onLanguage,()->{});
+    }
+    public TeamPicker(Runnable create,Consumer<Team> onOpen,Consumer<Team> onCopy,Consumer<Team> onDelete,Consumer<Team> onAnnual,Consumer<String> onLanguage,Runnable settings){
         super(new BorderLayout(0,24));setBorder(BorderFactory.createEmptyBorder(36,36,28,36));
         JPanel title=new JPanel(new GridLayout(0,1,0,10));
         JLabel brand=new JLabel("Manager’s Sidekick",Logo.icon(42),SwingConstants.LEFT);brand.setIconTextGap(12);brand.setForeground(Theme.ACCENT);brand.setFont(new Font("SansSerif",Font.BOLD,28));title.add(brand);
@@ -28,7 +31,8 @@ public final class TeamPicker extends JPanel {
         JComboBox<String> language=new JComboBox<>(new String[]{"Ελληνικά","English"});language.setSelectedIndex(I18n.english()?1:0);
         language.setToolTipText("Γλώσσα / Language");language.getAccessibleContext().setAccessibleName("Γλώσσα / Language");
         language.addActionListener(e->onLanguage.accept(language.getSelectedIndex()==1?"en":"el"));
-        JPanel languages=new JPanel(new FlowLayout(FlowLayout.RIGHT,0,0));languages.add(language);
+        JButton display=new ActionButton(I18n.text("Ρυθμίσεις εμφάνισης"),ActionButton.Style.QUIET);display.addActionListener(e->settings.run());
+        JPanel languages=new JPanel(new FlowLayout(FlowLayout.RIGHT,0,0));languages.add(language);languages.add(display);
         JButton license=new ActionButton(I18n.text("Άδεια χρήσης"),ActionButton.Style.QUIET);
         license.addActionListener(e->{try(var in=TeamPicker.class.getResourceAsStream("/META-INF/sidekick/LICENSE")){
             String text="Manager’s Sidekick\nCopyright (C) 2026 Dimitrios Diamantis\nGPL-3.0-only — WITHOUT ANY WARRANTY\n\n"+new String(java.util.Objects.requireNonNull(in).readAllBytes(),java.nio.charset.StandardCharsets.UTF_8);
@@ -44,7 +48,7 @@ public final class TeamPicker extends JPanel {
             JPanel text=new JPanel(new GridLayout(2,1,0,8));text.setOpaque(false);
             JLabel name=new JLabel(team.name);name.setFont(new Font("SansSerif",Font.BOLD,18));text.add(name);
             JLabel detail=new JLabel(team.employees.size()+I18n.text(" εργαζόμενοι  ·  ")+team.posts.size()+I18n.text(" πόστα  ·  ")+team.months.size()+I18n.text(" μήνες"));detail.setForeground(Theme.MUTED);text.add(detail);row.add(text,BorderLayout.CENTER);
-            JLabel badge=new JLabel(team.sandbox?I18n.text("ΔΟΚΙΜΑΣΤΙΚΟ ΑΝΤΙΓΡΑΦΟ"):I18n.text("ΟΜΑΔΑ ΕΡΓΑΣΙΑΣ"));badge.setForeground(Theme.ACCENT);row.add(badge,BorderLayout.EAST);return row;
+            JLabel badge=new JLabel(team.sandbox?I18n.text("ΔΟΚΙΜΑΣΤΙΚΟ ΑΝΤΙΓΡΑΦΟ"):I18n.text("ΟΜΑΔΑ ΕΡΓΑΣΙΑΣ"));badge.setForeground(Theme.ACCENT);row.add(badge,BorderLayout.EAST);UiScale.apply(row);return row;
         });
         add(new JScrollPane(list));
         JPanel actions=new GlassPanel(new BorderLayout(12,14));actions.setBorder(BorderFactory.createEmptyBorder(18,18,18,18));

@@ -11,7 +11,7 @@ Manager’s Sidekick is a free, open-source desktop application for planning a t
 
 **[Downloads](https://github.com/jimboL3t/managers-sidekick/releases) · [Getting started](docs/PUBLICATION.en.md) · [Administrator guide](docs/ADMIN_GUIDE.en.md)**
 
-> **Version 1.2.2 is available.** [Download packages with Java included](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.2.2).
+> **Version 1.3.0 is available.** [Download packages with Java included](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.3.0).
 
 ![Monthly calendar with duties, rest days, locked assignments and coverage indicators](docs/images/calendar.png)
 *Calendar preview with sample data. The interface and PDFs support both English and Greek.*
@@ -47,7 +47,7 @@ Calculation runs when you request it. Coverage gaps and rule deviations remain v
 
 ## Get started
 
-1. Choose the **1.2.2 package** for Windows x64, Linux x64, macOS Apple Silicon or macOS Intel from [Releases](https://github.com/jimboL3t/managers-sidekick/releases).
+1. Choose the **1.3.0 package** for Windows x64, Linux x64, macOS Apple Silicon or macOS Intel from [Releases](https://github.com/jimboL3t/managers-sidekick/releases).
 2. Extract the entire archive into a writable folder. The platform packages include Java; no separate Java installation is needed.
 3. Follow the included `START-HERE`: Windows uses `start-windows.cmd`; Linux uses `sh start-linux.sh`; macOS uses `sh start-macos.command`.
 
@@ -72,7 +72,7 @@ Requires **JDK 21+** and **Maven 3.9+**. From the repository root:
 
 ```sh
 mvn clean verify
-java -jar target/managers-sidekick-1.2.2.jar
+java -jar target/managers-sidekick-1.3.0.jar
 ```
 
 Runtime libraries: Gson and Apache PDFBox; Swing is included in Java. Maven resolves dependencies automatically. Packaging instructions and pinned dependency/runtime sources are described in the [publication guide](docs/PUBLICATION.en.md).

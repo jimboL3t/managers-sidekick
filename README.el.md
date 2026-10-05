@@ -11,7 +11,7 @@
 
 **[Λήψεις](https://github.com/jimboL3t/managers-sidekick/releases) · [Πρώτα βήματα](docs/PUBLICATION.md) · [Εγχειρίδιο διαχειριστή](docs/ADMIN_GUIDE.md)**
 
-> **Η έκδοση 1.2.2 είναι διαθέσιμη.** [Κατέβασε τα πακέτα με ενσωματωμένη Java](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.2.2).
+> **Η έκδοση 1.3.0 είναι διαθέσιμη.** [Κατέβασε τα πακέτα με ενσωματωμένη Java](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.3.0).
 
 ![Μηνιαίο ημερολόγιο με υπηρεσίες, ρεπό, κλειδωμένες επιλογές και ενδείξεις κάλυψης](docs/images/calendar.png)
 *Προεπισκόπηση με ενδεικτικά δεδομένα. Το περιβάλλον και τα PDF υποστηρίζουν ελληνικά και αγγλικά.*
@@ -47,7 +47,7 @@
 
 ## Πρώτα βήματα
 
-1. Επίλεξε από τα [Releases](https://github.com/jimboL3t/managers-sidekick/releases) το πακέτο **1.2.2** για Windows x64, Linux x64, macOS Apple Silicon ή macOS Intel.
+1. Επίλεξε από τα [Releases](https://github.com/jimboL3t/managers-sidekick/releases) το πακέτο **1.3.0** για Windows x64, Linux x64, macOS Apple Silicon ή macOS Intel.
 2. Αποσυμπίεσε ολόκληρο το αρχείο σε εγγράψιμο φάκελο. Τα πακέτα λειτουργικών περιλαμβάνουν Java· δεν χρειάζεται χωριστή εγκατάσταση.
 3. Ακολούθησε το `START-HERE`: Windows `start-windows.cmd`, Linux `sh start-linux.sh`, macOS `sh start-macos.command`.
 
@@ -72,7 +72,7 @@
 
 ```sh
 mvn clean verify
-java -jar target/managers-sidekick-1.2.2.jar
+java -jar target/managers-sidekick-1.3.0.jar
 ```
 
 Βιβλιοθήκες εκτέλεσης: Gson και Apache PDFBox. Το Swing περιλαμβάνεται στη Java και το Maven εγκαθιστά τις εξαρτήσεις αυτόματα. [Οδηγίες δημιουργίας πακέτων και πηγών](docs/PUBLICATION.md).

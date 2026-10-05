@@ -31,7 +31,8 @@ public final class ScheduleTableModel extends AbstractTableModel {
     }
     @Override public Object getValueAt(int row,int column){
         Employee e=team.employees.get(row);
-        if(column==0)return e.name+"   ·   "+CalendarRules.count(team,e,month,OFF)+"/"+CalendarRules.offTarget(team,month)+I18n.text(" Ρ · ")+Scheduler.workCount(team,e,month)+"/"+Scheduler.workTarget(team,e,month)+I18n.text(" Β");
+        if(column==0&&Workload.reserve(team,e,month))return e.name+I18n.text(" · Εφεδρικός · ")+Scheduler.workCount(team,e,month)+I18n.text(" / έως ")+Scheduler.workTarget(team,e,month);
+        if(column==0)return e.name+"   ·   "+CalendarRules.count(team,e,month,OFF)+"/"+Workload.offTarget(team,e,month)+I18n.text(" Ρ · ")+Scheduler.workCount(team,e,month)+"/"+Scheduler.workTarget(team,e,month)+I18n.text(" Β");
         Cell cell=team.cell(e.id,month.atDay(column));
         return cell==null?"—":(cell.locked?"★ ":"")+label(data,team,cell.value);
     }

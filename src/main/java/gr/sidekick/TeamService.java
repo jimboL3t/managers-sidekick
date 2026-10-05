@@ -43,6 +43,11 @@ public final class TeamService {
                 cells.put(employees.getOrDefault(employee,employee)+key.substring(separator),cell);
             });
             month.cells=cells;
+            if(month.workPlans!=null){
+                Map<String,WorkPlan> plans=new LinkedHashMap<>();
+                month.workPlans.forEach((employee,plan)->plans.put(employees.getOrDefault(employee,employee),plan));
+                month.workPlans=plans;
+            }
         }
         data.teams.add(copy);
         return copy;
