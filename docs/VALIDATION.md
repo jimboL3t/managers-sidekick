@@ -1,3 +1,7 @@
+## Desktop review 1.4.0
+
+61 Java tests πέρασαν. Το bundled Temurin 21.0.12.1 στο macOS arm64 πέρασε έλεγχο Swing headless, scheduler, ιστορικού, αποθήκευσης και PDF. Το native app άνοιξε με ανεξάρτητη δοκιμαστική βάση. Το Windows EXE ελέγχθηκε ως x64 GUI executable με embedded icon και εισαγωγές μόνο KERNEL32/USER32· δεν εκτελέστηκε σε Windows. Οδηγίες: [Desktop πακέτα](DESKTOP.md). Δεν έγινε δημοσίευση.
+
 # Έλεγχοι έκδοσης 1.2.0
 
 [English](VALIDATION.en.md)
@@ -90,3 +94,5 @@
 ## Πακέτα ιστοσελίδας 1.2.1
 
 Το `scripts/verify_public.py` ελέγχει τα τελικά αρχεία, τα hashes κάθε κανονικού αρχείου, παρουσία αδειών και binary αρχιτεκτονική (PE x64, ELF x64, Mach-O arm64/x64). Στον Mac arm64 τρέχει το τελικό bundled Java/JAR για Swing headless, υπολογισμό, ιστορικό, JSON και PDF, χωρίς πρόσβαση σε πραγματικά δεδομένα. Το αποτέλεσμα αποθηκεύεται στο `VALIDATION.json` του upload set. Η native GUI εκτέλεση Windows/Linux/Intel Mac δεν έχει πραγματοποιηθεί.
+
+Νέες αλλαγές προγράμματος: 64 tests πέρασαν, με ελέγχους προτεραιότητας υποχρεωτικών υπηρεσιών, προαιρετικής κάλυψης/αποθήκευσης, ορίου 10 ημερών και δίγλωσσου PDF δύο σελίδων.

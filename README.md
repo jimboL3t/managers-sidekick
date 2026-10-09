@@ -13,6 +13,8 @@ Manager’s Sidekick is a free, open-source desktop application for planning a t
 
 > **Version 1.3.0 is available.** [Download packages with Java included](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.3.0).
 
+> **1.4.0 source preview:** optional duties, a configurable 1–10 consecutive-day limit (default 5), all duties preselected for new employees, and a bilingual quick-start PDF generator. Windows EXE/macOS DMG packaging is under review; downloads above remain 1.3.0. [Review and migration guide](docs/DESKTOP.en.md).
+
 ![Monthly calendar with duties, rest days, locked assignments and coverage indicators](docs/images/calendar.png)
 *Calendar preview with sample data. The interface and PDFs support both English and Greek.*
 

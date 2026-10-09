@@ -46,12 +46,13 @@ public final class Model {
     }
     public static class Post {
         public String id = id(), name, start, end;
-        public boolean nightDuty;
+        public boolean nightDuty, optional;
         public int[] demand = {1,1,1,1,1,1,1};
         public boolean[] operatingDays = {true,true,true,true,true,true,true};
         public boolean operates(LocalDate day) { return operatingDays==null || operatingDays[day.getDayOfWeek().getValue()-1]; }
         public Post(String name,String start,String end) { this.name=name;this.start=start;this.end=end; }
-        public int required(LocalDate day) { return operates(day)?Math.max(1,demand[day.getDayOfWeek().getValue()-1]):0; }
+        public int slots(LocalDate day) { return operates(day)?Math.max(1,demand[day.getDayOfWeek().getValue()-1]):0; }
+        public int required(LocalDate day) { return optional?0:slots(day); }
         public LocalDateTime startAt(LocalDate d) { return d.atTime(LocalTime.parse(start)); }
         public LocalDateTime endAt(LocalDate d) {
             LocalTime a=LocalTime.parse(start), b=LocalTime.parse(end);

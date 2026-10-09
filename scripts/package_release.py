@@ -32,7 +32,10 @@ def main():
     prefix = f"managers-sidekick-{version}"
     output = ROOT / "dist" / f"{prefix}-test.zip"
     output.parent.mkdir(exist_ok=True)
+    guide = ROOT / "quickStartGuide.pdf"
+    subprocess.run(["java", "-Djava.awt.headless=true", "-cp", str(jar), "gr.sidekick.QuickStartGuide", str(guide)], cwd=ROOT, check=True)
     files = {"managers-sidekick.jar": jar.read_bytes(), "START-HERE.md": (ROOT / "packaging/START-HERE.md").read_bytes()}
+    files["quickStartGuide.pdf"] = guide.read_bytes()
     files["LICENSE"] = (ROOT / "LICENSE").read_bytes()
     files["COPYING.md"] = (ROOT / "COPYING.md").read_bytes()
     files["START-HERE.en.md"] = (ROOT / "packaging/START-HERE.en.md").read_bytes()
@@ -75,6 +78,12 @@ def main():
         assert not any("/data/" in name or "/.git/" in name for name in archive.namelist())
     checksum = hashlib.sha256(output.read_bytes()).hexdigest()
     output.with_suffix(output.suffix + ".sha256").write_text(f"{checksum}  {output.name}\n")
+    write_sources(version)
+    print(f"Created: {output}\nSHA-256: {checksum}")
+
+
+def write_sources(version):
+    prefix = f"managers-sidekick-{version}"
     source_zip = ROOT / "dist" / f"{prefix}-source.zip"
     source_files = [ROOT / name for name in ("LICENSE", "COPYING.md", "README.md", "README.en.md", "README.el.md", "pom.xml", ".gitignore", ".mvn/maven.config")]
     for directory in ("src", "docs", "scripts", "packaging"):
@@ -85,8 +94,6 @@ def main():
     digest = hashlib.sha256(source_zip.read_bytes()).hexdigest()
     source_zip.with_suffix(source_zip.suffix + ".sha256").write_text(f"{digest}  {source_zip.name}\n")
     print(f"Application source: {source_zip}")
-    print(f"Created: {output}\nSHA-256: {checksum}")
-
 
 if __name__ == "__main__":
     main()

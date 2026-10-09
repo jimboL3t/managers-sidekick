@@ -1,3 +1,11 @@
+## New options (1.4.0, local review)
+
+- Greek terminology now uses «Υπηρεσίες» (Duties); stored assignments are unchanged.
+- Team settings allow 1–10 consecutive working days, default 5. Rest and all other rules still apply.
+- Select Optional duty when creating/editing a duty. Calculation first attempts mandatory coverage across the entire month, then optional coverage within availability and monthly targets. Optional gaps do not mark dates red. Existing duties remain mandatory; manual assignments remain protected.
+- New employees start with all existing duties selected. Uncheck exceptions. Existing employee skills are unchanged.
+- A bilingual quickStartGuide.pdf is included in the package folder.
+
 # Administrator guide — 1.0.0
 
 [New in 1.2: configurable night/weekend balancing. Administrator guide](FAIRNESS.en.md).

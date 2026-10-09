@@ -47,7 +47,7 @@ public final class TeamPicker extends JPanel {
             row.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0,0,1,0,Theme.PANEL),BorderFactory.createEmptyBorder(14,18,14,18)));
             JPanel text=new JPanel(new GridLayout(2,1,0,8));text.setOpaque(false);
             JLabel name=new JLabel(team.name);name.setFont(new Font("SansSerif",Font.BOLD,18));text.add(name);
-            JLabel detail=new JLabel(team.employees.size()+I18n.text(" εργαζόμενοι  ·  ")+team.posts.size()+I18n.text(" πόστα  ·  ")+team.months.size()+I18n.text(" μήνες"));detail.setForeground(Theme.MUTED);text.add(detail);row.add(text,BorderLayout.CENTER);
+            JLabel detail=new JLabel(team.employees.size()+I18n.text(" εργαζόμενοι  ·  ")+team.posts.size()+I18n.text(" υπηρεσίες  ·  ")+team.months.size()+I18n.text(" μήνες"));detail.setForeground(Theme.MUTED);text.add(detail);row.add(text,BorderLayout.CENTER);
             JLabel badge=new JLabel(team.sandbox?I18n.text("ΔΟΚΙΜΑΣΤΙΚΟ ΑΝΤΙΓΡΑΦΟ"):I18n.text("ΟΜΑΔΑ ΕΡΓΑΣΙΑΣ"));badge.setForeground(Theme.ACCENT);row.add(badge,BorderLayout.EAST);UiScale.apply(row);return row;
         });
         add(new JScrollPane(list));

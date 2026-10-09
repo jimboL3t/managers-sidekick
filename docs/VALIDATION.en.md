@@ -1,3 +1,7 @@
+## Desktop review 1.4.0
+
+61 Java tests passed. Bundled Temurin 21.0.12.1 on macOS arm64 passed headless Swing, scheduling, history, storage and PDF smoke checks. The native app launched using isolated sample data. The Windows EXE was inspected as an x64 GUI executable with an embedded icon and only KERNEL32/USER32 imports; it was not executed on Windows. See [Desktop packages](DESKTOP.en.md). No release was published.
+
 # Validation — 1.2.0
 
 [Ελληνικά](VALIDATION.md)
@@ -34,3 +38,5 @@ Four tests verify measurable balancing improvement without loss of coverage, mon
 ## Website packages 1.2.1
 
 `scripts/verify_public.py` verifies archive contents, regular-file hashes, licenses and PE/ELF/Mach-O target architectures. On macOS arm64 it executes the distributed Java/JAR for headless Swing, scheduling, history, JSON and PDF using temporary data. Results are written to the upload directory VALIDATION.json. Windows/Linux/Intel Mac native GUI acceptance remains pending.
+
+Scheduling update: 64 tests passed, including mandatory-duty priority, optional coverage/persistence, the ten-day limit, and a two-page bilingual quick-start PDF.

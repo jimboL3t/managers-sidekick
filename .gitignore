@@ -11,3 +11,6 @@ dist/
 .vscode/
 .env
 .env.*
+
+# Python packaging helpers
+__pycache__/

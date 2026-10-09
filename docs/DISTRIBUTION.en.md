@@ -1,3 +1,5 @@
+**Local 1.4.0 review:** [Windows EXE and macOS DMG, upgrades and data migration](DESKTOP.en.md).
+
 # Installation and distribution — 1.2.0
 
 **1.3.0:** [Website packages with Java, source archives and upload instructions](PUBLICATION.en.md).

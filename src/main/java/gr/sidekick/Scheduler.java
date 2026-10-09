@@ -45,19 +45,19 @@ public final class Scheduler {
             List<LocalDate> days=new ArrayList<>();for(int d=1;d<=ym.lengthOfMonth();d++)days.add(ym.atDay(d));
             if(attempt%3==1) Collections.reverse(days); else if(attempt%3==2)Collections.shuffle(days,random);
             int gaps=0;
-            for(LocalDate day:days) {
+            for(boolean optionalPhase:new boolean[]{false,true}) for(LocalDate day:days) {
                 if(m.lockedDays.contains(day.getDayOfMonth()))continue;
-                List<Post> posts=new ArrayList<>(t.posts);
+                List<Post> posts=new ArrayList<>(t.posts.stream().filter(p->p.optional==optionalPhase).toList());
                 Collections.shuffle(posts,random);
                 posts.sort(Comparator.comparingLong(p->t.employees.stream().filter(e->e.skills.contains(p.id)).count()));
                 for(Post p:posts) {
                     int filled=(int)t.employees.stream().filter(e->{Cell c=t.cell(e.id,day);return c!=null&&p.id.equals(c.value);}).count();
-                    for(int n=filled;n<p.required(day);n++) {
+                    for(int n=filled;n<p.slots(day);n++) {
                         List<Employee> candidates=new ArrayList<>();
                         for(Employee e:t.employees) if(t.cell(e.id,day)==null&&withinMonthlyBudget(t,e,ym)&&safe(t,e,day,p)) candidates.add(e);
                         Collections.shuffle(candidates,random);
                         candidates.sort(Comparator.<Employee,Boolean>comparing(e->Workload.reserve(t,e,ym)).thenComparingDouble(e->cost(t,e,day,ym)+(guide?fairness.marginal(e,p,day):0)));
-                        if(candidates.isEmpty()) {gaps++;continue;}
+                        if(candidates.isEmpty()) {if(!p.optional)gaps++;continue;}
                         Employee e=candidates.getFirst();m.cells.put(key(e.id,day.getDayOfMonth()),new Cell(p.id,false));
                     }
                 }
@@ -79,7 +79,7 @@ public final class Scheduler {
                 Cell c=t.cell(e.id,day);Post p=c==null?null:t.post(c.value);
                 if(p==null||c.locked||m.lockedDays.contains(day.getDayOfMonth()))continue;
                 long filled=t.employees.stream().filter(other->{Cell cell=t.cell(other.id,day);return cell!=null&&p.id.equals(cell.value);}).count();
-                if(filled>p.required(day))m.cells.remove(key(e.id,day.getDayOfMonth()));
+                if(filled>p.slots(day))m.cells.remove(key(e.id,day.getDayOfMonth()));
             }
             int quotaDeviation=0, unassigned=0;
             for(Employee e:t.employees) {
@@ -167,7 +167,7 @@ public final class Scheduler {
             if(p==null&&(!leaves(data,t).containsKey(c.value)||!t.allowedLeaves.contains(c.value)))issues.add(day+" · "+e.name+I18n.text(": μη επιτρεπόμενη άδεια"));
         }
         for(Employee e:t.employees) {
-            if(t.posts.stream().noneMatch(p->e.skills.contains(p.id)))issues.add(e.name+I18n.text(": δεν έχουν επιλεγεί επιτρεπόμενα πόστα. Ορίστε τα από «Δεξιότητες»."));
+            if(t.posts.stream().noneMatch(p->e.skills.contains(p.id)))issues.add(e.name+I18n.text(": δεν έχουν επιλεγεί επιτρεπόμενες υπηρεσίες. Ορίστε τα από «Δεξιότητες»."));
             if(t.preferFullWeekend&&!Workload.reserve(t,e,ym)&&!CalendarRules.fullWeekendOff(t,e,ym))issues.add(e.name+I18n.text(": δεν βρέθηκε πλήρες Σαββατοκύριακο ρεπό στον μήνα"));
             int actual=CalendarRules.count(t,e,ym,OFF), target=Workload.offTarget(t,e,ym);
             int empty=0;for(int d=1;d<=ym.lengthOfMonth();d++)if(t.cell(e.id,ym.atDay(d))==null)empty++;
@@ -185,7 +185,7 @@ public final class Scheduler {
         if(!t.months.containsKey(ym.plusMonths(1).toString()))issues.add(I18n.text("Προειδοποίηση: απουσιάζει ο επόμενος μήνας· απαιτείται έλεγχος όταν δημιουργηθεί."));
         for(Employee e:t.employees) {
             boolean missing=false;
-            for(int i=1;i<=7;i++) if(t.cell(e.id,ym.atDay(1).minusDays(i))==null || t.cell(e.id,ym.atEndOfMonth().plusDays(i))==null) missing=true;
+            for(int i=1;i<=Math.max(7,t.maxConsecutive);i++) if(t.cell(e.id,ym.atDay(1).minusDays(i))==null || t.cell(e.id,ym.atEndOfMonth().plusDays(i))==null) missing=true;
             if(missing) issues.add(I18n.text("Προειδοποίηση: ")+e.name+I18n.text(": ελλιπές ιστορικό στις γειτονικές ημέρες του μήνα."));
         }
         return issues;
