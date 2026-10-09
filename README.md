@@ -11,9 +11,8 @@ Manager’s Sidekick is a free, open-source desktop application for planning a t
 
 **[Downloads](https://github.com/jimboL3t/managers-sidekick/releases) · [Getting started](docs/PUBLICATION.en.md) · [Administrator guide](docs/ADMIN_GUIDE.en.md)**
 
-> **Version 1.3.0 is available.** [Download packages with Java included](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.3.0).
+> **Version 1.4.0 is available.** [Download packages with Java included](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.4.0).
 
-> **1.4.0 source preview:** optional duties, a configurable 1–10 consecutive-day limit (default 5), all duties preselected for new employees, and a bilingual quick-start PDF generator. Windows EXE/macOS DMG packaging is under review; downloads above remain 1.3.0. [Review and migration guide](docs/DESKTOP.en.md).
 
 ![Monthly calendar with duties, rest days, locked assignments and coverage indicators](docs/images/calendar.png)
 *Calendar preview with sample data. The interface and PDFs support both English and Greek.*
@@ -49,7 +48,7 @@ Calculation runs when you request it. Coverage gaps and rule deviations remain v
 
 ## Get started
 
-1. Choose the **1.3.0 package** for Windows x64, Linux x64, macOS Apple Silicon or macOS Intel from [Releases](https://github.com/jimboL3t/managers-sidekick/releases).
+1. Choose the **1.4.0 package** for Windows x64, Linux x64, macOS Apple Silicon or macOS Intel from [Releases](https://github.com/jimboL3t/managers-sidekick/releases).
 2. Extract the entire archive into a writable folder. The platform packages include Java; no separate Java installation is needed.
 3. Follow the included `START-HERE`: Windows uses `start-windows.cmd`; Linux uses `sh start-linux.sh`; macOS uses `sh start-macos.command`.
 
@@ -74,7 +73,7 @@ Requires **JDK 21+** and **Maven 3.9+**. From the repository root:
 
 ```sh
 mvn clean verify
-java -jar target/managers-sidekick-1.3.0.jar
+java -jar target/managers-sidekick-1.4.0.jar
 ```
 
 Runtime libraries: Gson and Apache PDFBox; Swing is included in Java. Maven resolves dependencies automatically. Packaging instructions and pinned dependency/runtime sources are described in the [publication guide](docs/PUBLICATION.en.md).
@@ -84,3 +83,5 @@ Runtime libraries: Gson and Apache PDFBox; Swing is included in Java. Maven reso
 Copyright © 2026 Dimitrios Diamantis. Application licensed under **GPL-3.0-only**. [License](LICENSE) · [Copyright](COPYING.md) · [Distribution details](docs/LICENSING.en.md).
 
 Each distributed version includes a separate **`all-sources.zip`** with matching application, library and Java sources. GitHub's automatic source ZIP contains only this repository. Third-party licenses and notices remain included in the platform packages.
+
+**1.4.0 packages:** Windows x64 portable EXE, Linux x64 portable archive, macOS Apple Silicon DMG. Desktop acceptance testing is in progress. [Install, upgrade and back up](docs/DESKTOP.en.md).

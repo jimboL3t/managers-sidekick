@@ -1,8 +1,8 @@
-# Version 1.4.0 — local desktop package review
+# Version 1.4.0 — desktop packages
 
 [Ελληνικά](DESKTOP.md)
 
-The 1.4.0 source is available for review. No release with the new EXE/DMG packages has been published. Version 1.3.0 remains the public download.
+Version 1.4.0 is downloadable from GitHub. Full desktop installation/upgrade acceptance on Windows, Linux and Mac remains in progress.
 
 ## Windows 64-bit: portable with an application icon
 
@@ -40,6 +40,12 @@ On macOS with a JDK, Maven, Python 3.12+ and MinGW (`brew install mingw-w64`):
 python3 scripts/package_desktop.py
 ```
 
-The script verifies existing runtime/source archives in `dist/release-cache`, runs Java tests and produces `dist/desktop-review-1.4.0`. It does not commit, upload, or change the website. Build an Intel DMG on an Intel Mac. Bundled Java comes from `packaging/runtime-lock.json`, not from the build machine's JDK. Supply the matching full source bundle alongside a future public distribution.
+The script verifies existing runtime/source archives in `dist/release-cache`, runs Java tests and produces `dist/release-1.4.0`. It does not commit, upload, or change the website. The currently locked DMG build targets Apple Silicon only. Bundled Java comes from `packaging/runtime-lock.json`, not from the build machine's JDK. Supply the matching full source bundle alongside a future public distribution.
 
 Windows acceptance requires execution on Windows: launch, save, restart, PDF export, and a shortcut with a different working directory. Inspecting the EXE on macOS does not replace Windows execution testing.
+
+## Linux x64
+
+Extract the entire tar.gz and run `sh start-linux.sh` from its folder in a graphical desktop session. Java is bundled; desktop libraries and a Greek-capable font (e.g. DejaVu Sans) must be present. Data remains in the portable `data` folder. Back up and copy that folder into the new package before upgrading.
+
+All packages include `quickStartGuide.pdf`; it is also a separate release download. macOS includes it inside the application bundle. Download all-sources alongside binaries when redistributing. ARM Linux is not included; these Linux binaries require x64.

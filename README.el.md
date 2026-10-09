@@ -11,7 +11,7 @@
 
 **[Λήψεις](https://github.com/jimboL3t/managers-sidekick/releases) · [Πρώτα βήματα](docs/PUBLICATION.md) · [Εγχειρίδιο διαχειριστή](docs/ADMIN_GUIDE.md)**
 
-> **Η έκδοση 1.3.0 είναι διαθέσιμη.** [Κατέβασε τα πακέτα με ενσωματωμένη Java](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.3.0).
+> **Η έκδοση 1.4.0 είναι διαθέσιμη.** [Κατέβασε τα πακέτα με ενσωματωμένη Java](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.4.0).
 
 ![Μηνιαίο ημερολόγιο με υπηρεσίες, ρεπό, κλειδωμένες επιλογές και ενδείξεις κάλυψης](docs/images/calendar.png)
 *Προεπισκόπηση με ενδεικτικά δεδομένα. Το περιβάλλον και τα PDF υποστηρίζουν ελληνικά και αγγλικά.*
@@ -47,7 +47,7 @@
 
 ## Πρώτα βήματα
 
-1. Επίλεξε από τα [Releases](https://github.com/jimboL3t/managers-sidekick/releases) το πακέτο **1.3.0** για Windows x64, Linux x64, macOS Apple Silicon ή macOS Intel.
+1. Επίλεξε από τα [Releases](https://github.com/jimboL3t/managers-sidekick/releases) το πακέτο **1.4.0** για Windows x64, Linux x64, macOS Apple Silicon ή macOS Intel.
 2. Αποσυμπίεσε ολόκληρο το αρχείο σε εγγράψιμο φάκελο. Τα πακέτα λειτουργικών περιλαμβάνουν Java· δεν χρειάζεται χωριστή εγκατάσταση.
 3. Ακολούθησε το `START-HERE`: Windows `start-windows.cmd`, Linux `sh start-linux.sh`, macOS `sh start-macos.command`.
 
@@ -72,7 +72,7 @@
 
 ```sh
 mvn clean verify
-java -jar target/managers-sidekick-1.3.0.jar
+java -jar target/managers-sidekick-1.4.0.jar
 ```
 
 Βιβλιοθήκες εκτέλεσης: Gson και Apache PDFBox. Το Swing περιλαμβάνεται στη Java και το Maven εγκαθιστά τις εξαρτήσεις αυτόματα. [Οδηγίες δημιουργίας πακέτων και πηγών](docs/PUBLICATION.md).
@@ -83,4 +83,5 @@ Copyright © 2026 Dimitrios Diamantis. Η εφαρμογή διατίθεται 
 
 Κάθε διανεμόμενη έκδοση συνοδεύεται από **`all-sources.zip`** με τις αντίστοιχες πηγές εφαρμογής, βιβλιοθηκών και Java. Το αυτόματο Source code ZIP του GitHub περιέχει μόνο το repository. Οι άδειες και ειδοποιήσεις τρίτων περιλαμβάνονται στα πακέτα λειτουργικών.
 
-> **Προεπισκόπηση κώδικα 1.4.0:** προαιρετικές υπηρεσίες, όριο 1–10 συνεχόμενων ημερών (προεπιλογή 5), προεπιλογή όλων των υπηρεσιών για νέους εργαζομένους και δημιουργία δίγλωσσου quick-start PDF. Τα νέα EXE/DMG είναι υπό δοκιμή· η δημόσια λήψη παραμένει 1.3.0. [Οδηγός δοκιμής και μεταφοράς](docs/DESKTOP.md).
+
+**Πακέτα 1.4.0:** Windows x64 portable EXE, Linux x64, macOS Apple Silicon DMG. Οι δοκιμές στα desktop συνεχίζονται. [Εγκατάσταση, αναβάθμιση και backup](docs/DESKTOP.md).
