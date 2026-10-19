@@ -29,6 +29,7 @@ public final class App extends JFrame {
     private final JSpinner year=new JSpinner(new SpinnerNumberModel(LocalDate.now().getYear(),1900,2200,1));
     private final JTable grid=new MonthTable(this::team,this::ym,()->uncovered);
     private FrozenNames frozenNames;
+    private CalendarZoom calendarZoom;
     private final JTextArea report=new JTextArea(6,100);
     private final JLabel status=new JLabel(" ");
     private boolean busy;
@@ -87,7 +88,9 @@ public final class App extends JFrame {
         };controlScroll.setBorder(null);root.add(controlScroll,BorderLayout.NORTH);
         report.setEditable(false);report.setLineWrap(true);report.setWrapStyleWord(true);report.setMargin(new Insets(12,12,12,12));report.setForeground(Theme.MUTED);
         JScrollPane schedule=new JScrollPane(grid);frozenNames=new FrozenNames(grid,schedule);schedule.setColumnHeaderView(grid.getTableHeader());schedule.getViewport().setBackground(Theme.BACKGROUND);
-        JSplitPane split=new JSplitPane(JSplitPane.VERTICAL_SPLIT,schedule,new JScrollPane(report));split.setResizeWeight(.85);split.setBorder(null);root.add(split);
+        calendarZoom=new CalendarZoom(grid,frozenNames);
+        JPanel calendar=new JPanel(new BorderLayout());calendar.add(schedule,BorderLayout.CENTER);calendar.add(calendarZoom,BorderLayout.SOUTH);
+        JSplitPane split=new JSplitPane(JSplitPane.VERTICAL_SPLIT,calendar,new JScrollPane(report));split.setResizeWeight(.85);split.setBorder(null);root.add(split);
         JPanel footer=new JPanel(new GridLayout(2,1,0,8));
         JLabel legend=new JLabel(I18n.text("★ Κλειδωμένο   ·   Μωβ φόντο: Σαββατοκύριακο   ·   Πράσινο φόντο: Αργία   ·   Κόκκινη ημερομηνία: ελλιπής κάλυψη"));legend.setForeground(Theme.MUTED);
         footer.add(legend);footer.add(status);JPanel signature=new JPanel(new BorderLayout(16,0));signature.add(footer,BorderLayout.CENTER);signature.add(CompanyBrand.label(),BorderLayout.EAST);root.add(signature,BorderLayout.SOUTH);
@@ -111,10 +114,10 @@ public final class App extends JFrame {
         catch(Exception e){data.language=previous;I18n.setLanguage(previous);save();error(e);}
     }
     private void displaySettings(){
-        JComboBox<String> scale=new JComboBox<>(new String[]{I18n.text("100% (προεπιλογή)"),"125%","150%","175%","200%"});
-        scale.setSelectedIndex((UiScale.normalize(data.uiScale)-100)/25);
+        JComboBox<String> scale=new JComboBox<>(new String[]{"50%","75%",I18n.text("100% (προεπιλογή)"),"125%","150%","175%","200%"});
+        scale.setSelectedIndex((UiScale.normalize(data.uiScale)-50)/25);
         if(JOptionPane.showConfirmDialog(this,scale,I18n.text("Κλίμακα εμφάνισης"),JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE)!=JOptionPane.OK_OPTION)return;
-        int previous=data.uiScale;data.uiScale=100+25*scale.getSelectedIndex();
+        int previous=data.uiScale;data.uiScale=50+25*scale.getSelectedIndex();
         if(!save()){data.uiScale=previous;return;}
         UiScale.set(data.uiScale);UiScale.apply(pages);refresh();teamPicker.repaint();
     }
@@ -197,10 +200,9 @@ public final class App extends JFrame {
         teamHeading.setText(t==null?"":t.name+(t.sandbox?I18n.text(" · Δοκιμαστικό αντίγραφο"):I18n.text(" · Ομάδα εργασίας")));
         monthTitle.setText(month.getSelectedItem()+" "+year.getValue());
         grid.setModel(new ScheduleTableModel(data,t,date,()->{save();validateMonth();grid.getTableHeader().repaint();},()->!busy));
-        for(int c=1;c<grid.getColumnCount();c++)grid.getColumnModel().getColumn(c).setPreferredWidth(UiScale.px(104));
-        frozenNames.refresh();
+        calendarZoom.applyZoom();
         grid.setDefaultEditor(Object.class,new DefaultCellEditor(new JComboBox<Choice>()){
-            public Component getTableCellEditorComponent(JTable table,Object value,boolean selected,int row,int col){JComboBox<Choice> combo=new JComboBox<>();combo.addItem(new Choice(null,I18n.text("— Κενό")));Employee e=t.employees.get(row);for(Post p:t.posts)combo.addItem(new Choice(p.id,p.name+(p.operates(date.atDay(col))?"":I18n.text(" (εκτός ημερών λειτουργίας)"))+(e.skills.contains(p.id)?"":I18n.text(" (εκτός δεξιοτήτων)"))));for(String id:t.allowedLeaves)combo.addItem(new Choice(id,label(data,t,id)));Cell current=t.cell(e.id,date.atDay(col));for(int i=0;i<combo.getItemCount();i++)if(Objects.equals(combo.getItemAt(i).id(),current==null?null:current.value))combo.setSelectedIndex(i);combo.addActionListener(event->stopCellEditing());UiScale.apply(combo);editorComponent=combo;return combo;}
+            public Component getTableCellEditorComponent(JTable table,Object value,boolean selected,int row,int col){JComboBox<Choice> combo=new JComboBox<>();combo.addItem(new Choice(null,I18n.text("— Κενό")));Employee e=t.employees.get(row);for(Post p:t.posts)combo.addItem(new Choice(p.id,p.name+(p.operates(date.atDay(col))?"":I18n.text(" (εκτός ημερών λειτουργίας)"))+(e.skills.contains(p.id)?"":I18n.text(" (εκτός δεξιοτήτων)"))));for(String id:t.allowedLeaves)combo.addItem(new Choice(id,label(data,t,id)));Cell current=t.cell(e.id,date.atDay(col));for(int i=0;i<combo.getItemCount();i++)if(Objects.equals(combo.getItemAt(i).id(),current==null?null:current.value))combo.setSelectedIndex(i);combo.addActionListener(event->stopCellEditing());UiScale.apply(combo);combo.setFont(grid.getFont());editorComponent=combo;return combo;}
             public Object getCellEditorValue(){return ((JComboBox<?>)editorComponent).getSelectedItem();}
         });validateMonth();
     }

@@ -85,3 +85,5 @@ Copyright © 2026 Dimitrios Diamantis. Application licensed under **GPL-3.0-only
 Each distributed version includes a separate **`all-sources.zip`** with matching application, library and Java sources. GitHub's automatic source ZIP contains only this repository. Third-party licenses and notices remain included in the platform packages.
 
 **1.4.0 packages:** Windows x64 portable EXE, Linux x64 portable archive, macOS Apple Silicon DMG. Desktop acceptance testing is in progress. [Install, upgrade and back up](docs/DESKTOP.en.md).
+
+**1.5.0 source update:** independent calendar zoom for days and employees (50–200%), plus overall application zoom down to 50%. [User guide](docs/ADMIN_GUIDE.en.md). Downloads remain 1.4.0 until new packages are published.

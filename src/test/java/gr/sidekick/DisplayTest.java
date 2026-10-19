@@ -41,7 +41,7 @@ class DisplayTest {
                 MonthTable table=new MonthTable(()->t,()->month,()->Set.of(8));table.setModel(new ScheduleTableModel(data,t,month,()->{},()->true));
                 JScrollPane scroll=new JScrollPane(table);FrozenNames names=new FrozenNames(table,scroll);
                 JPanel panel=new JPanel(new BorderLayout(0,12));JPanel buttons=new JPanel();buttons.add(new ActionButton("Save",ActionButton.Style.PRIMARY));buttons.add(new ActionButton("Export PDF",ActionButton.Style.EXPORT));panel.add(buttons,BorderLayout.NORTH);panel.add(scroll);
-                for(int scale:new int[]{100,150,200}){
+                for(int scale:new int[]{50,75,100,150,200}){
                     UiScale.set(scale);UiScale.apply(panel);for(int i=1;i<table.getColumnCount();i++)table.getColumnModel().getColumn(i).setPreferredWidth(UiScale.px(104));names.refresh();
                     panel.setSize(1440,800);layout(panel);scroll.getViewport().setViewPosition(new Point(400,0));
                     var image=new java.awt.image.BufferedImage(1440,800,java.awt.image.BufferedImage.TYPE_INT_RGB);Graphics2D g=image.createGraphics();panel.printAll(g);g.dispose();javax.imageio.ImageIO.write(image,"png",Path.of("target","display-"+scale+".png").toFile());

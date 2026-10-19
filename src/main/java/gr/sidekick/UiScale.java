@@ -17,7 +17,7 @@ public final class UiScale {
     private static final Map<Component,Base> bases=new WeakHashMap<>();
     private record Base(Font font,Dimension preferred,Dimension minimum,Border border,Icon icon,int rowHeight,int cellHeight,int cellWidth){}
     private UiScale(){}
-    public static int normalize(int value){return Set.of(100,125,150,175,200).contains(value)?value:100;}
+    public static int normalize(int value){return Set.of(50,75,100,125,150,175,200).contains(value)?value:100;}
     public static void set(int value){percent=normalize(value);}
     public static int percent(){return percent;}
     public static int px(int value){return Math.round(value*percent/100f);}

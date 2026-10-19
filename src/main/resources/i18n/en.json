@@ -224,5 +224,8 @@
   " υπηρεσίες   ·   Αυτόματος στόχος ": " duties   ·   Automatic target ",
   " ρεπό (πριν τις ατομικές ρυθμίσεις)   ·   ": " rest days (before individual settings)   ·   ",
   "Προαιρετική υπηρεσία": "Optional duty",
-  "Κάλυψη μόνο αφού καλυφθούν οι υποχρεωτικές υπηρεσίες": "Covered only after mandatory duties"
+  "Κάλυψη μόνο αφού καλυφθούν οι υποχρεωτικές υπηρεσίες": "Covered only after mandatory duties",
+  "Ημέρες (Χ)": "Days (X)",
+  "Εργαζόμενοι (Υ)": "Employees (Y)",
+  "Επαναφορά zoom": "Reset zoom"
 }

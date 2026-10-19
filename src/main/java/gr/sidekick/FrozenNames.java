@@ -9,6 +9,9 @@ import java.awt.*;
 /** A row header sharing the calendar model and row selection. */
 public final class FrozenNames {
     private final JTable days;
+    private int horizontalPercent=100;
+    public void setHorizontalPercent(int value){horizontalPercent=value;}
+    private int nameWidth(){return Math.max(1,Math.round(UiScale.px(340)*horizontalPercent/100f));}
     private final JTable names=new JTable();
     public FrozenNames(JTable days,JScrollPane scroll){
         this.days=days;
@@ -32,10 +35,10 @@ public final class FrozenNames {
         names.setModel(days.getModel());
         while(names.getColumnCount()>0)names.removeColumn(names.getColumnModel().getColumn(0));
         if(days.getColumnCount()==0)return;
-        TableColumn column=new TableColumn(0,UiScale.px(340));column.setHeaderValue(days.getModel().getColumnName(0));names.addColumn(column);
+        TableColumn column=new TableColumn(0,nameWidth());column.setHeaderValue(days.getModel().getColumnName(0));names.addColumn(column);
         names.setRowHeight(days.getRowHeight());names.setFont(days.getFont());
-        names.setPreferredScrollableViewportSize(new Dimension(UiScale.px(340),0));
-        names.getTableHeader().setPreferredSize(new Dimension(UiScale.px(340),days.getTableHeader().getPreferredSize().height));
+        names.setPreferredScrollableViewportSize(new Dimension(nameWidth(),0));
+        names.getTableHeader().setPreferredSize(new Dimension(nameWidth(),days.getTableHeader().getPreferredSize().height));
         TableColumn hidden=days.getColumnModel().getColumn(0);hidden.setMinWidth(0);hidden.setMaxWidth(0);hidden.setPreferredWidth(0);hidden.setWidth(0);
     }
     JTable table(){return names;}

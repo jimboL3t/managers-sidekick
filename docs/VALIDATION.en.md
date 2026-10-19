@@ -40,3 +40,7 @@ Four tests verify measurable balancing improvement without loss of coverage, mon
 `scripts/verify_public.py` verifies archive contents, regular-file hashes, licenses and PE/ELF/Mach-O target architectures. On macOS arm64 it executes the distributed Java/JAR for headless Swing, scheduling, history, JSON and PDF using temporary data. Results are written to the upload directory VALIDATION.json. Windows/Linux/Intel Mac native GUI acceptance remains pending.
 
 Scheduling update: 64 tests passed, including mandatory-duty priority, optional coverage/persistence, the ten-day limit, and a two-page bilingual quick-start PDF.
+
+## Local 1.5.0 review
+
+66 tests passed: independent zoom axes, frozen-column alignment, reversible 50%/75% application scaling, unchanged model and manual cells. Runnable JAR built. Manual GUI acceptance is pending; no commit or release.

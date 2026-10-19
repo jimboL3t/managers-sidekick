@@ -85,3 +85,5 @@ Copyright © 2026 Dimitrios Diamantis. Η εφαρμογή διατίθεται 
 
 
 **Πακέτα 1.4.0:** Windows x64 portable EXE, Linux x64, macOS Apple Silicon DMG. Οι δοκιμές στα desktop συνεχίζονται. [Εγκατάσταση, αναβάθμιση και backup](docs/DESKTOP.md).
+
+**Κώδικας 1.5.0:** ανεξάρτητο zoom ημερών και εργαζομένων (50–200%) και συνολική κλίμακα έως 50%. [Εγχειρίδιο](docs/ADMIN_GUIDE.md). Οι λήψεις παραμένουν 1.4.0 μέχρι τη δημοσίευση νέων πακέτων.

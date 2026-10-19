@@ -1,3 +1,9 @@
+## 1.5.0 preview: calendar zoom
+
+Below the calendar, Days (X) and Employees (Y) independently adjust column width and row height (50–200%). Text follows the smaller scale to preserve its proportions. Frozen names stay aligned. Reset zoom restores both axes to 100%. Axis settings persist across month navigation in the same window, but not after closing it. They do not affect scheduling or PDF exports.
+
+Team-selection display settings now offer overall scaling at 50%, 75%, 100%, 125%, 150%, 175%, 200%. Overall scaling is saved and multiplies the calendar zoom factors.
+
 ## New options (1.4.0, local review)
 
 - Greek terminology now uses «Υπηρεσίες» (Duties); stored assignments are unchanged.
