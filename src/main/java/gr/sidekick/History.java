@@ -14,7 +14,7 @@ public final class History {
   JsonObject months=new JsonObject();months.add(month.toString(),GSON.toJsonTree(team.month(month)));tree.add("months",months);
   Revision revision=new Revision();revision.created=Instant.now().toString();revision.month=month.toString();revision.note=note;revision.snapshot=tree.toString();team.history.add(revision);return revision;
  }
- public static Team read(Revision revision){return GSON.fromJson(revision.snapshot,Team.class);}
+ public static Team read(Revision revision){Team t=GSON.fromJson(revision.snapshot,Team.class);HistoryPatterns.normalize(t);return t;}
  public static Team restoreCopy(Data data,Revision revision,String name){
   Team frozen=read(revision);data.teams.add(frozen);
   try{return TeamService.duplicate(data,frozen,name);}finally{data.teams.remove(frozen);}

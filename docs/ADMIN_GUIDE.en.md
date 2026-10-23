@@ -1,3 +1,7 @@
+## Version 1.6.0
+
+[History patterns and reorganized menus](PATTERNS.en.md): month approval, employee participation and preview instructions. Patterns are disabled by default.
+
 ## 1.5.0 preview: calendar zoom
 
 Below the calendar, Days (X) and Employees (Y) independently adjust column width and row height (50–200%). Text follows the smaller scale to preserve its proportions. Frozen names stay aligned. Reset zoom restores both axes to 100%. Axis settings persist across month navigation in the same window, but not after closing it. They do not affect scheduling or PDF exports.

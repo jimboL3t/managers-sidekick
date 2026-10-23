@@ -44,3 +44,7 @@ Scheduling update: 64 tests passed, including mandatory-duty priority, optional 
 ## Local 1.5.0 review
 
 66 tests passed: independent zoom axes, frozen-column alignment, reversible 50%/75% application scaling, unchanged model and manual cells. Runnable JAR built. Manual GUI acceptance is pending; no commit or release.
+
+## 1.6.0 validation
+
+76 tests cover approval windows, independent snapshots, holiday/rest exclusion, broken sequences across gaps, shift triples, opt-out/disabled/minimum samples, storage/team copies, legacy history, and preservation of manual assignments and mandatory coverage. Generated schedules measurably follow learned preferences. The dialog was visually inspected in headless Swing; manual desktop acceptance remains pending. Additional regressions cover unchanged scheduling without training evidence, hard constraints under strong learned preferences, and preservation of approvals hidden while editing earlier months.

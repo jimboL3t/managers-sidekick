@@ -34,8 +34,8 @@ class OptionalDutyTest {
  @Test void quickGuideHasBothLanguages()throws Exception{
   Path pdf=temp.resolve("guide.pdf");QuickStartGuide.export(pdf);
   try(var doc=org.apache.pdfbox.Loader.loadPDF(pdf.toFile())){
-   assertEquals(2,doc.getNumberOfPages());String text=new org.apache.pdfbox.text.PDFTextStripper().getText(doc);
-   assertTrue(text.contains("Quick start"));assertTrue(text.contains("Γρήγορη εκκίνηση"));assertTrue(text.contains("managersSidekick.exe"));
+   assertEquals(4,doc.getNumberOfPages());String text=new org.apache.pdfbox.text.PDFTextStripper().getText(doc);
+   assertTrue(text.indexOf("Quick start")<text.indexOf("Γρήγορη εκκίνηση"));assertTrue(text.contains("Planning settings & history patterns"));assertTrue(text.contains("Ρυθμίσεις σχεδιασμού & πρότυπα ιστορικού"));assertTrue(text.contains("Γρήγορη εκκίνηση"));assertTrue(text.contains("managersSidekick.exe"));
   }
  }
 }

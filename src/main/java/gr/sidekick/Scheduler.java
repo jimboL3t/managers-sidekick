@@ -9,8 +9,8 @@ import static gr.sidekick.Model.*;
 
 /** Bounded multi-start heuristic; never claims that failure proves infeasibility. */
 public final class Scheduler {
-    private record Score(int gaps,int quota,int empty,int weekends,int reserves,double preferences) implements Comparable<Score>{
-        public int compareTo(Score other){int c=Integer.compare(gaps,other.gaps);if(c==0)c=Integer.compare(quota,other.quota);if(c==0)c=Integer.compare(empty,other.empty);if(c==0)c=Integer.compare(reserves,other.reserves);if(c==0)c=Integer.compare(weekends,other.weekends);return c==0?Double.compare(preferences,other.preferences):c;}
+    private record Score(int gaps,int quota,int empty,int weekends,int reserves,double fairnessPriority,double preferences) implements Comparable<Score>{
+        public int compareTo(Score other){int c=Integer.compare(gaps,other.gaps);if(c==0)c=Integer.compare(quota,other.quota);if(c==0)c=Integer.compare(empty,other.empty);if(c==0)c=Integer.compare(reserves,other.reserves);if(c==0)c=Integer.compare(weekends,other.weekends);if(c==0)c=Double.compare(fairnessPriority,other.fairnessPriority);return c==0?Double.compare(preferences,other.preferences):c;}
     }
     private boolean work(Team t,Employee e,LocalDate d) { Cell c=t.cell(e.id,d);return c!=null&&t.post(c.value)!=null; }
     private boolean safe(Team t,Employee e,LocalDate d,Post p) {
@@ -36,12 +36,12 @@ public final class Scheduler {
         Model.Month m=t.month(ym);Map<String,Cell> fixed=new LinkedHashMap<>();
         m.cells.forEach((k,v)->{if(v.locked||m.lockedDays.contains(Integer.parseInt(k.substring(k.lastIndexOf(':')+1))))fixed.put(k,v);});
         Map<String,Cell> best=null;Score bestScore=null;
-        Fairness.Context fairness=new Fairness.Context(t,ym);boolean balancing=t.nightBalanceWeight>0||t.weekendBalanceWeight>0;
+        Fairness.Context fairness=new Fairness.Context(t,ym);HistoryPatterns.Context patterns=new HistoryPatterns.Context(t,ym);boolean usePatterns=t.employees.stream().anyMatch(patterns::active);boolean balancing=t.nightBalanceWeight>0||t.weekendBalanceWeight>0||usePatterns;
         Random random=new Random(seed);
         for(int attempt=0;attempt<(balancing?360:180);attempt++) {
             m.cells=new LinkedHashMap<>(fixed);
             if(t.preferFullWeekend&&attempt%2==1)reserveWeekends(t,ym,random);
-            boolean guide=balancing&&attempt>=180;
+            boolean guide=balancing&&attempt>=180;boolean patternGuide=usePatterns&&attempt%2==1;
             List<LocalDate> days=new ArrayList<>();for(int d=1;d<=ym.lengthOfMonth();d++)days.add(ym.atDay(d));
             if(attempt%3==1) Collections.reverse(days); else if(attempt%3==2)Collections.shuffle(days,random);
             int gaps=0;
@@ -56,7 +56,7 @@ public final class Scheduler {
                         List<Employee> candidates=new ArrayList<>();
                         for(Employee e:t.employees) if(t.cell(e.id,day)==null&&withinMonthlyBudget(t,e,ym)&&safe(t,e,day,p)) candidates.add(e);
                         Collections.shuffle(candidates,random);
-                        candidates.sort(Comparator.<Employee,Boolean>comparing(e->Workload.reserve(t,e,ym)).thenComparingDouble(e->cost(t,e,day,ym)+(guide?fairness.marginal(e,p,day):0)));
+                        candidates.sort(Comparator.<Employee,Boolean>comparing(e->Workload.reserve(t,e,ym)).thenComparingDouble(e->cost(t,e,day,ym)+(guide?fairness.marginal(e,p,day):0)+(patternGuide?patterns.preference(e,p,day):0)));
                         if(candidates.isEmpty()) {if(!p.optional)gaps++;continue;}
                         Employee e=candidates.getFirst();m.cells.put(key(e.id,day.getDayOfMonth()),new Cell(p.id,false));
                     }
@@ -70,7 +70,7 @@ public final class Scheduler {
                 List<Post> eligible=new ArrayList<>();
                 for(Post p:t.posts)if(safe(t,e,day,p))eligible.add(p);
                 Collections.shuffle(eligible,random);
-                eligible.sort(Comparator.comparingDouble(p->t.employees.stream().filter(person->{Cell c=t.cell(person.id,day);return c!=null&&p.id.equals(c.value);}).count()+(guide?fairness.marginal(e,p,day):0)));
+                eligible.sort(Comparator.comparingDouble(p->t.employees.stream().filter(person->{Cell c=t.cell(person.id,day);return c!=null&&p.id.equals(c.value);}).count()+(guide?fairness.marginal(e,p,day):0)+(patternGuide?patterns.preference(e,p,day):0)));
                 if(!eligible.isEmpty())m.cells.put(key(e.id,day.getDayOfMonth()),new Cell(eligible.getFirst().id,false));
             }
             // A regular employee may have filled a reserve's slot during quota completion.
@@ -98,7 +98,7 @@ public final class Scheduler {
             int isolated=0;
             if(t.preferPaired)for(Employee e:t.employees)if(!Workload.reserve(t,e,ym))for(int d=2;d<ym.lengthOfMonth();d++)if(!work(t,e,ym.atDay(d))&&work(t,e,ym.atDay(d-1))&&work(t,e,ym.atDay(d+1)))isolated++;
             int missingWeekends=t.preferFullWeekend?(int)t.employees.stream().filter(e->!Workload.reserve(t,e,ym)&&!CalendarRules.fullWeekendOff(t,e,ym)).count():0;
-            Score score=new Score(gaps,quotaDeviation,unassigned,missingWeekends,t.employees.stream().filter(e->Workload.reserve(t,e,ym)).mapToInt(e->workCount(t,e,ym)).sum(),fairness.penalty()+isolated);
+            Score score=new Score(gaps,quotaDeviation,unassigned,missingWeekends,t.employees.stream().filter(e->Workload.reserve(t,e,ym)).mapToInt(e->workCount(t,e,ym)).sum(),usePatterns?fairness.penalty():0,fairness.penalty()+isolated+patterns.penalty());
             if(bestScore==null||score.compareTo(bestScore)<0) {bestScore=score;best=new LinkedHashMap<>(m.cells);}
         }
         m.cells=best==null?fixed:best;

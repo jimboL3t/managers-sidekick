@@ -1,4 +1,4 @@
-**Version 1.4.0:** [GitHub downloads](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.4.0) · [EXE/DMG/Linux packages and data migration](DESKTOP.en.md). Details below also describe the previous portable layout; use the DESKTOP guide for the new installation.
+**Version 1.6.0:** [GitHub downloads](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.6.0) · [EXE/DMG/Linux packages and data migration](DESKTOP.en.md). Details below also describe the previous portable layout; use the DESKTOP guide for the new installation.
 
 # Website packages — 1.3.0
 

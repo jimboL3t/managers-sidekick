@@ -1,3 +1,11 @@
+## 1.6.0
+
+- Approved-history patterns: time-band preferences, adjacent pairs/triples, reference window and employee participation.
+- Independent snapshots, explicit refresh/revocation, hidden approvals preserved when viewing older months.
+- Task-oriented menus and separate rest-day preferences.
+- Quick Start Guide: two English pages followed by two Greek pages.
+- No change to scheduling behavior when patterns have insufficient evidence.
+
 # Release history
 
 ## 1.3.0

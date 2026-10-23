@@ -26,6 +26,11 @@ public final class Storage {
             for(int i=0;i<data.teams.size();i++){
                 Model.Team team=data.teams.get(i);
                 if(team.employees==null)team.employees=new java.util.ArrayList<>();
+                JsonObject teamSource=source.getAsJsonArray("teams").get(i).getAsJsonObject();
+                if(!teamSource.has("patternLookback"))team.patternLookback=6;
+                if(!teamSource.has("patternStrength"))team.patternStrength=2;
+                if(team.patternMonths==null)team.patternMonths=new java.util.TreeMap<>();
+                if(team.patternExcludedEmployees==null)team.patternExcludedEmployees=new java.util.LinkedHashSet<>();
                 if(team.history==null)team.history=new java.util.ArrayList<>();
                 for(Model.Employee employee:team.employees)if(employee.availabilityOverrides==null)employee.availabilityOverrides=new java.util.TreeMap<>();
                 if(team.leaveTypes==null||team.leaveTypes.isEmpty())team.leaveTypes=new java.util.LinkedHashMap<>(data.leaves);

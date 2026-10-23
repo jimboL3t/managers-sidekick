@@ -23,7 +23,7 @@ public final class TeamService {
         if(!data.teams.contains(source))throw new IllegalArgumentException(I18n.text("Η ομάδα δεν υπάρχει."));
         Gson gson=new Gson();
         Team copy=gson.fromJson(gson.toJson(source),Team.class);
-        copy.id=id();copy.name=requireName(name);copy.sandbox=true;
+        HistoryPatterns.normalize(copy);copy.id=id();copy.name=requireName(name);copy.sandbox=true;
         copy.leaveTypes=new LinkedHashMap<>(leaves(data,source));
         if(source.leaveTypes==null||source.leaveTypes.isEmpty())copy.builtInLeaves=new LinkedHashMap<>(data.builtInLeaves);
         Map<String,String> posts=new HashMap<>(),employees=new HashMap<>();
@@ -49,6 +49,10 @@ public final class TeamService {
                 month.workPlans=plans;
             }
         }
+        for(PatternMonth approved:copy.patternMonths.values()){
+            Map<String,int[]> shifts=new LinkedHashMap<>();approved.shifts.forEach((employee,days)->shifts.put(employees.getOrDefault(employee,employee),days));approved.shifts=shifts;
+        }
+        Set<String> excluded=new LinkedHashSet<>();for(String employee:copy.patternExcludedEmployees)excluded.add(employees.getOrDefault(employee,employee));copy.patternExcludedEmployees=excluded;
         data.teams.add(copy);
         return copy;
     }

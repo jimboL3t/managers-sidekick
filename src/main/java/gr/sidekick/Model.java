@@ -35,6 +35,10 @@ public final class Model {
         public boolean preferPaired = true;
         public boolean preferFullWeekend;
         public int nightBalanceWeight, weekendBalanceWeight, fairnessLookback;
+        public boolean patternsEnabled;
+        public int patternLookback=6, patternStrength=2;
+        public Map<String,PatternMonth> patternMonths=new TreeMap<>();
+        public Set<String> patternExcludedEmployees=new LinkedHashSet<>();
         public Team(String name) { this.name = name; allowedLeaves.add(OFF); }
         public Month month(YearMonth ym) { return months.computeIfAbsent(ym.toString(), k -> new Month()); }
         public Post post(String id) { return posts.stream().filter(p -> p.id.equals(id)).findFirst().orElse(null); }
@@ -66,6 +70,9 @@ public final class Model {
         public boolean[] availableWeekdays = {true,true,true,true,true,true,true};
         public Map<String,Boolean> availabilityOverrides = new TreeMap<>();
         public Employee(String name) { this.name=name; }
+    }
+    public static class PatternMonth {
+        public Map<String,int[]> shifts=new LinkedHashMap<>();
     }
     public static class WorkPlan {
         public String mode = "auto";

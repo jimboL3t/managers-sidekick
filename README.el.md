@@ -11,7 +11,7 @@
 
 **[Λήψεις](https://github.com/jimboL3t/managers-sidekick/releases) · [Πρώτα βήματα](docs/PUBLICATION.md) · [Εγχειρίδιο διαχειριστή](docs/ADMIN_GUIDE.md)**
 
-> **Η έκδοση 1.4.0 είναι διαθέσιμη.** [Κατέβασε τα πακέτα με ενσωματωμένη Java](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.4.0).
+> **Η έκδοση 1.6.0 είναι διαθέσιμη.** [Κατέβασε τα πακέτα με ενσωματωμένη Java](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.6.0).
 
 ![Μηνιαίο ημερολόγιο με υπηρεσίες, ρεπό, κλειδωμένες επιλογές και ενδείξεις κάλυψης](docs/images/calendar.png)
 *Προεπισκόπηση με ενδεικτικά δεδομένα. Το περιβάλλον και τα PDF υποστηρίζουν ελληνικά και αγγλικά.*
@@ -47,13 +47,13 @@
 
 ## Πρώτα βήματα
 
-1. Επίλεξε από τα [Releases](https://github.com/jimboL3t/managers-sidekick/releases) το πακέτο **1.4.0** για Windows x64, Linux x64, macOS Apple Silicon ή macOS Intel.
-2. Αποσυμπίεσε ολόκληρο το αρχείο σε εγγράψιμο φάκελο. Τα πακέτα λειτουργικών περιλαμβάνουν Java· δεν χρειάζεται χωριστή εγκατάσταση.
-3. Ακολούθησε το `START-HERE`: Windows `start-windows.cmd`, Linux `sh start-linux.sh`, macOS `sh start-macos.command`.
+1. Κατέβασε την **1.6.0** από τα [Releases](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.6.0): Windows x64, Linux x64 ή macOS Apple Silicon. Περιλαμβάνεται Java.
+2. Windows: αποσυμπίεση όλου του ZIP και εκκίνηση με `managersSidekick.exe`. Linux: αποσυμπίεση και `sh start-linux.sh` σε γραφικό περιβάλλον. Mac: άνοιγμα DMG και μεταφορά στο Applications.
+3. Διάβασε τον [Quick Start Guide](https://github.com/jimboL3t/managers-sidekick/releases/download/v1.6.0/quickStartGuide.pdf), πρώτα στα αγγλικά και μετά στα ελληνικά.
 
-Πρόκειται για φορητά πακέτα, όχι native installers. Το Linux χρειάζεται γραφικό περιβάλλον και τις βιβλιοθήκες/γραμματοσειρές των [οδηγιών ανά λειτουργικό](docs/PUBLICATION.md). Εκεί αναφέρονται και οι έλεγχοι που έχουν πραγματοποιηθεί.
+Δεν υπάρχει πακέτο Intel Mac ή ARM Linux σε αυτή την έκδοση. [Εγκατάσταση και έλεγχοι](docs/DESKTOP.md).
 
-**Κράτησε backup πριν την αναβάθμιση.** Τα φορητά πακέτα αποθηκεύουν στο `data/sidekick.json` δίπλα στο JAR. Πριν αντικαταστήσεις ή διαγράψεις τον φάκελο εφαρμογής, κράτησε χωριστό αντίγραφο του φακέλου δεδομένων. [Backup και επαναφορά](docs/BACKUP.md).
+**Backup πριν την αναβάθμιση:** κλείσε την εφαρμογή και αντέγραψε ολόκληρο το `data`. Windows/Linux portable: δίπλα στην εφαρμογή. Mac εγκατεστημένο: `~/ManagersSidekick/data`, έξω από το `.app`. [Οδηγίες μεταφοράς](docs/DESKTOP.md).
 
 ## Οδηγοί
 
@@ -72,7 +72,7 @@
 
 ```sh
 mvn clean verify
-java -jar target/managers-sidekick-1.4.0.jar
+java -jar target/managers-sidekick-1.6.0.jar
 ```
 
 Βιβλιοθήκες εκτέλεσης: Gson και Apache PDFBox. Το Swing περιλαμβάνεται στη Java και το Maven εγκαθιστά τις εξαρτήσεις αυτόματα. [Οδηγίες δημιουργίας πακέτων και πηγών](docs/PUBLICATION.md).
@@ -84,6 +84,11 @@ Copyright © 2026 Dimitrios Diamantis. Η εφαρμογή διατίθεται 
 Κάθε διανεμόμενη έκδοση συνοδεύεται από **`all-sources.zip`** με τις αντίστοιχες πηγές εφαρμογής, βιβλιοθηκών και Java. Το αυτόματο Source code ZIP του GitHub περιέχει μόνο το repository. Οι άδειες και ειδοποιήσεις τρίτων περιλαμβάνονται στα πακέτα λειτουργικών.
 
 
-**Πακέτα 1.4.0:** Windows x64 portable EXE, Linux x64, macOS Apple Silicon DMG. Οι δοκιμές στα desktop συνεχίζονται. [Εγκατάσταση, αναβάθμιση και backup](docs/DESKTOP.md).
 
-**Κώδικας 1.5.0:** ανεξάρτητο zoom ημερών και εργαζομένων (50–200%) και συνολική κλίμακα έως 50%. [Εγχειρίδιο](docs/ADMIN_GUIDE.md). Οι λήψεις παραμένουν 1.4.0 μέχρι τη δημοσίευση νέων πακέτων.
+## Νέο στην 1.6.0
+
+Προαιρετικά πρότυπα από εγκεκριμένα στιγμιότυπα προηγούμενων μηνών, με παράθυρο αναφοράς, ένταση επιρροής, εξαιρέσεις εργαζομένων και προεπισκόπηση. Η λειτουργία είναι αρχικά απενεργοποιημένη και εκτελείται τοπικά. [Οδηγός προτύπων](docs/PATTERNS.md).
+
+Τα μενού οργανώνονται σε Ομάδα & υπηρεσίες, Εργαζόμενοι και Σχεδιασμός προγράμματος. Ο Quick Start Guide περιλαμβάνει πρώτα αγγλικά και μετά ελληνικά.
+
+Λήψεις: Windows x64 ZIP με managersSidekick.exe, Linux x64 tar.gz και macOS Apple Silicon DMG. Περιλαμβάνεται Java. Δεν υπάρχει πακέτο Intel Mac ή ARM Linux. Οδηγίες εγκατάστασης, διατήρησης δεδομένων και backup: [Desktop](docs/DESKTOP.md).

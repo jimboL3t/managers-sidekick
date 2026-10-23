@@ -1,4 +1,4 @@
-**Έκδοση 1.4.0:** [Λήψεις GitHub](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.4.0) · [Νέα πακέτα EXE/DMG/Linux και μεταφορά δεδομένων](DESKTOP.md). Οι παρακάτω λεπτομέρειες αφορούν και την προηγούμενη portable διάταξη· για τη νέα εγκατάσταση ακολουθήστε τον οδηγό DESKTOP.
+**Έκδοση 1.6.0:** [Λήψεις GitHub](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.6.0) · [Νέα πακέτα EXE/DMG/Linux και μεταφορά δεδομένων](DESKTOP.md). Οι παρακάτω λεπτομέρειες αφορούν και την προηγούμενη portable διάταξη· για τη νέα εγκατάσταση ακολουθήστε τον οδηγό DESKTOP.
 
 # Πακέτα ιστοσελίδας — 1.3.0
 
