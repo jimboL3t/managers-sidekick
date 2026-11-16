@@ -11,7 +11,7 @@
 
 **[Λήψεις](https://github.com/jimboL3t/managers-sidekick/releases) · [Πρώτα βήματα](docs/PUBLICATION.md) · [Εγχειρίδιο διαχειριστή](docs/ADMIN_GUIDE.md)**
 
-> **Η έκδοση 1.6.0 είναι διαθέσιμη.** [Κατέβασε τα πακέτα με ενσωματωμένη Java](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.6.0).
+> **Η έκδοση 1.7.0 είναι διαθέσιμη.** [Κατέβασε τα πακέτα με ενσωματωμένη Java](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.7.0).
 
 ![Μηνιαίο ημερολόγιο με υπηρεσίες, ρεπό, κλειδωμένες επιλογές και ενδείξεις κάλυψης](docs/images/calendar.png)
 *Προεπισκόπηση με ενδεικτικά δεδομένα. Το περιβάλλον και τα PDF υποστηρίζουν ελληνικά και αγγλικά.*
@@ -47,9 +47,9 @@
 
 ## Πρώτα βήματα
 
-1. Κατέβασε την **1.6.0** από τα [Releases](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.6.0): Windows x64, Linux x64 ή macOS Apple Silicon. Περιλαμβάνεται Java.
+1. Κατέβασε την **1.7.0** από τα [Releases](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.7.0): Windows x64, Linux x64 ή macOS Apple Silicon. Περιλαμβάνεται Java.
 2. Windows: αποσυμπίεση όλου του ZIP και εκκίνηση με `managersSidekick.exe`. Linux: αποσυμπίεση και `sh start-linux.sh` σε γραφικό περιβάλλον. Mac: άνοιγμα DMG και μεταφορά στο Applications.
-3. Διάβασε τον [Quick Start Guide](https://github.com/jimboL3t/managers-sidekick/releases/download/v1.6.0/quickStartGuide.pdf), πρώτα στα αγγλικά και μετά στα ελληνικά.
+3. Διάβασε τον [Quick Start Guide](https://github.com/jimboL3t/managers-sidekick/releases/download/v1.7.0/quickStartGuide.pdf), πρώτα στα αγγλικά και μετά στα ελληνικά.
 
 Δεν υπάρχει πακέτο Intel Mac ή ARM Linux σε αυτή την έκδοση. [Εγκατάσταση και έλεγχοι](docs/DESKTOP.md).
 
@@ -72,7 +72,7 @@
 
 ```sh
 mvn clean verify
-java -jar target/managers-sidekick-1.6.0.jar
+java -jar target/managers-sidekick-1.7.0.jar
 ```
 
 Βιβλιοθήκες εκτέλεσης: Gson και Apache PDFBox. Το Swing περιλαμβάνεται στη Java και το Maven εγκαθιστά τις εξαρτήσεις αυτόματα. [Οδηγίες δημιουργίας πακέτων και πηγών](docs/PUBLICATION.md).
@@ -85,7 +85,11 @@ Copyright © 2026 Dimitrios Diamantis. Η εφαρμογή διατίθεται 
 
 
 
-## Νέο στην 1.6.0
+## Νέο στην 1.7.0
+
+Κατανομή πρωί/απόγευμα/νύχτα για παράλληλες υπηρεσίες, ασφαλείς ανταλλαγές και σαφέστερη λειτουργία εφεδρικού. Ενεργοποίηση: Σχεδιασμός προγράμματος → Κατανομή ωραρίων & ΣΚ. [Οδηγός κατανομής](docs/FAIRNESS.md).
+
+## Από την 1.6.0
 
 Προαιρετικά πρότυπα από εγκεκριμένα στιγμιότυπα προηγούμενων μηνών, με παράθυρο αναφοράς, ένταση επιρροής, εξαιρέσεις εργαζομένων και προεπισκόπηση. Η λειτουργία είναι αρχικά απενεργοποιημένη και εκτελείται τοπικά. [Οδηγός προτύπων](docs/PATTERNS.md).
 

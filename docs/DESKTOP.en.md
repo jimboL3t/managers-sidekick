@@ -1,12 +1,12 @@
-# Version 1.6.0 — desktop packages
+# Version 1.7.0 — desktop packages
 
 [Ελληνικά](DESKTOP.md)
 
-Version 1.6.0 is downloadable from GitHub. Full desktop installation/upgrade acceptance on Windows, Linux and Mac remains in progress.
+Version 1.7.0 is downloadable from GitHub. Full desktop installation/upgrade acceptance on Windows, Linux and Mac remains in progress.
 
 ## Windows 64-bit: portable with an application icon
 
-Extract the **entire** `managers-sidekick-1.6.0-windows-x64.zip` into a writable folder, such as Documents. Open **managersSidekick.exe** (MS icon); optionally create a desktop shortcut. No installer or separate Java installation is required. Keep the EXE, JAR and `runtime` directory together.
+Extract the **entire** `managers-sidekick-1.7.0-windows-x64.zip` into a writable folder, such as Documents. Open **managersSidekick.exe** (MS icon); optionally create a desktop shortcut. No installer or separate Java installation is required. Keep the EXE, JAR and `runtime` directory together.
 
 Data lives in **`data/sidekick.json` beside the EXE**, including when launched through a shortcut with a different working directory. To upgrade, close the application, back up the old `data` folder, extract the new version into a separate directory, and copy the entire old `data` folder there **before first launch**. Keep the old folder until you verify your data.
 
@@ -40,7 +40,7 @@ On macOS with a JDK, Maven, Python 3.12+ and MinGW (`brew install mingw-w64`):
 python3 scripts/package_desktop.py
 ```
 
-The script verifies existing runtime/source archives in `dist/release-cache`, runs Java tests and produces `dist/release-1.6.0`. It does not commit, upload, or change the website. The currently locked DMG build targets Apple Silicon only. Bundled Java comes from `packaging/runtime-lock.json`, not from the build machine's JDK. Supply the matching full source bundle alongside a future public distribution.
+The script verifies existing runtime/source archives in `dist/release-cache`, runs Java tests and produces `dist/release-1.7.0`. It does not commit, upload, or change the website. The currently locked DMG build targets Apple Silicon only. Bundled Java comes from `packaging/runtime-lock.json`, not from the build machine's JDK. Supply the matching full source bundle alongside a future public distribution.
 
 Windows acceptance requires execution on Windows: launch, save, restart, PDF export, and a shortcut with a different working directory. Inspecting the EXE on macOS does not replace Windows execution testing.
 

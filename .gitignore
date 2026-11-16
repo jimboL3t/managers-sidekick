@@ -14,3 +14,6 @@ dist/
 
 # Python packaging helpers
 __pycache__/
+
+# Private diagnostic screenshots
+/Screenshot*.png

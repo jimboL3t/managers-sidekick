@@ -1,50 +1,48 @@
-# Fairer distribution — 1.2.0
+# Fair distribution — 1.7.0
 
 [Ελληνικά](FAIRNESS.md)
 
-## Setup
+## Parallel duties: the recommended setup
 
-1. In **Duties**, mark each relevant duty as **Night duty**. Classification is explicit, not inferred from its name or hours. Existing duties initially have no night designation.
-2. Open **Fair distribution** in the calendar toolbar.
-3. Set separate night/weekend weights from 0 to 10. **0 disables that objective**; try 5/5 initially. Weights are priorities, not shift counts or maximum limits.
-4. Choose 0–12 previous reference months. Zero means the selected month only; two means that month plus the preceding two calendar months. Previous months without saved assignments are omitted and reported.
-5. Choose each employee's participation and prohibitions, confirm, then calculate or request another combination. Editing settings saves them without recalculating assignments.
+In **Schedule planning → Shift mix & weekend balance**, set **Morning / Afternoon / Night** to **5**. Zero disables the objective; it remains the default for compatibility. A visible status message identifies disabled balancing. Settings take effect when you calculate, not when opening the dialog.
 
-Both weights default to zero for new and existing teams. Employees initially participate in both objectives and have no prohibitions.
+Duties are grouped by their start time: morning 06:00–13:59, afternoon 14:00–21:59, night 22:00–05:59 or explicitly marked Night duty. Thus duties starting at 06:00 and 07:00 count together, as do 14:00 and 15:00. In each duty's editor, **Fairness time band** can override this grouping. This override affects shift-mix balancing only; the separate Night duty checkbox still controls night prohibitions, extra night balancing and history-pattern classification. Mark every night duty accordingly.
 
-## Participation versus prohibition
+This balances category totals between employees, not equal numbers of every individual duty. Nor does it require each employee to work equal amounts of morning, afternoon and night: the available assignments determine those totals.
 
-| Employee setting | Effect |
-| --- | --- |
-| Balance nights | Include the employee in night targets and comparisons |
-| Balance weekends | Include the employee in weekend targets and comparisons |
-| No nights | Prohibit automatic assignments to explicitly designated night duties |
-| No weekends | Prohibit automatic work starting on Saturday/Sunday |
+## Controls
 
-Exclusion from balancing is not a work prohibition: excluded staff can still receive eligible shifts, but their assignments are outside the participant totals and the algorithm does not equalize their counts. Participation can differ between objectives. Prohibitions remain active even with weights zero. Manual assignments and whole-day locks remain preserved, with observations if they violate a prohibition. Skills and availability are separate settings.
+- **Morning / Afternoon / Night (0–10):** balances all three categories together; try 5.
+- **Extra night weight (0–10):** gives explicitly marked night duties additional priority; 0 is reasonable when shift-mix balancing already covers nights.
+- **Weekend weight (0–10):** balances work starting on Saturday or Sunday separately; try 5 if needed.
+- **Previous reference months (0–12):** 0 compares this month only. With history, previous burdens are compensated over the whole period, so this month's counts need not be equal. Missing months are skipped. This history does not require pattern approval.
+- **Balance shift mix / nights / weekends:** independent employee participation. Excluded employees' assignments are outside the relevant totals, but they can still work.
+- **No nights / No weekends:** actual automatic-assignment prohibitions, even when balancing is disabled. Manual assignments remain protected and violations are reported.
 
-## Counting and proportional targets
+All weights default to zero. Historical pattern learning is separate and does not enable fairness; a learned personal preference may itself be unequal. Fairness takes priority over pattern similarity in final ranking.
 
-The unit is one assignment on its **start date**, not hours or complete free weekends. Saturday plus Sunday work counts as two. A Friday night ending Saturday counts as Friday night, not weekend work; a Saturday night counts in both categories. Holidays have no separate fairness objective in this release.
+## Reserve staff and optional duties
 
-For each participant, opportunities are calendar dates in the reference period with at least one eligible duty in that category: operating that day, permitted by skills and availability, and not prohibited. Assigned non-rest leave removes a date. Multiple eligible duties on one date count as one opportunity. Overnight availability checks the following date where applicable.
+Set the employee's **monthly workload** to **Reserve**, with a maximum number of shifts. This is month-specific: selecting it for November does not also select it for December. Restrict skills to the duties they can cover. The reserve has a ceiling, not a quota to fill, and is automatically excluded from fairness comparisons for that month. Locked manual reserve assignments remain preserved even above the ceiling.
 
-**Indicative target = actual category assignments among participants × employee opportunities / total participant opportunities.**
+In 1.7, reserves fill mandatory gaps only; optional duties do not create extra automatic reserve shifts. Regular employees can still fill optional duties after mandatory coverage. Redundant automatic reserve assignments are removed if regular quota completion covers the same slot. A reserve assignment is a heuristic result, not proof that no alternative could cover it without reserve staff.
 
-For example, two employees with 20 and 10 opportunities share 12 actual nights proportionally as 8 and 4, rather than 6 each. Equal opportunities give equal targets. Previous-month assignments count toward the cumulative burden, encouraging compensation in the current month without changing earlier schedules.
+## What a fair target means
 
-Opportunities approximate capacity, not full feasibility. They do not model contracts, part-time hours, employment start dates or every interaction of rest and locks. Those hard rules are checked separately when assigning work. Historical counting uses current duty classifications, skills and availability, not archived snapshots. Review results after major staffing/rule changes. A participant with zero opportunities has no calculated target and is identified in the report.
+For each category, the indicative target is:
 
-## Scheduling priorities
+**Actual category assignments among participants × employee capacity / total participant capacity.**
 
-Every new automatic assignment still respects skills, availability, operating days, prohibitions, rest intervals and consecutive-work limits. Individual manual assignments and locked days are preserved.
+Shift-mix capacity is eligible dates capped by the employee's monthly shift target, summed over the reference period. Skills, operating days, availability and prohibitions are respected; fixed non-working dates are excluded. Earlier months worked as a reserve are omitted from shift-mix history. Future months are never included. Equal capacity means equal targets; fewer shifts or leave can justify lower targets. A target of 6.4 is indicative, not a mandatory integer quota.
 
-Candidate schedules are compared lexicographically: fewer uncovered requirements, smaller rest-quota deviation, fewer unfilled editable cells, then the combined fairness and paired-rest preference score. Fairness penalizes squared differences from proportional targets, multiplied by each category's weight. Higher weights emphasize balancing relative to paired rest and the other objective.
+The report shows **this month's [morning, afternoon, night] counts**, followed by **period actual/target** for each category. Reserve/excluded staff are labelled separately.
 
-With an enabled objective the scheduler keeps 180 baseline attempts and adds 180 guided attempts, so calculations may take longer. Baseline candidates remain available: fairness cannot select worse coverage, quota or completeness merely for a better preference score. This is still a bounded heuristic, not proof of optimality or a hard cap on nights. Exact equality may be impossible.
+Night/weekend objectives retain their existing opportunity-based capacity calculation. Historical calculations use current skills, availability and duty classifications, not archived staffing rules. Capacity is an approximation: interactions between rest, adjacent months and locked assignments can prevent reaching a target. Zero-capacity categories have no calculated share; their manual assignments still appear in actual counts.
 
-## Reviewing results
+## Algorithm and limits
 
-After calculation the observations area shows **Before / After** when an objective is enabled. Reopen **Fair distribution** for current actual/target counts, configured weights, exclusions and missing-history notices. Dialog metrics use the settings saved when the dialog opened; confirm changes and reopen to refresh them.
+The scheduler first compares mandatory gaps, monthly quota deviations, empty days, reserve use and the full-weekend preference. It then compares weighted fairness before paired-rest preferences and history-pattern similarity. Multiple bounded searches include fairness-guided candidates.
 
-Fractional targets are comparison values, not instructions to schedule fractional shifts. Targets change if total assigned work changes, so compare coverage/completeness first. Before/after text is temporary; History stores the pre-calculation snapshot including fairness settings. Calculations still save automatically: use a test-copy team for experiments.
+A new final improvement pass swaps automatic work assignments between two regular employees on the same date, only when weighted fairness strictly improves. It checks skills, availability, prohibitions, operating days, rest (including adjacent months) and consecutive-work limits. It never changes manual cells, locked days, leave/rest layouts, employee shift totals, daily duty coverage or reserve assignments. This pass cannot repair a case needing a multi-day move, nor guarantee a global optimum. Previously locked violations are reported, not silently corrected.
+
+If coverage remains impossible under the fixed choices, inspect the red dates and validation notes. More historical data alone cannot fix insufficient staff or contradictory locks. Test on a team copy and back up before upgrading.

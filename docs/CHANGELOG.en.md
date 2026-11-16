@@ -1,5 +1,9 @@
 ## 1.6.0
 
+## 1.7.0
+
+Shift-mix balancing groups parallel duties by time band, with per-duty classification and per-employee participation. Weighted fairness now ranks ahead of paired-rest/pattern preferences regardless of pattern activation. A bounded safe same-day swap pass improves the final distribution without changing coverage or quotas. Reserves no longer fill optional duties automatically. Disabled balancing is visible; the bilingual guide explains activation and limitations.
+
 - Approved-history patterns: time-band preferences, adjacent pairs/triples, reference window and employee participation.
 - Independent snapshots, explicit refresh/revocation, hidden approvals preserved when viewing older months.
 - Task-oriented menus and separate rest-day preferences.

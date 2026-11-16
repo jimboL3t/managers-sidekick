@@ -11,11 +11,15 @@ Manager’s Sidekick is a free, open-source desktop application for planning a t
 
 **[Downloads](https://github.com/jimboL3t/managers-sidekick/releases) · [Getting started](docs/DESKTOP.en.md) · [Administrator guide](docs/ADMIN_GUIDE.en.md)**
 
-> **Version 1.6.0 is available.** [Download packages with Java included](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.6.0).
+> **Version 1.7.0 is available.** [Download packages with Java included](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.7.0).
 
 
 ![Monthly calendar with duties, rest days, locked assignments and coverage indicators](docs/images/calendar.png)
 *Calendar preview with sample data. The interface and PDFs support both English and Greek.*
+
+## New in 1.7.0
+
+Balance morning, afternoon and night totals across parallel duties. Safe same-day swaps improve fairness while preserving coverage, workloads and manual choices. Reserves cover mandatory gaps and stay outside fairness comparisons. Enable **Shift mix & weekend balance** in Schedule planning; weights default to zero. [Setup and limits](docs/FAIRNESS.en.md).
 
 ## Plan your team’s month
 
@@ -50,9 +54,9 @@ Calculation runs when you request it. Coverage gaps and rule deviations remain v
 
 ## Get started
 
-1. Download **1.6.0** for Windows x64, Linux x64 or macOS Apple Silicon from [Releases](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.6.0). Java is included.
+1. Download **1.7.0** for Windows x64, Linux x64 or macOS Apple Silicon from [Releases](https://github.com/jimboL3t/managers-sidekick/releases/tag/v1.7.0). Java is included.
 2. Windows: extract the entire ZIP and open `managersSidekick.exe`. Linux: extract and run `sh start-linux.sh` in a graphical desktop session. Mac: open the DMG and drag the app to Applications.
-3. Read **[quickStartGuide.pdf](https://github.com/jimboL3t/managers-sidekick/releases/download/v1.6.0/quickStartGuide.pdf)**: English first, followed by Greek. Create a team, duties and employees, then calculate and review the schedule.
+3. Read **[quickStartGuide.pdf](https://github.com/jimboL3t/managers-sidekick/releases/download/v1.7.0/quickStartGuide.pdf)**: English first, followed by Greek. Create a team, duties and employees, then calculate and review the schedule.
 
 Windows/Linux packages are x64; the DMG is for Apple Silicon. No Intel Mac or ARM Linux package is included in this release. Windows binaries are unsigned and the Mac app is not notarized. See [installation and validation details](docs/DESKTOP.en.md).
 
@@ -82,7 +86,7 @@ Requires **JDK 21+** and **Maven 3.9+**. From the repository root:
 
 ```sh
 mvn clean verify
-java -jar target/managers-sidekick-1.6.0.jar
+java -jar target/managers-sidekick-1.7.0.jar
 ```
 
 Runtime libraries: Gson and Apache PDFBox; Swing is included in Java. Maven resolves dependencies automatically. Packaging instructions and pinned dependency/runtime sources are described in the [publication guide](docs/DESKTOP.en.md).

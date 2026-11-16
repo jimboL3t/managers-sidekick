@@ -265,5 +265,19 @@
   "Όρια εργασίας": "Work limits",
   "Προτιμήσεις ρεπό": "Rest-day preferences",
   "Πρότυπα: ενεργά\n": "Patterns: enabled\n",
-  "Πρότυπα: ανενεργά (προεπισκόπηση μόνο)\n": "Patterns: disabled (preview only)\n"
+  "Πρότυπα: ανενεργά (προεπισκόπηση μόνο)\n": "Patterns: disabled (preview only)\n",
+  "Κατανομή ωραρίων & ΣΚ": "Shift mix & weekend balance",
+  "Αυτόματη από ώρα έναρξης": "Automatic from start time",
+  "Κατηγορία δίκαιης κατανομής": "Fairness time band",
+  "Πρωί / Απόγευμα / Νύχτα (0 = ανενεργό)": "Morning / Afternoon / Night (0 = disabled)",
+  "Επιπλέον βάρος νυχτερινών (0 = ανενεργό)": "Extra night weight (0 = disabled)",
+  "Συμμετοχή ωραρίων": "Balance shift mix",
+  " · Εφεδρικός": " · Reserve",
+  "Για παρόμοιες υπηρεσίες ενεργοποιήστε Πρωί / Απόγευμα / Νύχτα (π.χ. 5). Οι υπηρεσίες ίδιας κατηγορίας μετρούν μαζί.\n0 μήνες = ισορροπία μόνο στον τρέχοντα μήνα. Με ιστορικό αντισταθμίζονται προηγούμενες αποκλίσεις.\nΟ εφεδρικός ορίζεται ανά μήνα στις ρυθμίσεις εργαζομένου και εξαιρείται αυτόματα. Τα πρότυπα δεν ενεργοποιούν τη δικαιοσύνη.": "For parallel duties enable Morning / Afternoon / Night (e.g. 5). Duties in the same band count together.\n0 reference months balances only this month; history compensates for earlier differences.\nSet reserves per month in employee settings; they are automatically excluded. Patterns do not enable fairness.",
+  "Δίκαιη κατανομή: ανενεργή — ενεργοποιήστε την από Σχεδιασμός προγράμματος > Κατανομή ωραρίων & ΣΚ.": "Fair distribution: disabled — enable it in Schedule planning > Shift mix & weekend balance.",
+  "Βάρη ωραρίων / νύχτας / ΣΚ: ": "Shift mix / night / weekend weights: ",
+  "\nΠρωί / Απόγευμα / Νύχτα — μήνας και στόχοι περιόδου:\n": "\nMorning / Afternoon / Night — month counts and period targets:\n",
+  " · εκτός κατανομής ωραρίων": " · excluded from shift-mix balance",
+  " · περίοδος πραγματικό/στόχος: ": " · period actual/target: ",
+  "Ενδεικτικοί αναλογικοί στόχοι, όχι ίσος αριθμός ανά υπηρεσία. Οι εφεδρικοί εξαιρούνται.\n": "Indicative proportional targets, not equal counts per duty. Reserves are excluded.\n"
 }

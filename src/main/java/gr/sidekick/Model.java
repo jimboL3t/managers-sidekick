@@ -34,6 +34,7 @@ public final class Model {
         public int maxConsecutive = 5, minRestHours = 11, weeklyOff = 2;
         public boolean preferPaired = true;
         public boolean preferFullWeekend;
+        public int shiftBalanceWeight;
         public int nightBalanceWeight, weekendBalanceWeight, fairnessLookback;
         public boolean patternsEnabled;
         public int patternLookback=6, patternStrength=2;
@@ -51,6 +52,7 @@ public final class Model {
     public static class Post {
         public String id = id(), name, start, end;
         public boolean nightDuty, optional;
+        public int balanceBand; // 0 automatic; 1 morning; 2 afternoon; 3 night (fairness only)
         public int[] demand = {1,1,1,1,1,1,1};
         public boolean[] operatingDays = {true,true,true,true,true,true,true};
         public boolean operates(LocalDate day) { return operatingDays==null || operatingDays[day.getDayOfWeek().getValue()-1]; }
@@ -65,6 +67,7 @@ public final class Model {
     }
     public static class Employee {
         public String id = id(), name;
+        public boolean excludeShiftBalance;
         public boolean excludeNightBalance,excludeWeekendBalance,noNights,noWeekends;
         public Set<String> skills = new LinkedHashSet<>();
         public boolean[] availableWeekdays = {true,true,true,true,true,true,true};

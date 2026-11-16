@@ -53,8 +53,9 @@ public final class Fairness {
    if(weekend(day)&&participates(e,false)&&team.weekendBalanceWeight>0)score+=team.weekendBalanceWeight*(penalty(false,e)-penalty(false,null));return score;
   }
  }
+ public static String status(Team t){return t.shiftBalanceWeight==0&&t.nightBalanceWeight==0&&t.weekendBalanceWeight==0?I18n.text("Δίκαιη κατανομή: ανενεργή — ενεργοποιήστε την από Σχεδιασμός προγράμματος > Κατανομή ωραρίων & ΣΚ."):I18n.text("Βάρη ωραρίων / νύχτας / ΣΚ: ")+t.shiftBalanceWeight+" / "+t.nightBalanceWeight+" / "+t.weekendBalanceWeight;}
  public static String summary(Team t,YearMonth m){
-  Context c=new Context(t,m);StringBuilder out=new StringBuilder(I18n.text("Κατανομή: πραγματικό / αναλογικός στόχος περιόδου\n"));
+  Context c=new Context(t,m);StringBuilder out=new StringBuilder(status(t)+"\n"+ShiftBalance.summary(t,m)).append(I18n.text("Κατανομή: πραγματικό / αναλογικός στόχος περιόδου\n"));
   out.append(I18n.text("Προηγούμενοι μήνες: ")).append(t.fairnessLookback).append('\n');
   out.append(I18n.text("Βάρη νύχτας / ΣΚ: ")).append(t.nightBalanceWeight).append(" / ").append(t.weekendBalanceWeight).append('\n');
   int missing=0;for(int back=1;back<=t.fairnessLookback;back++){Model.Month old=t.months.get(m.minusMonths(back).toString());if(old==null||old.cells.isEmpty())missing++;}

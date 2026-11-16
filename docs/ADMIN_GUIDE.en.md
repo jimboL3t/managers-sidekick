@@ -1,3 +1,5 @@
+1.7: [Shift mix & weekend balance](FAIRNESS.en.md) groups parallel duties and explains reserve-only coverage.
+
 ## Version 1.6.0
 
 [History patterns and reorganized menus](PATTERNS.en.md): month approval, employee participation and preview instructions. Patterns are disabled by default.

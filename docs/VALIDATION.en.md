@@ -48,3 +48,7 @@ Scheduling update: 64 tests passed, including mandatory-duty priority, optional 
 ## 1.6.0 validation
 
 76 tests cover approval windows, independent snapshots, holiday/rest exclusion, broken sequences across gaps, shift triples, opt-out/disabled/minimum samples, storage/team copies, legacy history, and preservation of manual assignments and mandatory coverage. Generated schedules measurably follow learned preferences. The dialog was visually inspected in headless Swing; manual desktop acceptance remains pending. Additional regressions cover unchanged scheduling without training evidence, hard constraints under strong learned preferences, and preservation of approvals hidden while editing earlier months.
+
+## 1.7.0
+
+85 automated tests pass, including nine shift-mix tests: parallel classification, substantial end-to-end improvement with real overnight hours, safe same-day refinement, preserved coverage and quotas, manual/day locks, reserve/exclusion/history handling, marginal score correctness, optional reserve behavior and settings persistence/staging. The supplied trial JSON was read without modifying it; anonymous comparison results and coverage limitations are documented in REVIEW-1.7.en.md. The guide and settings panel were rendered for visual inspection. Interactive acceptance remains for the administrator.
